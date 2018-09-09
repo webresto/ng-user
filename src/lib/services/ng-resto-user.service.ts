@@ -22,6 +22,8 @@ import { ResetPasswordCodeResponseData } from '../interfaces/reset-password-code
 
 import { User } from '../interfaces/user';
 
+const LS_TOKEN_NAME = 'ghtke';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -42,11 +44,26 @@ export class NgRestoUserService {
     this.isLoggedIn = new BehaviorSubject(false);
     this.favorites = new BehaviorSubject([]);
 
+    this.authToken = localStorage.getItem(LS_TOKEN_NAME);
+    if(this.authToken) {
+      this.isLoggedIn.next(true);
+    }
+
     this.isLoggedIn.subscribe(isLoggedIn => {
       if(isLoggedIn) {
         this.getFavorites();
       }
-    })
+    });
+
+    this.eventer
+      .getMessageEmitter()
+      .subscribe(message => {
+        switch(message.type) {
+          case "Unauthorized":
+            this.deleteAuthToken();
+            break;
+        }
+      });
   }
 
   signIn(data:SignInRequestData, rememberMe:boolean = false) {
@@ -194,12 +211,16 @@ export class NgRestoUserService {
   }
 
   setAuthToken(authToken: string):void {
+    if(this.rememberMe) {
+      localStorage.setItem(LS_TOKEN_NAME, authToken);
+    }
     this.authToken = authToken;
     this.isLoggedIn.next(true);
   }
 
   deleteAuthToken():void {
     this.authToken = undefined;
+    localStorage.removeItem(LS_TOKEN_NAME);
     this.isLoggedIn.next(false);
   }
 

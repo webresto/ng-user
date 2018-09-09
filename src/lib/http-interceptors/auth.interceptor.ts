@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import {
   HttpInterceptor,
   HttpHandler,
-  HttpRequest
+  HttpRequest,
+  HttpErrorResponse
 } from '@angular/common/http';
 
 import { NgRestoUserService } from '../services/ng-resto-user.service';
@@ -28,9 +29,9 @@ export class AuthInterceptor implements HttpInterceptor {
 
       // send cloned request with header to the next handler.
       return next.handle(authReq);
+
     }
 
     return next.handle(req);
   }
-
 }
