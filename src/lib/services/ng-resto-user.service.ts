@@ -14,11 +14,15 @@ import { ResetPasswordRequestData } from '../interfaces/reset-password-request-d
 import { ResetPasswordCodeRequestData } from '../interfaces/reset-password-code-request-data';
 import { AddDishToFavoritesRequestData } from '../interfaces/add-dish-to-favorites-request-data';
 import { RemoveDishFromFavoritesRequestData } from '../interfaces/remove-dish-from-favorites-request-data';
+import { ProfileResponseData } from '../interfaces/profile-response-data';
 
 import { SignInResponseData } from '../interfaces/sign-in-response-data';
 import { SignUpResponseData } from '../interfaces/sign-up-response-data';
 import { ResetPasswordResponseData } from '../interfaces/reset-password-response-data';
 import { ResetPasswordCodeResponseData } from '../interfaces/reset-password-code-response-data';
+import { UpdateProfileResponseData } from '../interfaces/update-profile-response-data';
+import { UpdateProfileRequestData } from '../interfaces/update-profile-request-data';
+
 
 import { User } from '../interfaces/user';
 
@@ -51,7 +55,10 @@ export class NgRestoUserService {
 
     this.isLoggedIn.subscribe(isLoggedIn => {
       if(isLoggedIn) {
-        this.getFavorites();
+        setTimeout(() => {
+          this.getFavorites().subscribe();
+          this.getProfile().subscribe();
+        }, 500);
       }
     });
 
@@ -89,6 +96,35 @@ export class NgRestoUserService {
         )
       );
 
+  }
+
+  getProfile() {
+    return this.net.get('/user/get/user-info')
+      .pipe(
+        tap(
+          (result: User) => {
+            this.user.next(result);
+          },
+
+          error => this.eventer.emitMessageEvent(
+            new EventMessage('error', 'Ошибка', error)
+          )
+        )
+      );
+  }
+
+  updateProfile(data:UpdateProfileRequestData) {
+    return this.net.post('/user/set/user-info', data)
+      .pipe(
+        tap(
+          (result: UpdateProfileResponseData) => {
+            this.user.next(result);
+          },
+          error => this.eventer.emitMessageEvent(
+            new EventMessage('error', 'Ошибка', error)
+          )
+        )
+      )
   }
 
   signUp(data:SignUpRequestData) {

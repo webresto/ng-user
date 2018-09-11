@@ -25,11 +25,13 @@ export class ToggleDishToFavoritesDirective {
     private ngRestoUserService: NgRestoUserService,
     private element: ElementRef,
     private renderer: Renderer2
-  ) {
+  ) {}
 
+  ngOnInit() {
     this.ngRestoUserService
       .userFavorites()
       .subscribe(favorites => {
+
         this.inFavorites = favorites.find(dish => dish.id == this.dishId);
 
         if(this.inFavorites) {
