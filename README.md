@@ -45,6 +45,7 @@ constructor(
       });
       
     // Прописать токен авторизации принудительно
+    // Автоматически подменятся данные профиля и избранные
     this.usrtService.setAuthToken(token)
 }
 ~~~
@@ -111,7 +112,7 @@ constructor(
 ~~~ html
  ........
  <button appToggleDishToFavorites
-        [dishId]="dish.id"
+        [dish]="dish"
         
         (change)="...."
         (addedToFavorites)="...."

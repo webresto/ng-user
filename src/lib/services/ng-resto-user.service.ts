@@ -82,7 +82,7 @@ export class NgRestoUserService {
         tap(
           (result: SignInResponseData) => {
 
-            this.setAuthToken(result.token);
+            this.setAuthToken(result.token, false);
             this.user.next(result.user);
 
             this.eventer.emitMessageEvent(
@@ -133,7 +133,7 @@ export class NgRestoUserService {
         tap(
           (result: SignUpResponseData) => {
 
-            this.setAuthToken(result.token);
+            this.setAuthToken(result.token, false);
             this.user.next(result.user);
 
             this.eventer.emitMessageEvent(
@@ -200,12 +200,18 @@ export class NgRestoUserService {
       );
   }
 
-  addDishToFavorites(data:AddDishToFavoritesRequestData) {
+  addDishToFavorites(dish:any) {
+    let data:AddDishToFavoritesRequestData = {
+      dishId: dish.id
+    };
     return this.net.post('/user/add/favorites ', data)
       .pipe(
         tap(
           (result: any) => {
-            console.info('addDishToFavorites result', result);
+            let favoritesUpdated: any[] = this.favorites.getValue();
+            favoritesUpdated.push(dish);
+
+            this.favorites.next(favoritesUpdated);
           },
           error => this.eventer.emitMessageEvent(
             new EventMessage('error', 'Ошибка', error)
@@ -214,12 +220,20 @@ export class NgRestoUserService {
       );
   }
 
-  removeDishFromFavorites(data:RemoveDishFromFavoritesRequestData) {
+  removeDishFromFavorites(dish:any) {
+    let data:RemoveDishFromFavoritesRequestData = {
+      dishId: dish.id
+    };
     return this.net.post('/user/remove/favorites ', data)
       .pipe(
         tap(
           (result: any) => {
-            console.info('removeDishFromFavorites result', result);
+            console.info('Было=>>>', this.favorites.getValue().length);
+            let favoritesUpdated: any[] = this.favorites
+              .getValue()
+              .filter(item => item.id != dish.id);
+            console.info('Стало=>>>', favoritesUpdated.length);
+            this.favorites.next(favoritesUpdated);
           },
           error => this.eventer.emitMessageEvent(
             new EventMessage('error', 'Ошибка', error)
@@ -246,12 +260,17 @@ export class NgRestoUserService {
     return this.authToken;
   }
 
-  setAuthToken(authToken: string):void {
+  setAuthToken(authToken: string, updateProfile: boolean = true):void {
     if(this.rememberMe) {
       localStorage.setItem(LS_TOKEN_NAME, authToken);
     }
     this.authToken = authToken;
     this.isLoggedIn.next(true);
+    this.getFavorites().subscribe();
+
+    if(updateProfile) {
+      this.getProfile().subscribe();
+    }
   }
 
   deleteAuthToken():void {

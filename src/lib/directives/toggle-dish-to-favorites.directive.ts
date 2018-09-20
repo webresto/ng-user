@@ -12,7 +12,7 @@ import { RemoveDishFromFavoritesRequestData } from '../interfaces/remove-dish-fr
 })
 export class ToggleDishToFavoritesDirective {
 
-  @Input() dishId:string;
+  @Input() dish:any;
   @Output() addedToFavorites = new EventEmitter<void>();
   @Output() removedFromFavorites = new EventEmitter<void>();
   @Output() change = new EventEmitter<boolean>();
@@ -32,7 +32,7 @@ export class ToggleDishToFavoritesDirective {
       .userFavorites()
       .subscribe(favorites => {
 
-        this.inFavorites = favorites.find(dish => dish.id == this.dishId);
+        this.inFavorites = favorites.find(dish => dish.id == this.dish.id);
 
         if(this.inFavorites) {
           this.renderer.addClass(this.element.nativeElement, 'selected')
@@ -55,11 +55,8 @@ export class ToggleDishToFavoritesDirective {
   }
 
   addDishToFavorites() {
-    let data:AddDishToFavoritesRequestData = {
-      dishId: this.dishId
-    };
     this.ngRestoUserService
-      .addDishToFavorites(data)
+      .addDishToFavorites(this.dish)
       .subscribe(
         () => {
           this.addedToFavorites.emit();
@@ -71,11 +68,8 @@ export class ToggleDishToFavoritesDirective {
   }
 
   removeDishFromFavorites() {
-    let data:RemoveDishFromFavoritesRequestData = {
-      dishId: this.dishId
-    };
     this.ngRestoUserService
-      .removeDishFromFavorites(data)
+      .removeDishFromFavorites(this.dish)
       .subscribe(
         () => {
           this.removedFromFavorites.emit();
