@@ -4,5 +4,18 @@
   "peerDependencies": {
     "@angular/common": "^6.0.0-rc.0 || ^6.0.0",
     "@angular/core": "^6.0.0-rc.0 || ^6.0.0"
+  },
+  "main": "dist/bundles/sails-resto-ng-user.umd.js",
+  "module": "dist/fesm5/sails-resto-ng-user.js",
+  "es2015": "dist/fesm2015/sails-resto-ng-user.js",
+  "esm5": "dist/esm5/sails-resto-ng-user.js",
+  "esm2015": "dist/esm2015/sails-resto-ng-user.js",
+  "fesm5": "dist/fesm5/sails-resto-ng-user.js",
+  "fesm2015": "dist/fesm2015/sails-resto-ng-user.js",
+  "typings": "dist/sails-resto-ng-user.d.ts",
+  "metadata": "dist/sails-resto-ng-user.metadata.json",
+  "sideEffects": false,
+  "dependencies": {
+    "tslib": "^1.9.0"
   }
 }
