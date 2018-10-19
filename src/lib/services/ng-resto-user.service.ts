@@ -25,6 +25,9 @@ import { UpdateProfileRequestData } from '../interfaces/update-profile-request-d
 
 
 import { User } from '../interfaces/user';
+import { Address } from "../interfaces/address";
+import { RemoveAddressRequestData } from "../interfaces/remove-address-request-data";
+import {AddAddressRequestData} from "../interfaces/add-address-request-data";
 
 const LS_TOKEN_NAME = 'ghtke';
 
@@ -38,6 +41,9 @@ export class NgRestoUserService {
   private user:BehaviorSubject<any>;
   private isLoggedIn:BehaviorSubject<boolean>;
   private favorites:BehaviorSubject<any[]>;
+  private addresses:BehaviorSubject<Address[]>;
+  private streets:BehaviorSubject<any[]>;
+  private historyItems:BehaviorSubject<any[]>;
 
   constructor(
     //private restoStorageService:RestoStorageService,
@@ -47,6 +53,8 @@ export class NgRestoUserService {
     this.user = new BehaviorSubject({});
     this.isLoggedIn = new BehaviorSubject(false);
     this.favorites = new BehaviorSubject([]);
+    this.addresses = new BehaviorSubject([]);
+    this.historyItems = new BehaviorSubject([]);
 
     this.authToken = localStorage.getItem(LS_TOKEN_NAME);
     if(this.authToken) {
@@ -58,6 +66,8 @@ export class NgRestoUserService {
         setTimeout(() => {
           this.getFavorites().subscribe();
           this.getProfile().subscribe();
+          this.getAddresses().subscribe();
+          this.getHistory().subscribe();
         }, 500);
       }
     });
@@ -113,6 +123,21 @@ export class NgRestoUserService {
       );
   }
 
+  getHistory() {
+    return this.net.get('/user/get/history')
+      .pipe(
+        tap(
+          (historyItems) => {
+            this.historyItems.next(historyItems);
+          },
+
+          error => this.eventer.emitMessageEvent(
+            new EventMessage('error', 'Ошибка', error)
+          )
+        )
+      );
+  }
+
   updateProfile(data:UpdateProfileRequestData) {
     return this.net.post('/user/set/user-info', data)
       .pipe(
@@ -125,6 +150,58 @@ export class NgRestoUserService {
           )
         )
       )
+  }
+
+  getAddresses() {
+    return this.net.get('/user/get/location')
+      .pipe(
+        tap(
+          (addresses: Address[]) => {
+            this.addresses.next(addresses);
+          },
+
+          error => this.eventer.emitMessageEvent(
+            new EventMessage('error', 'Ошибка', error)
+          )
+        )
+      );
+  }
+
+  addAddress(address: AddAddressRequestData) {
+    return this.net.post('/user/add/location', address)
+      .pipe(
+        tap(
+          (addresses: Address[]) => {
+            this.addresses.next(addresses);
+          },
+
+          error => this.eventer.emitMessageEvent(
+            new EventMessage('error', 'Ошибка', error)
+          )
+        )
+      );
+  }
+
+  deleteAddress(address: Address) {
+
+    var reqBody: RemoveAddressRequestData = {
+      id: address.id,
+      street: address.street,
+      home: address.home
+    };
+
+    return this.net.post('/user/remove/location', reqBody)
+      .pipe(
+        tap(
+          (addresses: Address[]) => {
+            this.addresses.next(addresses);
+          },
+
+          error => this.eventer.emitMessageEvent(
+            new EventMessage('error', 'Ошибка', error)
+          )
+        )
+      );
   }
 
   signUp(data:SignUpRequestData) {
@@ -254,6 +331,13 @@ export class NgRestoUserService {
     return this.favorites;
   }
 
+  userAddresses():BehaviorSubject<Address[]> {
+    return this.addresses;
+  }
+
+  userHistory():BehaviorSubject<any[]> {
+    return this.historyItems;
+  }
 
 
   getAuthToken():string {
@@ -266,11 +350,13 @@ export class NgRestoUserService {
     }
     this.authToken = authToken;
     this.isLoggedIn.next(true);
-    this.getFavorites().subscribe();
 
-    if(updateProfile) {
+    /*if(updateProfile) {
       this.getProfile().subscribe();
-    }
+      this.getFavorites().subscribe();
+      this.getAddresses().subscribe();
+      this.getHistory().subscribe();
+    }*/
   }
 
   deleteAuthToken():void {

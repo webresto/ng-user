@@ -2,7 +2,9 @@
  * Generated bundle index. Do not edit.
  */
 export * from './public_api';
+export { AddAddressDirective as ɵj } from './lib/directives/add-address.directive';
 export { BalanceDirective as ɵg } from './lib/directives/balance.directive';
+export { DeleteAddressDirective as ɵk } from './lib/directives/delete-address.directive';
 export { ResetPasswordCodeDirective as ɵf } from './lib/directives/reset-password-code.directive';
 export { ResetPasswordDirective as ɵe } from './lib/directives/reset-password.directive';
 export { SignInDirective as ɵc } from './lib/directives/sign-in.directive';

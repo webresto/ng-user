@@ -8,6 +8,8 @@ import { ResetPasswordCodeDirective } from './directives/reset-password-code.dir
 import { BalanceDirective } from './directives/balance.directive';
 import { ToggleDishToFavoritesDirective } from './directives/toggle-dish-to-favorites.directive';
 import { UpdateProfileDirective } from './directives/update-profile.directive';
+import { AddAddressDirective } from "./directives/add-address.directive";
+import { DeleteAddressDirective } from "./directives/delete-address.directive";
 
 const DIRECTIVES = [
   SignUpDirective,
@@ -17,7 +19,9 @@ const DIRECTIVES = [
   ResetPasswordCodeDirective,
   BalanceDirective,
   ToggleDishToFavoritesDirective,
-  UpdateProfileDirective
+  UpdateProfileDirective,
+  AddAddressDirective,
+  DeleteAddressDirective
 ];
 
 @NgModule({

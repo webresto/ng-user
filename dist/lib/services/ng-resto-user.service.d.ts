@@ -11,6 +11,8 @@ import { ResetPasswordCodeResponseData } from '../interfaces/reset-password-code
 import { UpdateProfileResponseData } from '../interfaces/update-profile-response-data';
 import { UpdateProfileRequestData } from '../interfaces/update-profile-request-data';
 import { User } from '../interfaces/user';
+import { Address } from "../interfaces/address";
+import { AddAddressRequestData } from "../interfaces/add-address-request-data";
 export declare class NgRestoUserService {
     private net;
     private eventer;
@@ -19,10 +21,17 @@ export declare class NgRestoUserService {
     private user;
     private isLoggedIn;
     private favorites;
+    private addresses;
+    private streets;
+    private historyItems;
     constructor(net: NetService, eventer: EventerService);
     signIn(data: SignInRequestData, rememberMe?: boolean): Observable<SignInResponseData>;
     getProfile(): Observable<User>;
+    getHistory(): Observable<any>;
     updateProfile(data: UpdateProfileRequestData): Observable<UpdateProfileResponseData>;
+    getAddresses(): Observable<Address[]>;
+    addAddress(address: AddAddressRequestData): Observable<Address[]>;
+    deleteAddress(address: Address): Observable<Address[]>;
     signUp(data: SignUpRequestData): Observable<SignUpResponseData>;
     signOut(): void;
     resetPassword(data: ResetPasswordRequestData): Observable<ResetPasswordResponseData>;
@@ -33,6 +42,8 @@ export declare class NgRestoUserService {
     userProfile(): BehaviorSubject<User>;
     userIsLoggedIn(): BehaviorSubject<boolean>;
     userFavorites(): BehaviorSubject<any[]>;
+    userAddresses(): BehaviorSubject<Address[]>;
+    userHistory(): BehaviorSubject<any[]>;
     getAuthToken(): string;
     setAuthToken(authToken: string, updateProfile?: boolean): void;
     deleteAuthToken(): void;

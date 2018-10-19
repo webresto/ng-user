@@ -44,6 +44,14 @@ constructor(
         ...........
       });
       
+    // Получить историю заказов
+    this.userService
+      .userHistory()
+      .subscribe(historyItems => {
+        this.historyItems = historyItems;
+        ...........
+      });
+      
     // Прописать токен авторизации принудительно
     // Автоматически подменятся данные профиля и избранные
     this.usrtService.setAuthToken(token)
@@ -90,6 +98,38 @@ constructor(
         (success)="...."
         (error)="....">Регистрация</button>
 ~~~
+
+### [appAddAddress] - Добавить адрес
+Пример использования в компоненте:
+
+~~~ html
+ <input #name type="text">
+ <select #streetId ...</select>
+ <input #home type="text">
+ <input #housing type="text">
+ ........
+ <button appAddAddress
+        [name]="name.value"
+        [street]="streetId.value"
+        [home]="home.value"
+        [housing]="housing.value"
+        [index]="index.value"
+        [entrance]="entrance.value"
+        [floor]="floor.value"
+        [apartment]="apartment.value"
+        [doorphone]="doorphone.value"
+    
+        (success)="...."
+        (error)="....">Регистрация</button>
+~~~
+
+### [appDeleteAddress] - Удалить адрес
+Пример использования в компоненте:
+
+~~~ html
+ <button appDeleteAddress [address]="address">Удалить</button>
+~~~
+
 
 ### [appBalance]  - добавляет значение текущего баланса
 Пример использования в компоненте:
