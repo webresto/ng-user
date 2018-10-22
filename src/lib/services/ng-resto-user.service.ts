@@ -139,7 +139,9 @@ export class NgRestoUserService {
   }
 
   updateProfile(data:UpdateProfileRequestData) {
-    return this.net.post('/user/set/user-info', data)
+    return this.net.post('/user/set/user-info', {
+      user: data
+    })
       .pipe(
         tap(
           (result: UpdateProfileResponseData) => {
