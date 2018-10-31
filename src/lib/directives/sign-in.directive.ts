@@ -22,7 +22,7 @@ export class SignInDirective {
   @HostListener('click')
   onClick() {
     let data:SignInRequestData = {
-      phone: this.phone,
+      phone: this.preparePhone(this.phone),
       password: this.password,
       captcha: this.captcha
     };
@@ -32,6 +32,11 @@ export class SignInDirective {
         () => this.success.emit(true),
         error => this.error.emit(error)
       )
+  }
+
+  preparePhone(phone) {
+    phone = '+' + phone.replace(/[^0-9]/gim,'');
+    return phone.replace('+8', '');
   }
 
 }

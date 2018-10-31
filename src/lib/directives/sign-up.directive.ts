@@ -24,7 +24,7 @@ export class SignUpDirective {
   onClick() {
     let data:SignUpRequestData = {
       name: this.name,
-      phone: this.phone,
+      phone: this.preparePhone(this.phone),
       email: this.email,
       password: this.password,
       captcha: this.captcha
@@ -35,5 +35,10 @@ export class SignUpDirective {
         () => this.success.emit(true),
         error => this.error.emit(error)
       );
+  }
+
+  preparePhone(phone) {
+    phone = '+' + phone.replace(/[^0-9]/gim,'');
+    return phone.replace('+8', '');
   }
 }

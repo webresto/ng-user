@@ -11,4 +11,5 @@ export declare class SignUpDirective {
     error: EventEmitter<string>;
     constructor(ngRestoUserService: NgRestoUserService);
     onClick(): void;
+    preparePhone(phone: any): any;
 }
