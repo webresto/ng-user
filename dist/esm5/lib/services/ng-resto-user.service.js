@@ -194,7 +194,7 @@ var NgRestoUserService = /** @class */ (function () {
      */
     function (data) {
         var _this = this;
-        return this.net.post('/login', data)
+        return this.net.post('/reset', data)
             .pipe(tap(function (result) {
         }, function (error) { return _this.eventer.emitMessageEvent(new EventMessage('error', 'Ошибка', error)); }));
     };
