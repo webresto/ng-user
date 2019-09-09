@@ -1,13 +1,13 @@
-# @sails-resto/ng-user
+# @webresto/ng-user
 ## Установка модуля
 Модуль устанавливается с Git репозитория, в папку node_modules
 ## Подключение модуля в проект
 Добавьте следующие в ваш app.module.ts
 
 ~~~ javascript
-import { NgUserModule } from '@sails-resto/ng-user';
-import { ngCoreHttpInterceptorProviders } from '@sails-resto/ng-core';
-import { ngUserHttpInterceptorProviders } from '@sails-resto/ng-user';
+import { NgUserModule } from '@webresto/ng-user';
+import { ngCoreHttpInterceptorProviders } from '@webresto/ng-core';
+import { ngUserHttpInterceptorProviders } from '@webresto/ng-user';
 ~~~
 ~~~ javascript  
 imports: [
@@ -24,7 +24,7 @@ providers: [
 
 ## Использование сервиса
 ~~~ javascript
-import { NgRestoUserService } from '@sails-resto/ng-user';
+import { NgRestoUserService } from '@webresto/ng-user';
 ..........
 constructor(
     private userService: NgRestoUserService

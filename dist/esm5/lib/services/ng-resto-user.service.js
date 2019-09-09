@@ -5,9 +5,9 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { NetService, EventerService, EventMessage } from '@sails-resto/ng-core';
+import { NetService, EventerService, EventMessage } from '@webresto/ng-core';
 import * as i0 from "@angular/core";
-import * as i1 from "@sails-resto/ng-core";
+import * as i1 from "@webresto/ng-core";
 /** @type {?} */
 var LS_TOKEN_NAME = 'ghtke';
 var NgRestoUserService = /** @class */ (function () {

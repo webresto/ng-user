@@ -1,5 +1,5 @@
 import { Observable, BehaviorSubject } from 'rxjs';
-import { NetService, EventerService } from '@sails-resto/ng-core';
+import { NetService, EventerService } from '@webresto/ng-core';
 import { SignInRequestData } from '../interfaces/sign-in-request-data';
 import { SignUpRequestData } from '../interfaces/sign-up-request-data';
 import { ResetPasswordRequestData } from '../interfaces/reset-password-request-data';
