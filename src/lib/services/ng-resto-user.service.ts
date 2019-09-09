@@ -6,7 +6,7 @@ import {
   NetService,
   EventerService,
   EventMessage
-} from '@sails-resto/ng-core';
+} from '@webresto/ng-core';
 
 import { SignInRequestData } from '../interfaces/sign-in-request-data';
 import { SignUpRequestData } from '../interfaces/sign-up-request-data';
