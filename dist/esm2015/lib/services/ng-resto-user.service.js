@@ -150,7 +150,7 @@ export class NgRestoUserService {
      * @return {?}
      */
     resetPassword(data) {
-        return this.net.post('/login', data)
+        return this.net.post('/reset', data)
             .pipe(tap((result) => {
         }, error => this.eventer.emitMessageEvent(new EventMessage('error', 'Ошибка', error))));
     }

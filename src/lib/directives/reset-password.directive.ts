@@ -9,7 +9,6 @@ import { ResetPasswordRequestData } from '../interfaces/reset-password-request-d
 export class ResetPasswordDirective {
 
   @Input() phone:string;
-  @Input() password:string;
   @Input() captcha:string;
   @Output() success = new EventEmitter<boolean>();
   @Output() error = new EventEmitter<string>();
@@ -22,7 +21,6 @@ export class ResetPasswordDirective {
   onClick() {
     let data:ResetPasswordRequestData = {
       phone: this.phone,
-      password: this.password,
       captcha: this.captcha
     };
     this.ngRestoUserService

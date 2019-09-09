@@ -196,7 +196,7 @@
          */
             function (data) {
                 var _this = this;
-                return this.net.post('/login', data)
+                return this.net.post('/reset', data)
                     .pipe(operators.tap(function (result) {
                 }, function (error) { return _this.eventer.emitMessageEvent(new i1.EventMessage('error', 'Ошибка', error)); }));
             };

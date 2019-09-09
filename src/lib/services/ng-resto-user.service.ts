@@ -220,9 +220,9 @@ export class NgRestoUserService {
             )
           },
 
-          error => this.eventer.emitMessageEvent(
+          error => { this.eventer.emitMessageEvent(
             new EventMessage('error', 'Ошибка', error)
-          )
+          )}
         )
       );
   }
@@ -233,7 +233,7 @@ export class NgRestoUserService {
 
   resetPassword(data:ResetPasswordRequestData) {
 
-    return this.net.post('/login', data)
+    return this.net.post('/reset', data)
       .pipe(
         tap(
           (result: ResetPasswordResponseData) => {
