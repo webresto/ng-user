@@ -1,7 +1,7 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('rxjs'), require('rxjs/operators'), require('@sails-resto/ng-core'), require('@angular/common/http')) :
-    typeof define === 'function' && define.amd ? define('@sails-resto/ng-user', ['exports', '@angular/core', 'rxjs', 'rxjs/operators', '@sails-resto/ng-core', '@angular/common/http'], factory) :
-    (factory((global['sails-resto'] = global['sails-resto'] || {}, global['sails-resto']['ng-user'] = {}),global.ng.core,global.rxjs,global.rxjs.operators,null,global.ng.common.http));
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('rxjs'), require('rxjs/operators'), require('@webresto/ng-core'), require('@angular/common/http')) :
+    typeof define === 'function' && define.amd ? define('@webresto/ng-user', ['exports', '@angular/core', 'rxjs', 'rxjs/operators', '@webresto/ng-core', '@angular/common/http'], factory) :
+    (factory((global['webresto'] = global['webresto'] || {}, global['webresto']['ng-user'] = {}),global.ng.core,global.rxjs,global.rxjs.operators,null,global.ng.common.http));
 }(this, (function (exports,i0,rxjs,operators,i1,http) { 'use strict';
 
     /**
