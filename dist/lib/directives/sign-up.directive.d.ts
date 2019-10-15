@@ -5,7 +5,7 @@ export declare class SignUpDirective {
     name: string;
     phone: string;
     email: string;
-    // password: string;
+    password: string;
     captcha: string;
     success: EventEmitter<boolean>;
     error: EventEmitter<string>;
