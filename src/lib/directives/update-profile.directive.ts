@@ -23,7 +23,7 @@ export class UpdateProfileDirective {
   onClick() {
     let data:UpdateProfileRequestData = {
       name: this.name,
-      phone: this.phone,
+      //phone: this.phone,
       email: this.email
     };
     this.ngRestoUserService

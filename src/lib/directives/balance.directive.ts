@@ -10,10 +10,24 @@ export class BalanceDirective {
 
   constructor(
     private renderer: Renderer2,
-    private el: ElementRef
+    private el: ElementRef,
+    private ngRestoUserService: NgRestoUserService
   ) {
-    this.amount = '0';
-    this.renderer.setProperty(this.el.nativeElement, 'innerHTML', this.amount);
+    let balance = 0;
+    this.ngRestoUserService
+      .getBonuses()
+      .subscribe(bonuses => {
+        for(let name in bonuses) {
+          const data = bonuses[name];
+          if(data.state == 'active') {
+            balance += data.balance;
+          }
+        }
+
+        this.amount = `${balance}`;
+        this.renderer.setProperty(this.el.nativeElement, 'innerHTML', this.amount);
+      });
+
   }
 
 }

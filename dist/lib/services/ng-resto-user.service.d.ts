@@ -34,6 +34,7 @@ export declare class NgRestoUserService {
     deleteAddress(address: Address): Observable<Address[]>;
     signUp(data: SignUpRequestData): Observable<SignUpResponseData>;
     signOut(): void;
+    getBonuses(): Observable<any>;
     resetPassword(data: ResetPasswordRequestData): Observable<ResetPasswordResponseData>;
     resetPasswordCode(data: ResetPasswordCodeRequestData): Observable<ResetPasswordCodeResponseData>;
     getFavorites(): Observable<any[]>;

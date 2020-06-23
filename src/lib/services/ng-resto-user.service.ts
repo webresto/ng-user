@@ -29,7 +29,7 @@ import { Address } from "../interfaces/address";
 import { RemoveAddressRequestData } from "../interfaces/remove-address-request-data";
 import {AddAddressRequestData} from "../interfaces/add-address-request-data";
 
-const LS_TOKEN_NAME = 'ghtke';
+const LS_TOKEN_NAME = 'gf:tkn:v2';
 
 @Injectable({
   providedIn: 'root'
@@ -212,11 +212,11 @@ export class NgRestoUserService {
         tap(
           (result: SignUpResponseData) => {
 
-            this.setAuthToken(result.token, false);
-            this.user.next(result.user);
+            //this.setAuthToken(result.token, false);
+            //this.user.next(result.user);
 
             this.eventer.emitMessageEvent(
-              new EventMessage('success', 'Успех', 'Успешно зарегистирован')
+              new EventMessage('success', 'Регистрация', 'Ваш пароль был отправлен на указанный номер телефона')
             )
           },
 
@@ -229,6 +229,22 @@ export class NgRestoUserService {
 
   signOut() {
     return this.deleteAuthToken();
+  }
+
+
+  getBonuses() {
+    return this.net.post('/bonus/get', {})
+      .pipe(
+        tap(
+          (result: any) => {
+
+          },
+
+          error => this.eventer.emitMessageEvent(
+            new EventMessage('error', 'Ошибка', error)
+          )
+        )
+      );
   }
 
   resetPassword(data:ResetPasswordRequestData) {
@@ -349,6 +365,7 @@ export class NgRestoUserService {
   setAuthToken(authToken: string, updateProfile: boolean = true):void {
     if(this.rememberMe) {
       localStorage.setItem(LS_TOKEN_NAME, authToken);
+      localStorage.removeItem('gf:login:phone');
     }
     this.authToken = authToken;
     this.isLoggedIn.next(true);
@@ -364,6 +381,7 @@ export class NgRestoUserService {
   deleteAuthToken():void {
     this.authToken = undefined;
     localStorage.removeItem(LS_TOKEN_NAME);
+    localStorage.removeItem('gf:login:phone');
     this.isLoggedIn.next(false);
   }
 

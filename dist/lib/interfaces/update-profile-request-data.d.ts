@@ -1,5 +1,5 @@
 export interface UpdateProfileRequestData {
     name: string;
-    phone: string;
+    phone?: string;
     email: string;
 }
