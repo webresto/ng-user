@@ -1,28 +1,23 @@
-import { Injectable } from '@angular/core';
-import { Observable, BehaviorSubject, Subject } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import {Injectable} from '@angular/core';
+import {BehaviorSubject} from 'rxjs';
+import {tap} from 'rxjs/operators';
 
-import {
-  NetService,
-  EventerService,
-  EventMessage
-} from '@webresto/ng-core';
+import {EventerService, EventMessage, NetService} from '@webresto/ng-core';
 
-import { SignInRequestData } from '../interfaces/sign-in-request-data';
-import { SignUpRequestData } from '../interfaces/sign-up-request-data';
-import { ResetPasswordRequestData } from '../interfaces/reset-password-request-data';
-import { ResetPasswordCodeRequestData } from '../interfaces/reset-password-code-request-data';
-import { AddDishToFavoritesRequestData } from '../interfaces/add-dish-to-favorites-request-data';
-import { RemoveDishFromFavoritesRequestData } from '../interfaces/remove-dish-from-favorites-request-data';
-import { SignInResponseData } from '../interfaces/sign-in-response-data';
-import { SignUpResponseData } from '../interfaces/sign-up-response-data';
-import { ResetPasswordResponseData } from '../interfaces/reset-password-response-data';
-import { ResetPasswordCodeResponseData } from '../interfaces/reset-password-code-response-data';
-import { UpdateProfileResponseData } from '../interfaces/update-profile-response-data';
-import { UpdateProfileRequestData } from '../interfaces/update-profile-request-data';
-import { User } from '../interfaces';
-import { Address } from "../interfaces";
-import { RemoveAddressRequestData } from "../interfaces/remove-address-request-data";
+import {SignInRequestData} from '../interfaces/sign-in-request-data';
+import {SignUpRequestData} from '../interfaces/sign-up-request-data';
+import {ResetPasswordRequestData} from '../interfaces/reset-password-request-data';
+import {ResetPasswordCodeRequestData} from '../interfaces/reset-password-code-request-data';
+import {AddDishToFavoritesRequestData} from '../interfaces/add-dish-to-favorites-request-data';
+import {RemoveDishFromFavoritesRequestData} from '../interfaces/remove-dish-from-favorites-request-data';
+import {SignInResponseData} from '../interfaces/sign-in-response-data';
+import {SignUpResponseData} from '../interfaces/sign-up-response-data';
+import {ResetPasswordResponseData} from '../interfaces/reset-password-response-data';
+import {ResetPasswordCodeResponseData} from '../interfaces/reset-password-code-response-data';
+import {UpdateProfileResponseData} from '../interfaces/update-profile-response-data';
+import {UpdateProfileRequestData} from '../interfaces/update-profile-request-data';
+import {Address, User} from '../interfaces';
+import {RemoveAddressRequestData} from "../interfaces/remove-address-request-data";
 import {AddAddressRequestData} from "../interfaces/add-address-request-data";
 
 const LS_TOKEN_NAME = 'gf:tkn:v2';
@@ -32,7 +27,7 @@ const LS_TOKEN_NAME = 'gf:tkn:v2';
 })
 export class NgRestoUserService {
 
-  private authToken:string;
+  private authToken: string;
   private rememberMe:boolean = false;
   private historyTransactions: BehaviorSubject<any[]>;
   private user:BehaviorSubject<any>;
@@ -41,6 +36,7 @@ export class NgRestoUserService {
   private addresses:BehaviorSubject<Address[]>;
   private streets:BehaviorSubject<any[]>;
   private historyItems:BehaviorSubject<any[]>;
+  private bonusSystems: BehaviorSubject<any[]>;
 
   constructor(
     //private restoStorageService:RestoStorageService,
@@ -52,7 +48,8 @@ export class NgRestoUserService {
     this.favorites = new BehaviorSubject([]);
     this.addresses = new BehaviorSubject([]);
     this.historyItems = new BehaviorSubject([]);
-    this.historyTransactions = new BehaviorSubject<any[]>([])
+    this.historyTransactions = new BehaviorSubject<any[]>([]);
+    this.bonusSystems = new BehaviorSubject<any[]>([]);
 
     this.authToken = localStorage.getItem(LS_TOKEN_NAME);
     if(this.authToken) {
@@ -65,8 +62,8 @@ export class NgRestoUserService {
           this.getFavorites().subscribe();
           this.getProfile().subscribe();
           this.getAddresses().subscribe();
+          this.getBonuses().subscribe();
           this.getHistory().subscribe();
-          this.getHistoryTransactions().subscribe();
         }, 500);
       }
     });
@@ -137,8 +134,8 @@ export class NgRestoUserService {
       );
   }
 
-  getHistoryTransactions() {
-    return this.net.get('/bonus/transactions?bonussystem=card5')
+  getHistoryTransactions(bonusSystem: string= "local", limit: number = 15, set: number = 0) {
+     return this.net.get(`/bonus/transactions?bonussystem=${bonusSystem}&limit=${limit}&number=${set}`)
       .pipe(
         tap(
           (transactions) => {
@@ -251,7 +248,7 @@ export class NgRestoUserService {
       .pipe(
         tap(
           (result: any) => {
-
+            this.bonusSystems.next(result);
           },
 
           error => this.eventer.emitMessageEvent(
