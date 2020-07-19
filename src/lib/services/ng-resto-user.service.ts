@@ -138,7 +138,7 @@ export class NgRestoUserService {
   }
 
   getHistoryTransactions() {
-    return this.net.get('/bonus/transactions')
+    return this.net.get('/bonus/transactions?bonussystem=card5')
       .pipe(
         tap(
           (transactions) => {
