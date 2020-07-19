@@ -10,14 +10,15 @@ import { ResetPasswordResponseData } from '../interfaces/reset-password-response
 import { ResetPasswordCodeResponseData } from '../interfaces/reset-password-code-response-data';
 import { UpdateProfileResponseData } from '../interfaces/update-profile-response-data';
 import { UpdateProfileRequestData } from '../interfaces/update-profile-request-data';
-import { User } from '../interfaces/user';
-import { Address } from "../interfaces/address";
+import { User } from '../interfaces';
+import { Address } from "../interfaces";
 import { AddAddressRequestData } from "../interfaces/add-address-request-data";
 export declare class NgRestoUserService {
     private net;
     private eventer;
     private authToken;
     private rememberMe;
+    private historyTransactions;
     private user;
     private isLoggedIn;
     private favorites;
@@ -28,6 +29,7 @@ export declare class NgRestoUserService {
     signIn(data: SignInRequestData, rememberMe?: boolean): Observable<SignInResponseData>;
     getProfile(): Observable<User>;
     getHistory(): Observable<any>;
+    getHistoryTransactions(): Observable<any>;
     updateProfile(data: UpdateProfileRequestData): Observable<UpdateProfileResponseData>;
     getAddresses(): Observable<Address[]>;
     addAddress(address: AddAddressRequestData): Observable<Address[]>;
@@ -45,6 +47,7 @@ export declare class NgRestoUserService {
     userFavorites(): BehaviorSubject<any[]>;
     userAddresses(): BehaviorSubject<Address[]>;
     userHistory(): BehaviorSubject<any[]>;
+    userTransactionsHistory(): BehaviorSubject<any[]>;
     getAuthToken(): string;
     setAuthToken(authToken: string, updateProfile?: boolean): void;
     deleteAuthToken(): void;

@@ -14,18 +14,14 @@ import { ResetPasswordRequestData } from '../interfaces/reset-password-request-d
 import { ResetPasswordCodeRequestData } from '../interfaces/reset-password-code-request-data';
 import { AddDishToFavoritesRequestData } from '../interfaces/add-dish-to-favorites-request-data';
 import { RemoveDishFromFavoritesRequestData } from '../interfaces/remove-dish-from-favorites-request-data';
-import { ProfileResponseData } from '../interfaces/profile-response-data';
-
 import { SignInResponseData } from '../interfaces/sign-in-response-data';
 import { SignUpResponseData } from '../interfaces/sign-up-response-data';
 import { ResetPasswordResponseData } from '../interfaces/reset-password-response-data';
 import { ResetPasswordCodeResponseData } from '../interfaces/reset-password-code-response-data';
 import { UpdateProfileResponseData } from '../interfaces/update-profile-response-data';
 import { UpdateProfileRequestData } from '../interfaces/update-profile-request-data';
-
-
-import { User } from '../interfaces/user';
-import { Address } from "../interfaces/address";
+import { User } from '../interfaces';
+import { Address } from "../interfaces";
 import { RemoveAddressRequestData } from "../interfaces/remove-address-request-data";
 import {AddAddressRequestData} from "../interfaces/add-address-request-data";
 
@@ -38,6 +34,7 @@ export class NgRestoUserService {
 
   private authToken:string;
   private rememberMe:boolean = false;
+  private historyTransactions: BehaviorSubject<any[]>;
   private user:BehaviorSubject<any>;
   private isLoggedIn:BehaviorSubject<boolean>;
   private favorites:BehaviorSubject<any[]>;
@@ -55,6 +52,7 @@ export class NgRestoUserService {
     this.favorites = new BehaviorSubject([]);
     this.addresses = new BehaviorSubject([]);
     this.historyItems = new BehaviorSubject([]);
+    this.historyTransactions = new BehaviorSubject<any[]>([])
 
     this.authToken = localStorage.getItem(LS_TOKEN_NAME);
     if(this.authToken) {
@@ -68,6 +66,7 @@ export class NgRestoUserService {
           this.getProfile().subscribe();
           this.getAddresses().subscribe();
           this.getHistory().subscribe();
+          this.getHistoryTransactions().subscribe();
         }, 500);
       }
     });
@@ -129,6 +128,21 @@ export class NgRestoUserService {
         tap(
           (historyItems) => {
             this.historyItems.next(historyItems);
+          },
+
+          error => this.eventer.emitMessageEvent(
+            new EventMessage('error', 'Ошибка', error)
+          )
+        )
+      );
+  }
+
+  getHistoryTransactions() {
+    return this.net.get('/bonus/transactions')
+      .pipe(
+        tap(
+          (transactions) => {
+            this.historyTransactions.next(transactions);
           },
 
           error => this.eventer.emitMessageEvent(
@@ -355,6 +369,9 @@ export class NgRestoUserService {
 
   userHistory():BehaviorSubject<any[]> {
     return this.historyItems;
+  }
+  userTransactionsHistory():BehaviorSubject<any[]> {
+    return this.historyTransactions;
   }
 
 
