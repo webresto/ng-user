@@ -44,7 +44,7 @@ export class NgRestoUserService {
     private eventer:EventerService
   ) {
     this.user = new BehaviorSubject({});
-    this.isLoggedIn = new BehaviorSubject(false);
+    this.isLoggedIn = new BehaviorSubject<boolean>(false);
     this.favorites = new BehaviorSubject([]);
     this.addresses = new BehaviorSubject([]);
     this.historyItems = new BehaviorSubject([]);

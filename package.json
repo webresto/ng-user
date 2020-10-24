@@ -2,8 +2,8 @@
   "name": "@webresto/ng-user",
   "version": "0.0.1",
   "peerDependencies": {
-    "@angular/common": "^6.0.0-rc.0 || ^6.0.0",
-    "@angular/core": "^6.0.0-rc.0 || ^6.0.0"
+    "@angular/common": "^10.1.6",
+    "@angular/core": "^10.1.6"
   },
   "main": "dist/bundles/webresto-ng-user.umd.js",
   "module": "dist/fesm5/webresto-ng-user.js",
@@ -16,6 +16,6 @@
   "metadata": "dist/webresto-ng-user.metadata.json",
   "sideEffects": false,
   "dependencies": {
-    "tslib": "^1.9.0"
-  }
+    "tslib": "^2.0.1"
+    }
 }

@@ -1,15 +1,2 @@
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
- */
-/**
- * @record
- */
-export function ResetPasswordCodeResponseData() { }
-if (false) {
-    /** @type {?} */
-    ResetPasswordCodeResponseData.prototype.token;
-    /** @type {?} */
-    ResetPasswordCodeResponseData.prototype.user;
-}
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicmVzZXQtcGFzc3dvcmQtY29kZS1yZXNwb25zZS1kYXRhLmpzIiwic291cmNlUm9vdCI6Im5nOi8vQHdlYnJlc3RvL25nLXVzZXIvIiwic291cmNlcyI6WyJsaWIvaW50ZXJmYWNlcy9yZXNldC1wYXNzd29yZC1jb2RlLXJlc3BvbnNlLWRhdGEudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7OztBQUVBLG1EQUdDOzs7SUFGQyw4Q0FBYzs7SUFDZCw2Q0FBVSIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IFVzZXIgfSBmcm9tIFwiLi91c2VyXCI7XG5cbmV4cG9ydCBpbnRlcmZhY2UgUmVzZXRQYXNzd29yZENvZGVSZXNwb25zZURhdGEge1xuICB0b2tlbjogc3RyaW5nLFxuICB1c2VyOiBVc2VyXG59XG4iXX0=
+export {};
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicmVzZXQtcGFzc3dvcmQtY29kZS1yZXNwb25zZS1kYXRhLmpzIiwic291cmNlUm9vdCI6IkM6L1VzZXJzL1Byb2Zlc3Npb25hbC9mcm9udGVuZC9wcm9qZWN0cy93ZWJyZXN0by9uZy11c2VyL3NyYy8iLCJzb3VyY2VzIjpbImxpYi9pbnRlcmZhY2VzL3Jlc2V0LXBhc3N3b3JkLWNvZGUtcmVzcG9uc2UtZGF0YS50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgVXNlciB9IGZyb20gXCIuL3VzZXJcIjtcclxuXHJcbmV4cG9ydCBpbnRlcmZhY2UgUmVzZXRQYXNzd29yZENvZGVSZXNwb25zZURhdGEge1xyXG4gIHRva2VuOiBzdHJpbmcsXHJcbiAgdXNlcjogVXNlclxyXG59XHJcbiJdfQ==

@@ -12,6 +12,7 @@ import { UpdateProfileResponseData } from '../interfaces/update-profile-response
 import { UpdateProfileRequestData } from '../interfaces/update-profile-request-data';
 import { Address, User } from '../interfaces';
 import { AddAddressRequestData } from "../interfaces/add-address-request-data";
+import * as i0 from "@angular/core";
 export declare class NgRestoUserService {
     private net;
     private eventer;
@@ -26,22 +27,22 @@ export declare class NgRestoUserService {
     private historyItems;
     private bonusSystems;
     constructor(net: NetService, eventer: EventerService);
-    signIn(data: SignInRequestData, rememberMe?: boolean): import("rxjs/internal/Observable").Observable<SignInResponseData>;
-    getProfile(): import("rxjs/internal/Observable").Observable<User>;
-    getHistory(): import("rxjs/internal/Observable").Observable<any>;
-    getHistoryTransactions(bonusSystem?: string, limit?: number, set?: number): import("rxjs/internal/Observable").Observable<any>;
-    updateProfile(data: UpdateProfileRequestData): import("rxjs/internal/Observable").Observable<UpdateProfileResponseData>;
-    getAddresses(): import("rxjs/internal/Observable").Observable<Address[]>;
-    addAddress(address: AddAddressRequestData): import("rxjs/internal/Observable").Observable<Address[]>;
-    deleteAddress(address: Address): import("rxjs/internal/Observable").Observable<Address[]>;
-    signUp(data: SignUpRequestData): import("rxjs/internal/Observable").Observable<SignUpResponseData>;
+    signIn(data: SignInRequestData, rememberMe?: boolean): import("rxjs").Observable<SignInResponseData>;
+    getProfile(): import("rxjs").Observable<User>;
+    getHistory(): import("rxjs").Observable<any>;
+    getHistoryTransactions(bonusSystem?: string, limit?: number, set?: number): import("rxjs").Observable<any>;
+    updateProfile(data: UpdateProfileRequestData): import("rxjs").Observable<UpdateProfileResponseData>;
+    getAddresses(): import("rxjs").Observable<Address[]>;
+    addAddress(address: AddAddressRequestData): import("rxjs").Observable<Address[]>;
+    deleteAddress(address: Address): import("rxjs").Observable<Address[]>;
+    signUp(data: SignUpRequestData): import("rxjs").Observable<SignUpResponseData>;
     signOut(): void;
-    getBonuses(): import("rxjs/internal/Observable").Observable<any>;
-    resetPassword(data: ResetPasswordRequestData): import("rxjs/internal/Observable").Observable<ResetPasswordResponseData>;
-    resetPasswordCode(data: ResetPasswordCodeRequestData): import("rxjs/internal/Observable").Observable<ResetPasswordCodeResponseData>;
-    getFavorites(): import("rxjs/internal/Observable").Observable<any[]>;
-    addDishToFavorites(dish: any): import("rxjs/internal/Observable").Observable<any>;
-    removeDishFromFavorites(dish: any): import("rxjs/internal/Observable").Observable<any>;
+    getBonuses(): import("rxjs").Observable<any>;
+    resetPassword(data: ResetPasswordRequestData): import("rxjs").Observable<ResetPasswordResponseData>;
+    resetPasswordCode(data: ResetPasswordCodeRequestData): import("rxjs").Observable<ResetPasswordCodeResponseData>;
+    getFavorites(): import("rxjs").Observable<any[]>;
+    addDishToFavorites(dish: any): import("rxjs").Observable<any>;
+    removeDishFromFavorites(dish: any): import("rxjs").Observable<any>;
     userProfile(): BehaviorSubject<User>;
     userIsLoggedIn(): BehaviorSubject<boolean>;
     userFavorites(): BehaviorSubject<any[]>;
@@ -51,4 +52,6 @@ export declare class NgRestoUserService {
     getAuthToken(): string;
     setAuthToken(authToken: string, updateProfile?: boolean): void;
     deleteAuthToken(): void;
+    static ɵfac: i0.ɵɵFactoryDef<NgRestoUserService, never>;
+    static ɵprov: i0.ɵɵInjectableDef<NgRestoUserService>;
 }
