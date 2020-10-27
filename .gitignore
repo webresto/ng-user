@@ -1,4 +1,10 @@
 # compiled output
 /dist
+dist
+dist/*
+dist/
+/dist/
+/dist/*
+
 # dependencies
 /node_modules

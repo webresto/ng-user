@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {tap} from 'rxjs/operators';
 
 import {EventerService, EventMessage, NetService} from '@webresto/ng-core';
@@ -348,27 +348,27 @@ export class NgRestoUserService {
       );
   }
 
-  userProfile():BehaviorSubject<User> {
-    return this.user;
+  userProfile():Observable<User> {
+    return this.user.pipe();
   }
 
-  userIsLoggedIn():BehaviorSubject<boolean> {
-    return this.isLoggedIn;
+  userIsLoggedIn():Observable<boolean> {
+    return this.isLoggedIn.pipe();
   }
 
-  userFavorites():BehaviorSubject<any[]> {
-    return this.favorites;
+  userFavorites():Observable<any[]> {
+    return this.favorites.pipe();
   }
 
-  userAddresses():BehaviorSubject<Address[]> {
-    return this.addresses;
+  userAddresses():Observable<Address[]> {
+    return this.addresses.pipe();
   }
 
-  userHistory():BehaviorSubject<any[]> {
-    return this.historyItems;
+  userHistory():Observable<any[]> {
+    return this.historyItems.pipe();
   }
-  userTransactionsHistory():BehaviorSubject<any[]> {
-    return this.historyTransactions;
+  userTransactionsHistory():Observable<any[]> {
+    return this.historyTransactions.pipe();
   }
 
 
