@@ -164,22 +164,22 @@ class NgRestoUserService {
         }, error => this.eventer.emitMessageEvent(new EventMessage('error', 'Ошибка', error))));
     }
     userProfile() {
-        return this.user;
+        return this.user.pipe();
     }
     userIsLoggedIn() {
-        return this.isLoggedIn;
+        return this.isLoggedIn.pipe();
     }
     userFavorites() {
-        return this.favorites;
+        return this.favorites.pipe();
     }
     userAddresses() {
-        return this.addresses;
+        return this.addresses.pipe();
     }
     userHistory() {
-        return this.historyItems;
+        return this.historyItems.pipe();
     }
     userTransactionsHistory() {
-        return this.historyTransactions;
+        return this.historyTransactions.pipe();
     }
     getAuthToken() {
         return this.authToken;

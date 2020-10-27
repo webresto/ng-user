@@ -184,22 +184,22 @@
             }, function (error) { return _this.eventer.emitMessageEvent(new i1.EventMessage('error', 'Ошибка', error)); }));
         };
         NgRestoUserService.prototype.userProfile = function () {
-            return this.user;
+            return this.user.pipe();
         };
         NgRestoUserService.prototype.userIsLoggedIn = function () {
-            return this.isLoggedIn;
+            return this.isLoggedIn.pipe();
         };
         NgRestoUserService.prototype.userFavorites = function () {
-            return this.favorites;
+            return this.favorites.pipe();
         };
         NgRestoUserService.prototype.userAddresses = function () {
-            return this.addresses;
+            return this.addresses.pipe();
         };
         NgRestoUserService.prototype.userHistory = function () {
-            return this.historyItems;
+            return this.historyItems.pipe();
         };
         NgRestoUserService.prototype.userTransactionsHistory = function () {
-            return this.historyTransactions;
+            return this.historyTransactions.pipe();
         };
         NgRestoUserService.prototype.getAuthToken = function () {
             return this.authToken;
