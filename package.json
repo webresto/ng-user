@@ -5,17 +5,7 @@
     "@angular/common": "^10.2.1",
     "@angular/core": "^10.2.1"
   },
-  "main": "dist/bundles/webresto-ng-user.umd.js",
-  "module": "dist/fesm5/webresto-ng-user.js",
-  "es2015": "dist/fesm2015/webresto-ng-user.js",
-  "esm5": "dist/esm5/webresto-ng-user.js",
-  "esm2015": "dist/esm2015/webresto-ng-user.js",
-  "fesm5": "dist/fesm5/webresto-ng-user.js",
-  "fesm2015": "dist/fesm2015/webresto-ng-user.js",
-  "typings": "dist/webresto-ng-user.d.ts",
-  "metadata": "dist/webresto-ng-user.metadata.json",
-  "sideEffects": false,
   "dependencies": {
     "tslib": "^2.0.1"
-    }
+  }
 }
