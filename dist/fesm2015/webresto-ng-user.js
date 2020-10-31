@@ -1,6 +1,6 @@
 import { ɵɵinject, ɵɵdefineInjectable, ɵsetClassMetadata, Injectable, EventEmitter, ɵɵdirectiveInject, ɵɵdefineDirective, ɵɵlistener, Directive, Input, Output, HostListener, Renderer2, ElementRef, ɵɵdefineNgModule, ɵɵdefineInjector, ɵɵsetNgModuleScope, NgModule } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { filter, switchMap, tap } from 'rxjs/operators';
 import { EventMessage, NetService, EventerService } from '@webresto/ng-core';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
@@ -11,83 +11,55 @@ class NgRestoUserService {
     net, eventer) {
         this.net = net;
         this.eventer = eventer;
+        this.authToken = localStorage.getItem(LS_TOKEN_NAME);
         this.rememberMe = false;
         this.user = new BehaviorSubject({});
-        this.isLoggedIn = new BehaviorSubject(false);
+        this.isLoggedIn = new BehaviorSubject(this.authToken ? true : false);
         this.favorites = new BehaviorSubject([]);
         this.addresses = new BehaviorSubject([]);
         this.historyItems = new BehaviorSubject([]);
         this.historyTransactions = new BehaviorSubject([]);
         this.bonusSystems = new BehaviorSubject([]);
-        this.authToken = localStorage.getItem(LS_TOKEN_NAME);
-        if (this.authToken) {
-            this.isLoggedIn.next(true);
-        }
-        this.isLoggedIn.subscribe(isLoggedIn => {
-            if (isLoggedIn) {
-                setTimeout(() => {
-                    this.getFavorites().subscribe();
-                    this.getProfile().subscribe();
-                    this.getAddresses().subscribe();
-                    this.getBonuses().subscribe();
-                    this.getHistory().subscribe();
-                }, 500);
-            }
-        });
-        this.eventer
-            .getMessageEmitter()
-            .subscribe(message => {
-            switch (message.type) {
-                case "Unauthorized":
-                    this.deleteAuthToken();
-                    break;
-            }
-        });
+        this.isLoggedSubscription = this.isLoggedIn.pipe(filter(isLoggedIn => isLoggedIn === true), switchMap(() => this.getFavorites()), switchMap(() => this.getProfile()), switchMap(() => this.getAddresses()), switchMap(() => this.getBonuses()), switchMap(() => this.getHistory())).subscribe(() => { }, () => { }, () => this.isLoggedSubscription.unsubscribe());
+        this.eventer.getMessageEmitter().pipe(filter(message => message.type === "Unauthorized")).subscribe(() => this.deleteAuthToken());
     }
     signIn(data, rememberMe = false) {
         this.rememberMe = rememberMe;
-        return this.net.post('/signin', data)
-            .pipe(tap((result) => {
+        return this.net.post('/signin', data).pipe(tap((result) => {
             this.setAuthToken(result.token, false);
             this.user.next(result.user);
             this.eventer.emitMessageEvent(new EventMessage('success', 'Успех', 'Успешно авторизирован'));
         }, error => this.eventer.emitMessageEvent(new EventMessage('error', 'Ошибка', error))));
     }
     getProfile() {
-        return this.net.get('/user/get/user-info')
-            .pipe(tap((result) => {
+        return this.net.get('/user/get/user-info').pipe(tap((result) => {
             this.user.next(result);
         }, error => this.eventer.emitMessageEvent(new EventMessage('error', 'Ошибка', error))));
     }
     getHistory() {
-        return this.net.get('/user/get/history')
-            .pipe(tap((historyItems) => {
+        return this.net.get('/user/get/history').pipe(tap((historyItems) => {
             this.historyItems.next(historyItems);
         }, error => this.eventer.emitMessageEvent(new EventMessage('error', 'Ошибка', error))));
     }
     getHistoryTransactions(bonusSystem = "local", limit = 15, set = 0) {
-        return this.net.get(`/bonus/transactions?bonussystem=${bonusSystem}&limit=${limit}&number=${set}`)
-            .pipe(tap((transactions) => {
+        return this.net.get(`/bonus/transactions?bonussystem=${bonusSystem}&limit=${limit}&number=${set}`).pipe(tap((transactions) => {
             this.historyTransactions.next(transactions);
         }, error => this.eventer.emitMessageEvent(new EventMessage('error', 'Ошибка', error))));
     }
     updateProfile(data) {
         return this.net.post('/user/set/user-info', {
             user: data
-        })
-            .pipe(tap((result) => {
+        }).pipe(tap((result) => {
             this.user.next(result);
         }, error => this.eventer.emitMessageEvent(new EventMessage('error', 'Ошибка', error))));
     }
     getAddresses() {
-        return this.net.get('/user/get/location')
-            .pipe(tap((addresses) => {
+        return this.net.get('/user/get/location').pipe(tap((addresses) => {
             this.addresses.next(addresses);
         }, error => this.eventer.emitMessageEvent(new EventMessage('error', 'Ошибка', error))));
     }
     addAddress(address) {
-        return this.net.post('/user/add/location', address)
-            .pipe(tap((addresses) => {
+        return this.net.post('/user/add/location', address).pipe(tap((addresses) => {
             this.addresses.next(addresses);
         }, error => this.eventer.emitMessageEvent(new EventMessage('error', 'Ошибка', error))));
     }
@@ -97,14 +69,12 @@ class NgRestoUserService {
             street: address.street,
             home: address.home
         };
-        return this.net.post('/user/remove/location', reqBody)
-            .pipe(tap((addresses) => {
+        return this.net.post('/user/remove/location', reqBody).pipe(tap((addresses) => {
             this.addresses.next(addresses);
         }, error => this.eventer.emitMessageEvent(new EventMessage('error', 'Ошибка', error))));
     }
     signUp(data) {
-        return this.net.post('/signup', data)
-            .pipe(tap((result) => {
+        return this.net.post('/signup', data).pipe(tap((result) => {
             //this.setAuthToken(result.token, false);
             //this.user.next(result.user);
             this.eventer.emitMessageEvent(new EventMessage('success', 'Регистрация', 'Ваш пароль был отправлен на указанный номер телефона'));
@@ -116,24 +86,20 @@ class NgRestoUserService {
         return this.deleteAuthToken();
     }
     getBonuses() {
-        return this.net.post('/bonus/get', {})
-            .pipe(tap((result) => {
+        return this.net.post('/bonus/get', {}).pipe(tap((result) => {
             this.bonusSystems.next(result);
         }, error => this.eventer.emitMessageEvent(new EventMessage('error', 'Ошибка', error))));
     }
     resetPassword(data) {
-        return this.net.post('/reset', data)
-            .pipe(tap((result) => {
+        return this.net.post('/reset', data).pipe(tap((result) => {
         }, error => this.eventer.emitMessageEvent(new EventMessage('error', 'Ошибка', error))));
     }
     resetPasswordCode(data) {
-        return this.net.post('/code', data)
-            .pipe(tap((result) => {
+        return this.net.post('/code', data).pipe(tap((result) => {
         }, error => this.eventer.emitMessageEvent(new EventMessage('error', 'Ошибка', error))));
     }
     getFavorites() {
-        return this.net.get('/user/get/favorites ')
-            .pipe(tap((result) => {
+        return this.net.get('/user/get/favorites ').pipe(tap((result) => {
             console.info('getFavorites result', result);
             this.favorites.next(result);
         }, error => this.eventer.emitMessageEvent(new EventMessage('error', 'Ошибка', error))));
@@ -142,8 +108,7 @@ class NgRestoUserService {
         let data = {
             dishId: dish.id
         };
-        return this.net.post('/user/add/favorites ', data)
-            .pipe(tap((result) => {
+        return this.net.post('/user/add/favorites ', data).pipe(tap((result) => {
             let favoritesUpdated = this.favorites.getValue();
             favoritesUpdated.push(dish);
             this.favorites.next(favoritesUpdated);
@@ -153,8 +118,7 @@ class NgRestoUserService {
         let data = {
             dishId: dish.id
         };
-        return this.net.post('/user/remove/favorites ', data)
-            .pipe(tap((result) => {
+        return this.net.post('/user/remove/favorites ', data).pipe(tap((result) => {
             console.info('Было=>>>', this.favorites.getValue().length);
             let favoritesUpdated = this.favorites
                 .getValue()

@@ -6,7 +6,7 @@ export * from './lib/services';
 export * from './lib/ng-user.module';
 export * from './lib/http-interceptors/index';
 export * from './lib/http-interceptors/auth.interceptor';
-export * from './lib/interfaces';
+export * from './lib/interfaces/index';
 export * from './lib/directives/sign-up.directive';
 export * from './lib/directives/sign-in.directive';
 export * from './lib/directives/sign-out.directive';

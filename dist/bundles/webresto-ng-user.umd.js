@@ -12,45 +12,23 @@
             var _this = this;
             this.net = net;
             this.eventer = eventer;
+            this.authToken = localStorage.getItem(LS_TOKEN_NAME);
             this.rememberMe = false;
             this.user = new rxjs.BehaviorSubject({});
-            this.isLoggedIn = new rxjs.BehaviorSubject(false);
+            this.isLoggedIn = new rxjs.BehaviorSubject(this.authToken ? true : false);
             this.favorites = new rxjs.BehaviorSubject([]);
             this.addresses = new rxjs.BehaviorSubject([]);
             this.historyItems = new rxjs.BehaviorSubject([]);
             this.historyTransactions = new rxjs.BehaviorSubject([]);
             this.bonusSystems = new rxjs.BehaviorSubject([]);
-            this.authToken = localStorage.getItem(LS_TOKEN_NAME);
-            if (this.authToken) {
-                this.isLoggedIn.next(true);
-            }
-            this.isLoggedIn.subscribe(function (isLoggedIn) {
-                if (isLoggedIn) {
-                    setTimeout(function () {
-                        _this.getFavorites().subscribe();
-                        _this.getProfile().subscribe();
-                        _this.getAddresses().subscribe();
-                        _this.getBonuses().subscribe();
-                        _this.getHistory().subscribe();
-                    }, 500);
-                }
-            });
-            this.eventer
-                .getMessageEmitter()
-                .subscribe(function (message) {
-                switch (message.type) {
-                    case "Unauthorized":
-                        _this.deleteAuthToken();
-                        break;
-                }
-            });
+            this.isLoggedSubscription = this.isLoggedIn.pipe(operators.filter(function (isLoggedIn) { return isLoggedIn === true; }), operators.switchMap(function () { return _this.getFavorites(); }), operators.switchMap(function () { return _this.getProfile(); }), operators.switchMap(function () { return _this.getAddresses(); }), operators.switchMap(function () { return _this.getBonuses(); }), operators.switchMap(function () { return _this.getHistory(); })).subscribe(function () { }, function () { }, function () { return _this.isLoggedSubscription.unsubscribe(); });
+            this.eventer.getMessageEmitter().pipe(operators.filter(function (message) { return message.type === "Unauthorized"; })).subscribe(function () { return _this.deleteAuthToken(); });
         }
         NgRestoUserService.prototype.signIn = function (data, rememberMe) {
             var _this = this;
             if (rememberMe === void 0) { rememberMe = false; }
             this.rememberMe = rememberMe;
-            return this.net.post('/signin', data)
-                .pipe(operators.tap(function (result) {
+            return this.net.post('/signin', data).pipe(operators.tap(function (result) {
                 _this.setAuthToken(result.token, false);
                 _this.user.next(result.user);
                 _this.eventer.emitMessageEvent(new i1.EventMessage('success', 'Успех', 'Успешно авторизирован'));
@@ -58,15 +36,13 @@
         };
         NgRestoUserService.prototype.getProfile = function () {
             var _this = this;
-            return this.net.get('/user/get/user-info')
-                .pipe(operators.tap(function (result) {
+            return this.net.get('/user/get/user-info').pipe(operators.tap(function (result) {
                 _this.user.next(result);
             }, function (error) { return _this.eventer.emitMessageEvent(new i1.EventMessage('error', 'Ошибка', error)); }));
         };
         NgRestoUserService.prototype.getHistory = function () {
             var _this = this;
-            return this.net.get('/user/get/history')
-                .pipe(operators.tap(function (historyItems) {
+            return this.net.get('/user/get/history').pipe(operators.tap(function (historyItems) {
                 _this.historyItems.next(historyItems);
             }, function (error) { return _this.eventer.emitMessageEvent(new i1.EventMessage('error', 'Ошибка', error)); }));
         };
@@ -75,8 +51,7 @@
             if (bonusSystem === void 0) { bonusSystem = "local"; }
             if (limit === void 0) { limit = 15; }
             if (set === void 0) { set = 0; }
-            return this.net.get("/bonus/transactions?bonussystem=" + bonusSystem + "&limit=" + limit + "&number=" + set)
-                .pipe(operators.tap(function (transactions) {
+            return this.net.get("/bonus/transactions?bonussystem=" + bonusSystem + "&limit=" + limit + "&number=" + set).pipe(operators.tap(function (transactions) {
                 _this.historyTransactions.next(transactions);
             }, function (error) { return _this.eventer.emitMessageEvent(new i1.EventMessage('error', 'Ошибка', error)); }));
         };
@@ -84,22 +59,19 @@
             var _this = this;
             return this.net.post('/user/set/user-info', {
                 user: data
-            })
-                .pipe(operators.tap(function (result) {
+            }).pipe(operators.tap(function (result) {
                 _this.user.next(result);
             }, function (error) { return _this.eventer.emitMessageEvent(new i1.EventMessage('error', 'Ошибка', error)); }));
         };
         NgRestoUserService.prototype.getAddresses = function () {
             var _this = this;
-            return this.net.get('/user/get/location')
-                .pipe(operators.tap(function (addresses) {
+            return this.net.get('/user/get/location').pipe(operators.tap(function (addresses) {
                 _this.addresses.next(addresses);
             }, function (error) { return _this.eventer.emitMessageEvent(new i1.EventMessage('error', 'Ошибка', error)); }));
         };
         NgRestoUserService.prototype.addAddress = function (address) {
             var _this = this;
-            return this.net.post('/user/add/location', address)
-                .pipe(operators.tap(function (addresses) {
+            return this.net.post('/user/add/location', address).pipe(operators.tap(function (addresses) {
                 _this.addresses.next(addresses);
             }, function (error) { return _this.eventer.emitMessageEvent(new i1.EventMessage('error', 'Ошибка', error)); }));
         };
@@ -110,15 +82,13 @@
                 street: address.street,
                 home: address.home
             };
-            return this.net.post('/user/remove/location', reqBody)
-                .pipe(operators.tap(function (addresses) {
+            return this.net.post('/user/remove/location', reqBody).pipe(operators.tap(function (addresses) {
                 _this.addresses.next(addresses);
             }, function (error) { return _this.eventer.emitMessageEvent(new i1.EventMessage('error', 'Ошибка', error)); }));
         };
         NgRestoUserService.prototype.signUp = function (data) {
             var _this = this;
-            return this.net.post('/signup', data)
-                .pipe(operators.tap(function (result) {
+            return this.net.post('/signup', data).pipe(operators.tap(function (result) {
                 //this.setAuthToken(result.token, false);
                 //this.user.next(result.user);
                 _this.eventer.emitMessageEvent(new i1.EventMessage('success', 'Регистрация', 'Ваш пароль был отправлен на указанный номер телефона'));
@@ -131,27 +101,23 @@
         };
         NgRestoUserService.prototype.getBonuses = function () {
             var _this = this;
-            return this.net.post('/bonus/get', {})
-                .pipe(operators.tap(function (result) {
+            return this.net.post('/bonus/get', {}).pipe(operators.tap(function (result) {
                 _this.bonusSystems.next(result);
             }, function (error) { return _this.eventer.emitMessageEvent(new i1.EventMessage('error', 'Ошибка', error)); }));
         };
         NgRestoUserService.prototype.resetPassword = function (data) {
             var _this = this;
-            return this.net.post('/reset', data)
-                .pipe(operators.tap(function (result) {
+            return this.net.post('/reset', data).pipe(operators.tap(function (result) {
             }, function (error) { return _this.eventer.emitMessageEvent(new i1.EventMessage('error', 'Ошибка', error)); }));
         };
         NgRestoUserService.prototype.resetPasswordCode = function (data) {
             var _this = this;
-            return this.net.post('/code', data)
-                .pipe(operators.tap(function (result) {
+            return this.net.post('/code', data).pipe(operators.tap(function (result) {
             }, function (error) { return _this.eventer.emitMessageEvent(new i1.EventMessage('error', 'Ошибка', error)); }));
         };
         NgRestoUserService.prototype.getFavorites = function () {
             var _this = this;
-            return this.net.get('/user/get/favorites ')
-                .pipe(operators.tap(function (result) {
+            return this.net.get('/user/get/favorites ').pipe(operators.tap(function (result) {
                 console.info('getFavorites result', result);
                 _this.favorites.next(result);
             }, function (error) { return _this.eventer.emitMessageEvent(new i1.EventMessage('error', 'Ошибка', error)); }));
@@ -161,8 +127,7 @@
             var data = {
                 dishId: dish.id
             };
-            return this.net.post('/user/add/favorites ', data)
-                .pipe(operators.tap(function (result) {
+            return this.net.post('/user/add/favorites ', data).pipe(operators.tap(function (result) {
                 var favoritesUpdated = _this.favorites.getValue();
                 favoritesUpdated.push(dish);
                 _this.favorites.next(favoritesUpdated);
@@ -173,8 +138,7 @@
             var data = {
                 dishId: dish.id
             };
-            return this.net.post('/user/remove/favorites ', data)
-                .pipe(operators.tap(function (result) {
+            return this.net.post('/user/remove/favorites ', data).pipe(operators.tap(function (result) {
                 console.info('Было=>>>', _this.favorites.getValue().length);
                 var favoritesUpdated = _this.favorites
                     .getValue()

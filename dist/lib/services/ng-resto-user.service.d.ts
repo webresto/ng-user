@@ -18,14 +18,14 @@ export declare class NgRestoUserService {
     private eventer;
     private authToken;
     private rememberMe;
-    private historyTransactions;
     private user;
     private isLoggedIn;
     private favorites;
     private addresses;
-    private streets;
     private historyItems;
+    private historyTransactions;
     private bonusSystems;
+    private isLoggedSubscription;
     constructor(net: NetService, eventer: EventerService);
     signIn(data: SignInRequestData, rememberMe?: boolean): Observable<SignInResponseData>;
     getProfile(): Observable<User>;
