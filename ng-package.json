@@ -3,6 +3,9 @@
   "dest": "../../../dist/webresto/ng-user",
   "deleteDestPath": false,
   "lib": {
-    "entryFile": "src/public_api.ts"
+    "entryFile": "src/public_api.ts",
+    "umdModuleIds": {
+      "@webresto/ng-user": "@webresto/ng-user"
+    }
   }
 }

@@ -2,6 +2,9 @@
   "$schema": "../../../node_modules/ng-packagr/ng-package.schema.json",
   "dest": "./dist",
   "lib": {
-    "entryFile": "src/public_api.ts"
+    "entryFile": "src/public_api.ts",
+    "umdModuleIds": {
+      "@webresto/ng-user": "@webresto/ng-user"
+    }
   }
 }
