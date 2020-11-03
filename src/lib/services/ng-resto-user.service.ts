@@ -47,13 +47,7 @@ export class NgRestoUserService {
     //private restoStorageService:RestoStorageService,
     private net: NetService,
     private eventer: EventerService
-  ) {
-
-    this.eventer.getMessageEmitter().pipe(
-      filter(message => message.type === "Unauthorized")
-    ).subscribe(() => this.deleteAuthToken()
-    );
-  }
+  ) { }
 
   signIn(data: SignInRequestData, rememberMe: boolean = false) {
 
@@ -62,15 +56,14 @@ export class NgRestoUserService {
     return this.net.post('/signin', data).pipe(
       tap(
         (result: SignInResponseData) => {
-          this.setAuthToken(result.token, false);
+          this.setAuthToken(result.token);
           this.user.next(result.user);
+          this.isLoggedIn.next(true);
           this.eventer.emitMessageEvent(
             new EventMessage('success', 'Успех', 'Успешно авторизирован')
           );
         },
-        error => this.eventer.emitMessageEvent(
-          new EventMessage('error', 'Ошибка', error)
-        )
+        error => this.eventer.emitMessageEvent(new EventMessage('error', 'Ошибка', error))
       )
     );
 
@@ -95,10 +88,13 @@ export class NgRestoUserService {
         (historyItems) => {
           this.historyItems.next(historyItems);
         },
-        error => this.eventer.emitMessageEvent(
-          new EventMessage('error', 'Ошибка', error)
-        )
-      )
+        error => {
+          const message = new EventMessage('error', 'Ошибка', error);
+          this.eventer.emitMessageEvent(message);
+          if (message.type === "Unauthorized") {
+            this.deleteAuthToken();
+          };
+        })
     );
   }
 
@@ -325,11 +321,10 @@ export class NgRestoUserService {
     return this.authToken;
   }
 
-  setAuthToken(authToken: string, updateProfile: boolean = true): void {
+  setAuthToken(authToken: string): void {
     if (this.rememberMe) {
       localStorage.setItem(LS_TOKEN_NAME, authToken);
-      localStorage.removeItem('gf:login:phone');
-    }
+    };
     this.authToken = authToken;
     this.isLoggedIn.next(true);
     /*if(updateProfile) {
@@ -341,9 +336,8 @@ export class NgRestoUserService {
   }
 
   deleteAuthToken(): void {
-    this.authToken = undefined;
+    this.authToken = null;
     localStorage.removeItem(LS_TOKEN_NAME);
-    localStorage.removeItem('gf:login:phone');
     this.isLoggedIn.next(false);
   }
 
