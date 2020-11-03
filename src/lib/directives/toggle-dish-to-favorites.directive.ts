@@ -4,9 +4,6 @@ import {
 } from '@angular/core';
 import { NgRestoUserService } from '../services/ng-resto-user.service';
 
-import { AddDishToFavoritesRequestData } from '../interfaces/add-dish-to-favorites-request-data';
-import { RemoveDishFromFavoritesRequestData } from '../interfaces/remove-dish-from-favorites-request-data';
-
 @Directive({
   selector: '[appToggleDishToFavorites]'
 })
