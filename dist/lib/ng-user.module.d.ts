@@ -13,3 +13,4 @@ export declare class NgUserModule {
     static ɵmod: i0.ɵɵNgModuleDefWithMeta<NgUserModule, [typeof i1.SignUpDirective, typeof i2.SignInDirective, typeof i3.SignOutDirective, typeof i4.ResetPasswordDirective, typeof i5.ResetPasswordCodeDirective, typeof i6.BalanceDirective, typeof i7.ToggleDishToFavoritesDirective, typeof i8.UpdateProfileDirective, typeof i9.AddAddressDirective, typeof i10.DeleteAddressDirective], never, [typeof i1.SignUpDirective, typeof i2.SignInDirective, typeof i3.SignOutDirective, typeof i4.ResetPasswordDirective, typeof i5.ResetPasswordCodeDirective, typeof i6.BalanceDirective, typeof i7.ToggleDishToFavoritesDirective, typeof i8.UpdateProfileDirective, typeof i9.AddAddressDirective, typeof i10.DeleteAddressDirective]>;
     static ɵinj: i0.ɵɵInjectorDef<NgUserModule>;
 }
+//# sourceMappingURL=ng-user.module.d.ts.map

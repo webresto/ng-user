@@ -16,3 +16,4 @@ export declare class SignUpDirective {
     static ɵfac: i0.ɵɵFactoryDef<SignUpDirective, never>;
     static ɵdir: i0.ɵɵDirectiveDefWithMeta<SignUpDirective, "[appSignUp]", never, { "name": "name"; "phone": "phone"; "email": "email"; "password": "password"; "captcha": "captcha"; }, { "success": "success"; "error": "error"; }, never>;
 }
+//# sourceMappingURL=sign-up.directive.d.ts.map

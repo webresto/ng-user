@@ -1,7 +1,6 @@
 import { Directive, HostListener, Input, Output, EventEmitter } from '@angular/core';
+import { SignUpRequestData } from '../../models';
 import { NgRestoUserService } from '../services/ng-resto-user.service';
-
-import { SignUpRequestData } from '../interfaces/sign-up-request-data';
 
 @Directive({
   selector: '[appSignUp]'

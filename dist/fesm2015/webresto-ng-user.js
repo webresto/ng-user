@@ -2,7 +2,6 @@ import { ɵɵinject, ɵɵdefineInjectable, ɵsetClassMetadata, Injectable, Event
 import { BehaviorSubject } from 'rxjs';
 import { filter, switchMap, tap } from 'rxjs/operators';
 import { EventMessage, NetService, EventerService } from '@webresto/ng-core';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 const LS_TOKEN_NAME = 'gf:tkn:v2';
 class NgRestoUserService {
@@ -21,13 +20,13 @@ class NgRestoUserService {
         this.historyTransactions = new BehaviorSubject([]);
         this.bonusSystems = new BehaviorSubject([]);
         this.isLoggedSubscription = this.isLoggedIn.pipe(filter(isLoggedIn => isLoggedIn === true), switchMap(() => this.getFavorites()), switchMap(() => this.getProfile()), switchMap(() => this.getAddresses()), switchMap(() => this.getBonuses()), switchMap(() => this.getHistory())).subscribe(() => { }, () => { }, () => this.isLoggedSubscription.unsubscribe());
-        this.eventer.getMessageEmitter().pipe(filter(message => message.type === "Unauthorized")).subscribe(() => this.deleteAuthToken());
     }
     signIn(data, rememberMe = false) {
         this.rememberMe = rememberMe;
         return this.net.post('/signin', data).pipe(tap((result) => {
-            this.setAuthToken(result.token, false);
+            this.setAuthToken(result.token);
             this.user.next(result.user);
+            this.isLoggedIn.next(true);
             this.eventer.emitMessageEvent(new EventMessage('success', 'Успех', 'Успешно авторизирован'));
         }, error => this.eventer.emitMessageEvent(new EventMessage('error', 'Ошибка', error))));
     }
@@ -39,7 +38,14 @@ class NgRestoUserService {
     getHistory() {
         return this.net.get('/user/get/history').pipe(tap((historyItems) => {
             this.historyItems.next(historyItems);
-        }, error => this.eventer.emitMessageEvent(new EventMessage('error', 'Ошибка', error))));
+        }, error => {
+            const message = new EventMessage('error', 'Ошибка', error);
+            this.eventer.emitMessageEvent(message);
+            if (message.type === "Unauthorized") {
+                this.deleteAuthToken();
+            }
+            ;
+        }));
     }
     getHistoryTransactions(bonusSystem = "local", limit = 15, set = 0) {
         return this.net.get(`/bonus/transactions?bonussystem=${bonusSystem}&limit=${limit}&number=${set}`).pipe(tap((transactions) => {
@@ -148,11 +154,11 @@ class NgRestoUserService {
     getAuthToken() {
         return this.authToken;
     }
-    setAuthToken(authToken, updateProfile = true) {
+    setAuthToken(authToken) {
         if (this.rememberMe) {
             localStorage.setItem(LS_TOKEN_NAME, authToken);
-            localStorage.removeItem('gf:login:phone');
         }
+        ;
         this.authToken = authToken;
         this.isLoggedIn.next(true);
         /*if(updateProfile) {
@@ -163,9 +169,8 @@ class NgRestoUserService {
         }*/
     }
     deleteAuthToken() {
-        this.authToken = undefined;
+        this.authToken = null;
         localStorage.removeItem(LS_TOKEN_NAME);
-        localStorage.removeItem('gf:login:phone');
         this.isLoggedIn.next(false);
     }
 }
@@ -668,36 +673,6 @@ NgUserModule.ɵinj = ɵɵdefineInjector({ factory: function NgUserModule_Factory
             }]
     }], null, null); })();
 
-class AuthInterceptor {
-    constructor(userService) {
-        this.userService = userService;
-    }
-    intercept(req, next) {
-        console.info('AuthInterceptor', req);
-        // Get the auth token from the service.
-        const authToken = this.userService.getAuthToken();
-        if (authToken) {
-            // Clone the request and replace the original headers with
-            // cloned headers, updated with the authorization.
-            const authReq = req.clone({
-                headers: req.headers.set('Authorization', `JWT ${authToken}`)
-            });
-            // send cloned request with header to the next handler.
-            return next.handle(authReq);
-        }
-        return next.handle(req);
-    }
-}
-AuthInterceptor.ɵfac = function AuthInterceptor_Factory(t) { return new (t || AuthInterceptor)(ɵɵinject(NgRestoUserService)); };
-AuthInterceptor.ɵprov = ɵɵdefineInjectable({ token: AuthInterceptor, factory: AuthInterceptor.ɵfac });
-/*@__PURE__*/ (function () { ɵsetClassMetadata(AuthInterceptor, [{
-        type: Injectable
-    }], function () { return [{ type: NgRestoUserService }]; }, null); })();
-
-const ngUserHttpInterceptorProviders = [
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
-];
-
 /*
  * Public API Surface of ng-user
  */
@@ -706,5 +681,5 @@ const ngUserHttpInterceptorProviders = [
  * Generated bundle index. Do not edit.
  */
 
-export { AddAddressDirective, AuthInterceptor, BalanceDirective, DeleteAddressDirective, NgRestoUserService, NgUserModule, ResetPasswordCodeDirective, ResetPasswordDirective, SignInDirective, SignOutDirective, SignUpDirective, ToggleDishToFavoritesDirective, UpdateProfileDirective, ngUserHttpInterceptorProviders };
+export { AddAddressDirective, BalanceDirective, DeleteAddressDirective, NgRestoUserService, NgUserModule, ResetPasswordCodeDirective, ResetPasswordDirective, SignInDirective, SignOutDirective, SignUpDirective, ToggleDishToFavoritesDirective, UpdateProfileDirective };
 //# sourceMappingURL=webresto-ng-user.js.map

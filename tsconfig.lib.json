@@ -10,7 +10,15 @@
     "lib": [
       "dom",
       "es2018"
-    ]
+    ],
+    "paths": {
+      "@webresto/ng-core": [
+        "projects/webresto/ng-core/dist"
+      ],
+      "@webresto/ng-core/*": [
+        "projects/webresto/ng-core/dist/*"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "skipTemplateCodegen": true,
@@ -20,5 +28,8 @@
   "exclude": [
     "src/test.ts",
     "**/*.spec.ts"
+  ],
+  "include": [
+    "**/*.d.ts",
   ]
 }

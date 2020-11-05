@@ -12,3 +12,4 @@ export declare class ResetPasswordDirective {
     static ɵfac: i0.ɵɵFactoryDef<ResetPasswordDirective, never>;
     static ɵdir: i0.ɵɵDirectiveDefWithMeta<ResetPasswordDirective, "[appResetPassword]", never, { "phone": "phone"; "captcha": "captcha"; }, { "success": "success"; "error": "error"; }, never>;
 }
+//# sourceMappingURL=reset-password.directive.d.ts.map

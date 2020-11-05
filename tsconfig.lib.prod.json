@@ -1,7 +1,18 @@
 /* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
   "extends": "./tsconfig.lib.json",
+  "include": [
+    "**/*.d.ts",
+  ],
   "compilerOptions": {
-    "declarationMap": false
+    "declarationMap": false,
+    "paths": {
+      "@webresto/ng-core": [
+        "projects/webresto/ng-core/dist"
+      ],
+      "@webresto/ng-core/*": [
+        "projects/webresto/ng-core/dist/*"
+      ]
+    }
   }
 }

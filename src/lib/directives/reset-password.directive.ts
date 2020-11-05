@@ -1,7 +1,6 @@
 import { Directive, HostListener, Input, Output, EventEmitter } from '@angular/core';
+import { ResetPasswordRequestData } from '../../models';
 import { NgRestoUserService } from '../services/ng-resto-user.service';
-
-import { ResetPasswordRequestData } from '../interfaces/reset-password-request-data';
 
 @Directive({
   selector: '[appResetPassword]'

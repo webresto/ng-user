@@ -1,17 +1,6 @@
 import { Observable } from 'rxjs';
 import { EventerService, NetService } from '@webresto/ng-core';
-import { SignInRequestData } from '../interfaces/sign-in-request-data';
-import { SignUpRequestData } from '../interfaces/sign-up-request-data';
-import { ResetPasswordRequestData } from '../interfaces/reset-password-request-data';
-import { ResetPasswordCodeRequestData } from '../interfaces/reset-password-code-request-data';
-import { SignInResponseData } from '../interfaces/sign-in-response-data';
-import { SignUpResponseData } from '../interfaces/sign-up-response-data';
-import { ResetPasswordResponseData } from '../interfaces/reset-password-response-data';
-import { ResetPasswordCodeResponseData } from '../interfaces/reset-password-code-response-data';
-import { UpdateProfileResponseData } from '../interfaces/update-profile-response-data';
-import { UpdateProfileRequestData } from '../interfaces/update-profile-request-data';
-import { Address, User } from '../interfaces';
-import { AddAddressRequestData } from "../interfaces/add-address-request-data";
+import { Address, SignInRequestData, SignInResponseData, User, UpdateProfileRequestData, UpdateProfileResponseData, AddAddressRequestData, SignUpRequestData, SignUpResponseData, ResetPasswordRequestData, ResetPasswordResponseData, ResetPasswordCodeRequestData, ResetPasswordCodeResponseData } from '../../models';
 import * as i0 from "@angular/core";
 export declare class NgRestoUserService {
     private net;
@@ -50,8 +39,9 @@ export declare class NgRestoUserService {
     userHistory(): Observable<any[]>;
     userTransactionsHistory(): Observable<any[]>;
     getAuthToken(): string;
-    setAuthToken(authToken: string, updateProfile?: boolean): void;
+    setAuthToken(authToken: string): void;
     deleteAuthToken(): void;
     static ɵfac: i0.ɵɵFactoryDef<NgRestoUserService, never>;
     static ɵprov: i0.ɵɵInjectableDef<NgRestoUserService>;
 }
+//# sourceMappingURL=ng-resto-user.service.d.ts.map

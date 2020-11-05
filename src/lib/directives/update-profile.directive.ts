@@ -1,7 +1,6 @@
 import { Directive, HostListener, Input, Output, EventEmitter } from '@angular/core';
+import { UpdateProfileRequestData } from '../../models';
 import { NgRestoUserService } from '../services/ng-resto-user.service';
-
-import { UpdateProfileRequestData } from '../interfaces/update-profile-request-data';
 
 @Directive({
   selector: '[appUpdateProfile]'

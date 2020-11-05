@@ -1,8 +1,6 @@
 import { Directive, HostListener, Input, Output, EventEmitter } from '@angular/core';
+import { Address } from '../../models';
 import { NgRestoUserService } from '../services/ng-resto-user.service';
-import { Address } from "../interfaces/address";
-
-
 
 @Directive({
   selector: '[appDeleteAddress]'

@@ -1,7 +1,6 @@
 import { Directive, HostListener, Input, Output, EventEmitter } from '@angular/core';
+import { AddAddressRequestData } from '../../models';
 import { NgRestoUserService } from '../services/ng-resto-user.service';
-
-import { AddAddressRequestData } from '../interfaces/add-address-request-data';
 
 @Directive({
   selector: '[appAddAddress]'

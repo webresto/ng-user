@@ -2,21 +2,10 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { filter, switchMap, tap } from 'rxjs/operators';
 import { EventerService, EventMessage, NetService } from '@webresto/ng-core';
-import { SignInRequestData } from '../interfaces/sign-in-request-data';
-import { SignUpRequestData } from '../interfaces/sign-up-request-data';
-import { ResetPasswordRequestData } from '../interfaces/reset-password-request-data';
-import { ResetPasswordCodeRequestData } from '../interfaces/reset-password-code-request-data';
-import { AddDishToFavoritesRequestData } from '../interfaces/add-dish-to-favorites-request-data';
-import { RemoveDishFromFavoritesRequestData } from '../interfaces/remove-dish-from-favorites-request-data';
-import { SignInResponseData } from '../interfaces/sign-in-response-data';
-import { SignUpResponseData } from '../interfaces/sign-up-response-data';
-import { ResetPasswordResponseData } from '../interfaces/reset-password-response-data';
-import { ResetPasswordCodeResponseData } from '../interfaces/reset-password-code-response-data';
-import { UpdateProfileResponseData } from '../interfaces/update-profile-response-data';
-import { UpdateProfileRequestData } from '../interfaces/update-profile-request-data';
-import { Address, User } from '../interfaces';
-import { RemoveAddressRequestData } from "../interfaces/remove-address-request-data";
-import { AddAddressRequestData } from "../interfaces/add-address-request-data";
+import { Address, SignInRequestData, SignInResponseData, User, UpdateProfileRequestData,
+  UpdateProfileResponseData, AddAddressRequestData, RemoveAddressRequestData, SignUpRequestData,
+  SignUpResponseData, ResetPasswordRequestData, ResetPasswordResponseData, ResetPasswordCodeRequestData,
+  ResetPasswordCodeResponseData, AddDishToFavoritesRequestData, RemoveDishFromFavoritesRequestData } from '../../models';
 
 const LS_TOKEN_NAME = 'gf:tkn:v2';
 

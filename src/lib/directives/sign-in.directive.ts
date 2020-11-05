@@ -1,7 +1,6 @@
 import { Directive, HostListener, Input, Output, EventEmitter } from '@angular/core';
+import { SignInRequestData } from '../../models';
 import { NgRestoUserService } from '../services/ng-resto-user.service';
-
-import { SignInRequestData } from '../interfaces/sign-in-request-data';
 
 @Directive({
   selector: '[appSignIn]'

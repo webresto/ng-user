@@ -13,3 +13,4 @@ export declare class UpdateProfileDirective {
     static ɵfac: i0.ɵɵFactoryDef<UpdateProfileDirective, never>;
     static ɵdir: i0.ɵɵDirectiveDefWithMeta<UpdateProfileDirective, "[appUpdateProfile]", never, { "name": "name"; "phone": "phone"; "email": "email"; }, { "success": "success"; "error": "error"; }, never>;
 }
+//# sourceMappingURL=update-profile.directive.d.ts.map
