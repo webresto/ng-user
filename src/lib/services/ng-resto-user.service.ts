@@ -171,7 +171,7 @@ export class NgRestoUserService {
           //this.user.next(result.user);
 
           this.eventer.emitMessageEvent(
-            new EventMessage('success', 'Регистрация', 'Ваш пароль был отправлен на указанный номер телефона')
+            new EventMessage('success', 'Регистрация', 'Ваш пароль был отправлен на указанный номер телефона. Он будет действовать на постоянной основе')
           )
         },
 
