@@ -1064,36 +1064,6 @@
             }], null, null);
     })();
 
-    var LS_TOKEN_NAME$1 = 'gf:tkn:v2';
-    var AuthInterceptor = /** @class */ (function () {
-        function AuthInterceptor(userService) {
-            this.userService = userService;
-        }
-        AuthInterceptor.prototype.intercept = function (req, next) {
-            console.info('AuthInterceptor', req);
-            // Get the auth token from the service.
-            var authToken = localStorage.getItem(LS_TOKEN_NAME$1);
-            if (authToken) {
-                // Clone the request and replace the original headers with
-                // cloned headers, updated with the authorization.
-                var authReq = req.clone({
-                    headers: req.headers.set('Authorization', "JWT " + authToken)
-                });
-                // send cloned request with header to the next handler.
-                return next.handle(authReq);
-            }
-            return next.handle(req);
-        };
-        return AuthInterceptor;
-    }());
-    AuthInterceptor.ɵfac = function AuthInterceptor_Factory(t) { return new (t || AuthInterceptor)(i0.ɵɵinject(NgRestoUserService)); };
-    AuthInterceptor.ɵprov = i0.ɵɵdefineInjectable({ token: AuthInterceptor, factory: AuthInterceptor.ɵfac });
-    /*@__PURE__*/ (function () {
-        i0.ɵsetClassMetadata(AuthInterceptor, [{
-                type: i0.Injectable
-            }], function () { return [{ type: NgRestoUserService }]; }, null);
-    })();
-
     /*
      * Public API Surface of ng-user
      */
@@ -1103,7 +1073,6 @@
      */
 
     exports.AddAddressDirective = AddAddressDirective;
-    exports.AuthInterceptor = AuthInterceptor;
     exports.BalanceDirective = BalanceDirective;
     exports.DeleteAddressDirective = DeleteAddressDirective;
     exports.NgRestoUserService = NgRestoUserService;

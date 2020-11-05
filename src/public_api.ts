@@ -14,4 +14,3 @@ export * from './lib/directives/update-profile.directive';
 export * from './lib/directives/add-address.directive';
 export * from './lib/directives/delete-address.directive';
 export * from './lib/services/ng-resto-user.service';
-export * from './lib/http-interceptors/auth.interceptor';
