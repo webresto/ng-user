@@ -230,7 +230,7 @@ export class NgRestoUserService {
 
 
   getFavorites() {
-    return this.net.get('/user/get/favorites ').pipe(
+    return this.net.get('/user/get/favorites').pipe(
       tap(
         (result: any[]) => {
           console.info('getFavorites result', result);
@@ -247,13 +247,13 @@ export class NgRestoUserService {
     let data: AddDishToFavoritesRequestData = {
       dishId: dish.id
     };
-    return this.net.post('/user/add/favorites ', data).pipe(
+    return this.net.post<AddDishToFavoritesRequestData,any[]>('/user/add/favorites ', data).pipe(
       tap(
-        (result: any) => {
+        result => {
           let favoritesUpdated: any[] = this.favorites.getValue();
           favoritesUpdated.push(dish);
 
-          this.favorites.next(favoritesUpdated);
+          this.favorites.next(result);
         },
         error => this.eventer.emitMessageEvent(
           new EventMessage('error', 'Ошибка', error)
@@ -268,13 +268,13 @@ export class NgRestoUserService {
     };
     return this.net.post('/user/remove/favorites ', data).pipe(
       tap(
-        (result: any) => {
+        (result: any[]) => {
           console.info('Было=>>>', this.favorites.getValue().length);
           let favoritesUpdated: any[] = this.favorites
             .getValue()
             .filter(item => item.id != dish.id);
           console.info('Стало=>>>', favoritesUpdated.length);
-          this.favorites.next(favoritesUpdated);
+          this.favorites.next(result);
         },
         error => this.eventer.emitMessageEvent(
           new EventMessage('error', 'Ошибка', error)

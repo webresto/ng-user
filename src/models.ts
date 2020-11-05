@@ -6,6 +6,7 @@ export declare interface User {
   createdAt: string,
   updatedAt: string,
   verified: boolean,
+  avatar?:string;
   captcha?: string
 }
 export declare interface ProfileResponseData {

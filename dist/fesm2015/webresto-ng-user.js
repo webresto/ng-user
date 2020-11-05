@@ -83,7 +83,7 @@ class NgRestoUserService {
         return this.net.post('/signup', data).pipe(tap((result) => {
             //this.setAuthToken(result.token, false);
             //this.user.next(result.user);
-            this.eventer.emitMessageEvent(new EventMessage('success', 'Регистрация', 'Ваш пароль был отправлен на указанный номер телефона'));
+            this.eventer.emitMessageEvent(new EventMessage('success', 'Регистрация', 'Ваш пароль был отправлен на указанный номер телефона. Он будет действовать на постоянной основе'));
         }, error => {
             this.eventer.emitMessageEvent(new EventMessage('error', 'Ошибка', error));
         }));
@@ -105,7 +105,7 @@ class NgRestoUserService {
         }, error => this.eventer.emitMessageEvent(new EventMessage('error', 'Ошибка', error))));
     }
     getFavorites() {
-        return this.net.get('/user/get/favorites ').pipe(tap((result) => {
+        return this.net.get('/user/get/favorites').pipe(tap((result) => {
             console.info('getFavorites result', result);
             this.favorites.next(result);
         }, error => this.eventer.emitMessageEvent(new EventMessage('error', 'Ошибка', error))));
@@ -114,10 +114,10 @@ class NgRestoUserService {
         let data = {
             dishId: dish.id
         };
-        return this.net.post('/user/add/favorites ', data).pipe(tap((result) => {
+        return this.net.post('/user/add/favorites ', data).pipe(tap(result => {
             let favoritesUpdated = this.favorites.getValue();
             favoritesUpdated.push(dish);
-            this.favorites.next(favoritesUpdated);
+            this.favorites.next(result);
         }, error => this.eventer.emitMessageEvent(new EventMessage('error', 'Ошибка', error))));
     }
     removeDishFromFavorites(dish) {
@@ -130,7 +130,7 @@ class NgRestoUserService {
                 .getValue()
                 .filter(item => item.id != dish.id);
             console.info('Стало=>>>', favoritesUpdated.length);
-            this.favorites.next(favoritesUpdated);
+            this.favorites.next(result);
         }, error => this.eventer.emitMessageEvent(new EventMessage('error', 'Ошибка', error))));
     }
     userProfile() {

@@ -399,7 +399,7 @@
             return this.net.post('/signup', data).pipe(operators.tap(function (result) {
                 //this.setAuthToken(result.token, false);
                 //this.user.next(result.user);
-                _this.eventer.emitMessageEvent(new i1.EventMessage('success', 'Регистрация', 'Ваш пароль был отправлен на указанный номер телефона'));
+                _this.eventer.emitMessageEvent(new i1.EventMessage('success', 'Регистрация', 'Ваш пароль был отправлен на указанный номер телефона. Он будет действовать на постоянной основе'));
             }, function (error) {
                 _this.eventer.emitMessageEvent(new i1.EventMessage('error', 'Ошибка', error));
             }));
@@ -425,7 +425,7 @@
         };
         NgRestoUserService.prototype.getFavorites = function () {
             var _this = this;
-            return this.net.get('/user/get/favorites ').pipe(operators.tap(function (result) {
+            return this.net.get('/user/get/favorites').pipe(operators.tap(function (result) {
                 console.info('getFavorites result', result);
                 _this.favorites.next(result);
             }, function (error) { return _this.eventer.emitMessageEvent(new i1.EventMessage('error', 'Ошибка', error)); }));
@@ -438,7 +438,7 @@
             return this.net.post('/user/add/favorites ', data).pipe(operators.tap(function (result) {
                 var favoritesUpdated = _this.favorites.getValue();
                 favoritesUpdated.push(dish);
-                _this.favorites.next(favoritesUpdated);
+                _this.favorites.next(result);
             }, function (error) { return _this.eventer.emitMessageEvent(new i1.EventMessage('error', 'Ошибка', error)); }));
         };
         NgRestoUserService.prototype.removeDishFromFavorites = function (dish) {
@@ -452,7 +452,7 @@
                     .getValue()
                     .filter(function (item) { return item.id != dish.id; });
                 console.info('Стало=>>>', favoritesUpdated.length);
-                _this.favorites.next(favoritesUpdated);
+                _this.favorites.next(result);
             }, function (error) { return _this.eventer.emitMessageEvent(new i1.EventMessage('error', 'Ошибка', error)); }));
         };
         NgRestoUserService.prototype.userProfile = function () {
