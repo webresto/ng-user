@@ -673,6 +673,33 @@ NgUserModule.ɵinj = ɵɵdefineInjector({ factory: function NgUserModule_Factory
             }]
     }], null, null); })();
 
+const LS_TOKEN_NAME$1 = 'gf:tkn:v2';
+class AuthInterceptor {
+    constructor(userService) {
+        this.userService = userService;
+    }
+    intercept(req, next) {
+        console.info('AuthInterceptor', req);
+        // Get the auth token from the service.
+        const authToken = localStorage.getItem(LS_TOKEN_NAME$1);
+        if (authToken) {
+            // Clone the request and replace the original headers with
+            // cloned headers, updated with the authorization.
+            const authReq = req.clone({
+                headers: req.headers.set('Authorization', `JWT ${authToken}`)
+            });
+            // send cloned request with header to the next handler.
+            return next.handle(authReq);
+        }
+        return next.handle(req);
+    }
+}
+AuthInterceptor.ɵfac = function AuthInterceptor_Factory(t) { return new (t || AuthInterceptor)(ɵɵinject(NgRestoUserService)); };
+AuthInterceptor.ɵprov = ɵɵdefineInjectable({ token: AuthInterceptor, factory: AuthInterceptor.ɵfac });
+/*@__PURE__*/ (function () { ɵsetClassMetadata(AuthInterceptor, [{
+        type: Injectable
+    }], function () { return [{ type: NgRestoUserService }]; }, null); })();
+
 /*
  * Public API Surface of ng-user
  */
@@ -681,5 +708,5 @@ NgUserModule.ɵinj = ɵɵdefineInjector({ factory: function NgUserModule_Factory
  * Generated bundle index. Do not edit.
  */
 
-export { AddAddressDirective, BalanceDirective, DeleteAddressDirective, NgRestoUserService, NgUserModule, ResetPasswordCodeDirective, ResetPasswordDirective, SignInDirective, SignOutDirective, SignUpDirective, ToggleDishToFavoritesDirective, UpdateProfileDirective };
+export { AddAddressDirective, AuthInterceptor, BalanceDirective, DeleteAddressDirective, NgRestoUserService, NgUserModule, ResetPasswordCodeDirective, ResetPasswordDirective, SignInDirective, SignOutDirective, SignUpDirective, ToggleDishToFavoritesDirective, UpdateProfileDirective };
 //# sourceMappingURL=webresto-ng-user.js.map
