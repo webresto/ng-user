@@ -173,6 +173,16 @@ class NgRestoUserService {
         localStorage.removeItem(LS_TOKEN_NAME);
         this.isLoggedIn.next(false);
     }
+    saveAvatar(avatar) {
+        const data = new FormData();
+        data.append('avatar', avatar, avatar.name);
+        return this.net.post('/user/avatar/upload', data, true, {
+            headers: { 'Content-Type': 'multipart/form-data' },
+        }).pipe(tap((result) => {
+            this.user.next(result.user);
+            this.eventer.emitMessageEvent(new EventMessage('success', 'Успех', 'Аватар загружен'));
+        }, error => this.eventer.emitMessageEvent(new EventMessage('error', 'Ошибка', error))));
+    }
 }
 NgRestoUserService.ɵfac = function NgRestoUserService_Factory(t) { return new (t || NgRestoUserService)(ɵɵinject(NetService), ɵɵinject(EventerService)); };
 NgRestoUserService.ɵprov = ɵɵdefineInjectable({ token: NgRestoUserService, factory: NgRestoUserService.ɵfac, providedIn: 'root' });
@@ -499,6 +509,8 @@ class UpdateProfileDirective {
             name: this.name,
             //phone: this.phone,
             email: this.email,
+            additionalInfo: this.additionalInfo,
+            birthday: this.birthday
         };
         this.ngRestoUserService
             .updateProfile(data)

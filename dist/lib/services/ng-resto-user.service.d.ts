@@ -41,6 +41,7 @@ export declare class NgRestoUserService {
     getAuthToken(): string;
     setAuthToken(authToken: string): void;
     deleteAuthToken(): void;
+    saveAvatar(avatar: File): Observable<any>;
     static ɵfac: i0.ɵɵFactoryDef<NgRestoUserService, never>;
     static ɵprov: i0.ɵɵInjectableDef<NgRestoUserService>;
 }

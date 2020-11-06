@@ -26,6 +26,8 @@ export class UpdateProfileDirective {
       name: this.name,
       //phone: this.phone,
       email: this.email,
+      additionalInfo:this.additionalInfo,
+      birthday:this.birthday
     };
     this.ngRestoUserService
       .updateProfile(data)

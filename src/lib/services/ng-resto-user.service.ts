@@ -2,10 +2,12 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { filter, switchMap, tap } from 'rxjs/operators';
 import { EventerService, EventMessage, NetService } from '@webresto/ng-core';
-import { Address, SignInRequestData, SignInResponseData, User, UpdateProfileRequestData,
+import {
+  Address, SignInRequestData, SignInResponseData, User, UpdateProfileRequestData,
   UpdateProfileResponseData, AddAddressRequestData, RemoveAddressRequestData, SignUpRequestData,
   SignUpResponseData, ResetPasswordRequestData, ResetPasswordResponseData, ResetPasswordCodeRequestData,
-  ResetPasswordCodeResponseData, AddDishToFavoritesRequestData, RemoveDishFromFavoritesRequestData } from '../../models';
+  ResetPasswordCodeResponseData, AddDishToFavoritesRequestData, RemoveDishFromFavoritesRequestData
+} from '../../models';
 
 const LS_TOKEN_NAME = 'gf:tkn:v2';
 
@@ -247,7 +249,7 @@ export class NgRestoUserService {
     let data: AddDishToFavoritesRequestData = {
       dishId: dish.id
     };
-    return this.net.post<AddDishToFavoritesRequestData,any[]>('/user/add/favorites ', data).pipe(
+    return this.net.post<AddDishToFavoritesRequestData, any[]>('/user/add/favorites ', data).pipe(
       tap(
         result => {
           let favoritesUpdated: any[] = this.favorites.getValue();
@@ -328,6 +330,27 @@ export class NgRestoUserService {
     this.authToken = null;
     localStorage.removeItem(LS_TOKEN_NAME);
     this.isLoggedIn.next(false);
+  }
+
+  saveAvatar(avatar: File) {
+    const data = new FormData();
+    data.append('avatar',avatar,avatar.name);
+    return this.net.post('/user/avatar/upload',data, true, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    }).pipe(
+      tap(
+        (result) => {
+          this.user.next(result.user);
+          this.eventer.emitMessageEvent(
+            new EventMessage('success', 'Успех', 'Аватар загружен')
+          );
+        },
+        error => this.eventer.emitMessageEvent(
+          new EventMessage('error', 'Ошибка', error)
+        )
+      )
+    );
+
   }
 
 }

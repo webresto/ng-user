@@ -495,6 +495,17 @@
             localStorage.removeItem(LS_TOKEN_NAME);
             this.isLoggedIn.next(false);
         };
+        NgRestoUserService.prototype.saveAvatar = function (avatar) {
+            var _this = this;
+            var data = new FormData();
+            data.append('avatar', avatar, avatar.name);
+            return this.net.post('/user/avatar/upload', data, true, {
+                headers: { 'Content-Type': 'multipart/form-data' },
+            }).pipe(operators.tap(function (result) {
+                _this.user.next(result.user);
+                _this.eventer.emitMessageEvent(new i1.EventMessage('success', 'Успех', 'Аватар загружен'));
+            }, function (error) { return _this.eventer.emitMessageEvent(new i1.EventMessage('error', 'Ошибка', error)); }));
+        };
         return NgRestoUserService;
     }());
     NgRestoUserService.ɵfac = function NgRestoUserService_Factory(t) { return new (t || NgRestoUserService)(i0.ɵɵinject(i1.NetService), i0.ɵɵinject(i1.EventerService)); };
@@ -866,6 +877,8 @@
                 name: this.name,
                 //phone: this.phone,
                 email: this.email,
+                additionalInfo: this.additionalInfo,
+                birthday: this.birthday
             };
             this.ngRestoUserService
                 .updateProfile(data)
