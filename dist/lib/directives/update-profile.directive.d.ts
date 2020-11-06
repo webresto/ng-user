@@ -6,12 +6,13 @@ export declare class UpdateProfileDirective {
     name: string;
     phone: string;
     email: string;
-    avatar: string;
+    additionalInfo: string;
+    birthday: string;
     success: EventEmitter<boolean>;
     error: EventEmitter<string>;
     constructor(ngRestoUserService: NgRestoUserService);
     onClick(): void;
     static ɵfac: i0.ɵɵFactoryDef<UpdateProfileDirective, never>;
-    static ɵdir: i0.ɵɵDirectiveDefWithMeta<UpdateProfileDirective, "[appUpdateProfile]", never, { "name": "name"; "phone": "phone"; "email": "email"; "avatar": "avatar"; }, { "success": "success"; "error": "error"; }, never>;
+    static ɵdir: i0.ɵɵDirectiveDefWithMeta<UpdateProfileDirective, "[appUpdateProfile]", never, { "name": "name"; "phone": "phone"; "email": "email"; "additionalInfo": "additionalInfo"; "birthday": "birthday"; }, { "success": "success"; "error": "error"; }, never>;
 }
 //# sourceMappingURL=update-profile.directive.d.ts.map

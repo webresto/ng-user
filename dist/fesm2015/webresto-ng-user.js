@@ -499,7 +499,6 @@ class UpdateProfileDirective {
             name: this.name,
             //phone: this.phone,
             email: this.email,
-            avatar: this.avatar
         };
         this.ngRestoUserService
             .updateProfile(data)
@@ -509,7 +508,7 @@ class UpdateProfileDirective {
 UpdateProfileDirective.ɵfac = function UpdateProfileDirective_Factory(t) { return new (t || UpdateProfileDirective)(ɵɵdirectiveInject(NgRestoUserService)); };
 UpdateProfileDirective.ɵdir = ɵɵdefineDirective({ type: UpdateProfileDirective, selectors: [["", "appUpdateProfile", ""]], hostBindings: function UpdateProfileDirective_HostBindings(rf, ctx) { if (rf & 1) {
         ɵɵlistener("click", function UpdateProfileDirective_click_HostBindingHandler() { return ctx.onClick(); });
-    } }, inputs: { name: "name", phone: "phone", email: "email", avatar: "avatar" }, outputs: { success: "success", error: "error" } });
+    } }, inputs: { name: "name", phone: "phone", email: "email", additionalInfo: "additionalInfo", birthday: "birthday" }, outputs: { success: "success", error: "error" } });
 /*@__PURE__*/ (function () { ɵsetClassMetadata(UpdateProfileDirective, [{
         type: Directive,
         args: [{
@@ -521,7 +520,9 @@ UpdateProfileDirective.ɵdir = ɵɵdefineDirective({ type: UpdateProfileDirectiv
             type: Input
         }], email: [{
             type: Input
-        }], avatar: [{
+        }], additionalInfo: [{
+            type: Input
+        }], birthday: [{
             type: Input
         }], success: [{
             type: Output

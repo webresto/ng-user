@@ -866,7 +866,6 @@
                 name: this.name,
                 //phone: this.phone,
                 email: this.email,
-                avatar: this.avatar
             };
             this.ngRestoUserService
                 .updateProfile(data)
@@ -879,7 +878,7 @@
             if (rf & 1) {
                 i0.ɵɵlistener("click", function UpdateProfileDirective_click_HostBindingHandler() { return ctx.onClick(); });
             }
-        }, inputs: { name: "name", phone: "phone", email: "email", avatar: "avatar" }, outputs: { success: "success", error: "error" } });
+        }, inputs: { name: "name", phone: "phone", email: "email", additionalInfo: "additionalInfo", birthday: "birthday" }, outputs: { success: "success", error: "error" } });
     /*@__PURE__*/ (function () {
         i0.ɵsetClassMetadata(UpdateProfileDirective, [{
                 type: i0.Directive,
@@ -892,7 +891,9 @@
                     type: i0.Input
                 }], email: [{
                     type: i0.Input
-                }], avatar: [{
+                }], additionalInfo: [{
+                    type: i0.Input
+                }], birthday: [{
                     type: i0.Input
                 }], success: [{
                     type: i0.Output

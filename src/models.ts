@@ -6,6 +6,8 @@ export declare interface User {
   createdAt: string,
   updatedAt: string,
   verified: boolean,
+  birthday?:string;
+  additionalInfo?:any;
   avatar?:string;
   captcha?: string
 }
@@ -45,7 +47,8 @@ export declare interface SignUpResponseData {
 }
 export declare interface UpdateProfileRequestData {
   name: string,
-  avatar:string;
+  birthday?:string;
+  additionalInfo?:any;
   phone?: string,
   email: string
 }
