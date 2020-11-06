@@ -456,10 +456,10 @@
             }, function (error) { return _this.eventer.emitMessageEvent(new i1.EventMessage('error', 'Ошибка', error)); }));
         };
         NgRestoUserService.prototype.userProfile = function () {
-            return this.user.pipe();
+            return this.user;
         };
         NgRestoUserService.prototype.userIsLoggedIn = function () {
-            return this.isLoggedIn.pipe();
+            return this.isLoggedIn;
         };
         NgRestoUserService.prototype.userFavorites = function () {
             return this.favorites.pipe();
@@ -865,7 +865,8 @@
             var data = {
                 name: this.name,
                 //phone: this.phone,
-                email: this.email
+                email: this.email,
+                avatar: this.avatar
             };
             this.ngRestoUserService
                 .updateProfile(data)
@@ -878,7 +879,7 @@
             if (rf & 1) {
                 i0.ɵɵlistener("click", function UpdateProfileDirective_click_HostBindingHandler() { return ctx.onClick(); });
             }
-        }, inputs: { name: "name", phone: "phone", email: "email" }, outputs: { success: "success", error: "error" } });
+        }, inputs: { name: "name", phone: "phone", email: "email", avatar: "avatar" }, outputs: { success: "success", error: "error" } });
     /*@__PURE__*/ (function () {
         i0.ɵsetClassMetadata(UpdateProfileDirective, [{
                 type: i0.Directive,
@@ -890,6 +891,8 @@
                 }], phone: [{
                     type: i0.Input
                 }], email: [{
+                    type: i0.Input
+                }], avatar: [{
                     type: i0.Input
                 }], success: [{
                     type: i0.Output

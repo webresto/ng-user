@@ -283,12 +283,12 @@ export class NgRestoUserService {
     );
   }
 
-  userProfile(): Observable<User> {
-    return this.user.pipe();
+  userProfile(): BehaviorSubject<User> {
+    return this.user;
   }
 
-  userIsLoggedIn(): Observable<boolean> {
-    return this.isLoggedIn.pipe();
+  userIsLoggedIn(): BehaviorSubject<boolean> {
+    return this.isLoggedIn;
   }
 
   userFavorites(): Observable<any[]> {

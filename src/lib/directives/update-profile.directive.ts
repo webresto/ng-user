@@ -10,6 +10,7 @@ export class UpdateProfileDirective {
   @Input() name:string;
   @Input() phone:string;
   @Input() email:string;
+  @Input() avatar:string;
 
   @Output() success = new EventEmitter<boolean>();
   @Output() error = new EventEmitter<string>();
@@ -23,7 +24,8 @@ export class UpdateProfileDirective {
     let data:UpdateProfileRequestData = {
       name: this.name,
       //phone: this.phone,
-      email: this.email
+      email: this.email,
+      avatar:this.avatar
     };
     this.ngRestoUserService
       .updateProfile(data)

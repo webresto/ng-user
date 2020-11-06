@@ -45,6 +45,7 @@ export declare interface SignUpResponseData {
 }
 export declare interface UpdateProfileRequestData {
   name: string,
+  avatar:string;
   phone?: string,
   email: string
 }

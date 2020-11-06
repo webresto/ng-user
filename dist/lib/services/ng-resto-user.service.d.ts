@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { EventerService, NetService } from '@webresto/ng-core';
 import { Address, SignInRequestData, SignInResponseData, User, UpdateProfileRequestData, UpdateProfileResponseData, AddAddressRequestData, SignUpRequestData, SignUpResponseData, ResetPasswordRequestData, ResetPasswordResponseData, ResetPasswordCodeRequestData, ResetPasswordCodeResponseData } from '../../models';
 import * as i0 from "@angular/core";
@@ -32,8 +32,8 @@ export declare class NgRestoUserService {
     getFavorites(): Observable<any[]>;
     addDishToFavorites(dish: any): Observable<any>;
     removeDishFromFavorites(dish: any): Observable<any[]>;
-    userProfile(): Observable<User>;
-    userIsLoggedIn(): Observable<boolean>;
+    userProfile(): BehaviorSubject<User>;
+    userIsLoggedIn(): BehaviorSubject<boolean>;
     userFavorites(): Observable<any[]>;
     userAddresses(): Observable<Address[]>;
     userHistory(): Observable<any[]>;
