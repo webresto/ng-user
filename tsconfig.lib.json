@@ -10,15 +10,7 @@
     "lib": [
       "dom",
       "es2018"
-    ],
-    "paths": {
-      "@webresto/ng-core": [
-        "projects/webresto/ng-core/dist"
-      ],
-      "@webresto/ng-core/*": [
-        "projects/webresto/ng-core/dist/*"
-      ]
-    }
+    ]
   },
   "angularCompilerOptions": {
     "skipTemplateCodegen": false,
