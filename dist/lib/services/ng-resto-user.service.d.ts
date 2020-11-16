@@ -1,6 +1,6 @@
 import { BehaviorSubject, Observable } from 'rxjs';
 import { EventerService, NetService } from '@webresto/ng-core';
-import { Address, SignInRequestData, SignInResponseData, User, UpdateProfileRequestData, UpdateProfileResponseData, AddAddressRequestData, SignUpRequestData, SignUpResponseData, ResetPasswordRequestData, ResetPasswordResponseData, ResetPasswordCodeRequestData, ResetPasswordCodeResponseData } from '../../models';
+import { Address, SignInRequestData, SignInResponseData, User, UpdateProfileRequestData, UpdateProfileResponseData, AddAddressRequestData, SignUpRequestData, ResetPasswordRequestData, ResetPasswordResponseData, ResetPasswordCodeRequestData, ResetPasswordCodeResponseData } from '../../models';
 import * as i0 from "@angular/core";
 export declare class NgRestoUserService {
     private net;
@@ -24,7 +24,7 @@ export declare class NgRestoUserService {
     getAddresses(): Observable<Address[]>;
     addAddress(address: AddAddressRequestData): Observable<Address[]>;
     deleteAddress(address: Address): Observable<Address[]>;
-    signUp(data: SignUpRequestData): Observable<SignUpResponseData>;
+    signUp(data: SignUpRequestData): Observable<any>;
     signOut(): void;
     getBonuses(): Observable<any>;
     resetPassword(data: ResetPasswordRequestData): Observable<ResetPasswordResponseData>;

@@ -333,22 +333,21 @@
                 _this.user.next(result.user);
                 _this.isLoggedIn.next(true);
                 _this.eventer.emitMessageEvent(new i1.EventMessage('success', 'Успех', 'Успешно авторизирован'));
-            }, function (error) { return _this.eventer.emitMessageEvent(new i1.EventMessage('error', 'Ошибка', error)); }));
+            }, function (error) { return _this.eventer.emitMessageEvent(new i1.EventMessage(error === null || error === void 0 ? void 0 : error.type, error === null || error === void 0 ? void 0 : error.title, error === null || error === void 0 ? void 0 : error.body)); }));
         };
         NgRestoUserService.prototype.getProfile = function () {
             var _this = this;
             return this.net.get('/user/get/user-info').pipe(operators.tap(function (result) {
                 _this.user.next(result);
-            }, function (error) { return _this.eventer.emitMessageEvent(new i1.EventMessage('error', 'Ошибка', error)); }));
+            }, function (error) { return _this.eventer.emitMessageEvent(new i1.EventMessage(error === null || error === void 0 ? void 0 : error.type, error === null || error === void 0 ? void 0 : error.title, error === null || error === void 0 ? void 0 : error.body)); }));
         };
         NgRestoUserService.prototype.getHistory = function () {
             var _this = this;
             return this.net.get('/user/get/history').pipe(operators.tap(function (historyItems) {
                 _this.historyItems.next(historyItems);
             }, function (error) {
-                var message = new i1.EventMessage('error', 'Ошибка', error);
-                _this.eventer.emitMessageEvent(message);
-                if (message.type === "Unauthorized") {
+                _this.eventer.emitMessageEvent(new i1.EventMessage(error === null || error === void 0 ? void 0 : error.type, error === null || error === void 0 ? void 0 : error.title, error === null || error === void 0 ? void 0 : error.body));
+                if ((error === null || error === void 0 ? void 0 : error.type) === "Unauthorized") {
                     _this.deleteAuthToken();
                 }
                 ;
@@ -361,7 +360,7 @@
             if (set === void 0) { set = 0; }
             return this.net.get("/bonus/transactions?bonussystem=" + bonusSystem + "&limit=" + limit + "&number=" + set).pipe(operators.tap(function (transactions) {
                 _this.historyTransactions.next(transactions);
-            }, function (error) { return _this.eventer.emitMessageEvent(new i1.EventMessage('error', 'Ошибка', error)); }));
+            }, function (error) { return _this.eventer.emitMessageEvent(new i1.EventMessage(error === null || error === void 0 ? void 0 : error.type, error === null || error === void 0 ? void 0 : error.title, error === null || error === void 0 ? void 0 : error.body)); }));
         };
         NgRestoUserService.prototype.updateProfile = function (data) {
             var _this = this;
@@ -369,19 +368,19 @@
                 user: data
             }).pipe(operators.tap(function (result) {
                 _this.user.next(result);
-            }, function (error) { return _this.eventer.emitMessageEvent(new i1.EventMessage('error', 'Ошибка', error)); }));
+            }, function (error) { return _this.eventer.emitMessageEvent(new i1.EventMessage(error === null || error === void 0 ? void 0 : error.type, error === null || error === void 0 ? void 0 : error.title, error === null || error === void 0 ? void 0 : error.body)); }));
         };
         NgRestoUserService.prototype.getAddresses = function () {
             var _this = this;
             return this.net.get('/user/get/location').pipe(operators.tap(function (addresses) {
                 _this.addresses.next(addresses);
-            }, function (error) { return _this.eventer.emitMessageEvent(new i1.EventMessage('error', 'Ошибка', error)); }));
+            }, function (error) { return _this.eventer.emitMessageEvent(new i1.EventMessage(error === null || error === void 0 ? void 0 : error.type, error === null || error === void 0 ? void 0 : error.title, error === null || error === void 0 ? void 0 : error.body)); }));
         };
         NgRestoUserService.prototype.addAddress = function (address) {
             var _this = this;
             return this.net.post('/user/add/location', address).pipe(operators.tap(function (addresses) {
                 _this.addresses.next(addresses);
-            }, function (error) { return _this.eventer.emitMessageEvent(new i1.EventMessage('error', 'Ошибка', error)); }));
+            }, function (error) { return _this.eventer.emitMessageEvent(new i1.EventMessage(error === null || error === void 0 ? void 0 : error.type, error === null || error === void 0 ? void 0 : error.title, error === null || error === void 0 ? void 0 : error.body)); }));
         };
         NgRestoUserService.prototype.deleteAddress = function (address) {
             var _this = this;
@@ -392,17 +391,16 @@
             };
             return this.net.post('/user/remove/location', reqBody).pipe(operators.tap(function (addresses) {
                 _this.addresses.next(addresses);
-            }, function (error) { return _this.eventer.emitMessageEvent(new i1.EventMessage('error', 'Ошибка', error)); }));
+            }, function (error) { return _this.eventer.emitMessageEvent(new i1.EventMessage(error === null || error === void 0 ? void 0 : error.type, error === null || error === void 0 ? void 0 : error.title, error === null || error === void 0 ? void 0 : error.body)); }));
         };
         NgRestoUserService.prototype.signUp = function (data) {
             var _this = this;
             return this.net.post('/signup', data).pipe(operators.tap(function (result) {
+                var _a, _b, _c;
                 //this.setAuthToken(result.token, false);
                 //this.user.next(result.user);
-                _this.eventer.emitMessageEvent(new i1.EventMessage('success', 'Регистрация', 'Ваш пароль был отправлен на указанный номер телефона. Он будет действовать на постоянной основе'));
-            }, function (error) {
-                _this.eventer.emitMessageEvent(new i1.EventMessage('error', 'Ошибка', error));
-            }));
+                _this.eventer.emitMessageEvent(new i1.EventMessage((_a = result === null || result === void 0 ? void 0 : result.message) === null || _a === void 0 ? void 0 : _a.type, (_b = result === null || result === void 0 ? void 0 : result.message) === null || _b === void 0 ? void 0 : _b.title, (_c = result === null || result === void 0 ? void 0 : result.message) === null || _c === void 0 ? void 0 : _c.body));
+            }, function (error) { return _this.eventer.emitMessageEvent(new i1.EventMessage(error === null || error === void 0 ? void 0 : error.type, error === null || error === void 0 ? void 0 : error.title, error === null || error === void 0 ? void 0 : error.body)); }));
         };
         NgRestoUserService.prototype.signOut = function () {
             return this.deleteAuthToken();
@@ -411,24 +409,24 @@
             var _this = this;
             return this.net.post('/bonus/get', {}).pipe(operators.tap(function (result) {
                 _this.bonusSystems.next(result);
-            }, function (error) { return _this.eventer.emitMessageEvent(new i1.EventMessage('error', 'Ошибка', error)); }));
+            }, function (error) { return _this.eventer.emitMessageEvent(new i1.EventMessage(error === null || error === void 0 ? void 0 : error.type, error === null || error === void 0 ? void 0 : error.title, error === null || error === void 0 ? void 0 : error.body)); }));
         };
         NgRestoUserService.prototype.resetPassword = function (data) {
             var _this = this;
             return this.net.post('/reset', data).pipe(operators.tap(function (result) {
-            }, function (error) { return _this.eventer.emitMessageEvent(new i1.EventMessage('error', 'Ошибка', error)); }));
+            }, function (error) { return _this.eventer.emitMessageEvent(new i1.EventMessage(error === null || error === void 0 ? void 0 : error.type, error === null || error === void 0 ? void 0 : error.title, error === null || error === void 0 ? void 0 : error.body)); }));
         };
         NgRestoUserService.prototype.resetPasswordCode = function (data) {
             var _this = this;
             return this.net.post('/code', data).pipe(operators.tap(function (result) {
-            }, function (error) { return _this.eventer.emitMessageEvent(new i1.EventMessage('error', 'Ошибка', error)); }));
+            }, function (error) { return _this.eventer.emitMessageEvent(new i1.EventMessage(error === null || error === void 0 ? void 0 : error.type, error === null || error === void 0 ? void 0 : error.title, error === null || error === void 0 ? void 0 : error.body)); }));
         };
         NgRestoUserService.prototype.getFavorites = function () {
             var _this = this;
             return this.net.get('/user/get/favorites').pipe(operators.tap(function (result) {
                 console.info('getFavorites result', result);
                 _this.favorites.next(result);
-            }, function (error) { return _this.eventer.emitMessageEvent(new i1.EventMessage('error', 'Ошибка', error)); }));
+            }, function (error) { return _this.eventer.emitMessageEvent(new i1.EventMessage(error === null || error === void 0 ? void 0 : error.type, error === null || error === void 0 ? void 0 : error.title, error === null || error === void 0 ? void 0 : error.body)); }));
         };
         NgRestoUserService.prototype.addDishToFavorites = function (dish) {
             var _this = this;
@@ -439,7 +437,7 @@
                 var favoritesUpdated = _this.favorites.getValue();
                 favoritesUpdated.push(dish);
                 _this.favorites.next(result);
-            }, function (error) { return _this.eventer.emitMessageEvent(new i1.EventMessage('error', 'Ошибка', error)); }));
+            }, function (error) { return _this.eventer.emitMessageEvent(new i1.EventMessage(error === null || error === void 0 ? void 0 : error.type, error === null || error === void 0 ? void 0 : error.title, error === null || error === void 0 ? void 0 : error.body)); }));
         };
         NgRestoUserService.prototype.removeDishFromFavorites = function (dish) {
             var _this = this;
@@ -453,7 +451,7 @@
                     .filter(function (item) { return item.id != dish.id; });
                 console.info('Стало=>>>', favoritesUpdated.length);
                 _this.favorites.next(result);
-            }, function (error) { return _this.eventer.emitMessageEvent(new i1.EventMessage('error', 'Ошибка', error)); }));
+            }, function (error) { return _this.eventer.emitMessageEvent(new i1.EventMessage(error === null || error === void 0 ? void 0 : error.type, error === null || error === void 0 ? void 0 : error.title, error === null || error === void 0 ? void 0 : error.body)); }));
         };
         NgRestoUserService.prototype.userProfile = function () {
             return this.user;
@@ -504,7 +502,7 @@
             }).pipe(operators.tap(function (result) {
                 _this.user.next(result.user);
                 _this.eventer.emitMessageEvent(new i1.EventMessage('success', 'Успех', 'Аватар загружен'));
-            }, function (error) { return _this.eventer.emitMessageEvent(new i1.EventMessage('error', 'Ошибка', error)); }));
+            }, function (error) { return _this.eventer.emitMessageEvent(new i1.EventMessage(error === null || error === void 0 ? void 0 : error.type, error === null || error === void 0 ? void 0 : error.title, error === null || error === void 0 ? void 0 : error.body)); }));
         };
         return NgRestoUserService;
     }());
