@@ -54,7 +54,9 @@ export class NgRestoUserService {
             new EventMessage('success', 'Успех', 'Успешно авторизирован')
           );
         },
-        error => this.eventer.emitMessageEvent(new EventMessage('error', 'Ошибка', error))
+        error => this.eventer.emitMessageEvent(
+          new EventMessage(error?.type, error?.title, error?.body)
+        )
       )
     );
 
@@ -67,7 +69,7 @@ export class NgRestoUserService {
           this.user.next(result);
         },
         error => this.eventer.emitMessageEvent(
-          new EventMessage('error', 'Ошибка', error)
+          new EventMessage(error?.type, error?.title, error?.body)
         )
       )
     );
@@ -80,9 +82,10 @@ export class NgRestoUserService {
           this.historyItems.next(historyItems);
         },
         error => {
-          const message = new EventMessage('error', 'Ошибка', error);
-          this.eventer.emitMessageEvent(message);
-          if (message.type === "Unauthorized") {
+          this.eventer.emitMessageEvent(
+            new EventMessage(error?.type, error?.title, error?.body)
+          );
+          if (error?.type === "Unauthorized") {
             this.deleteAuthToken();
           };
         })
@@ -96,7 +99,7 @@ export class NgRestoUserService {
           this.historyTransactions.next(transactions);
         },
         error => this.eventer.emitMessageEvent(
-          new EventMessage('error', 'Ошибка', error)
+          new EventMessage(error?.type, error?.title, error?.body)
         )
       )
     );
@@ -111,7 +114,7 @@ export class NgRestoUserService {
           this.user.next(result);
         },
         error => this.eventer.emitMessageEvent(
-          new EventMessage('error', 'Ошибка', error)
+          new EventMessage(error?.type, error?.title, error?.body)
         )
       )
     )
@@ -124,7 +127,7 @@ export class NgRestoUserService {
           this.addresses.next(addresses);
         },
         error => this.eventer.emitMessageEvent(
-          new EventMessage('error', 'Ошибка', error)
+          new EventMessage(error?.type, error?.title, error?.body)
         )
       )
     );
@@ -138,7 +141,7 @@ export class NgRestoUserService {
         },
 
         error => this.eventer.emitMessageEvent(
-          new EventMessage('error', 'Ошибка', error)
+          new EventMessage(error?.type, error?.title, error?.body)
         )
       )
     );
@@ -156,9 +159,8 @@ export class NgRestoUserService {
         (addresses: Address[]) => {
           this.addresses.next(addresses);
         },
-
         error => this.eventer.emitMessageEvent(
-          new EventMessage('error', 'Ошибка', error)
+          new EventMessage(error?.type, error?.title, error?.body)
         )
       )
     );
@@ -167,21 +169,16 @@ export class NgRestoUserService {
   signUp(data: SignUpRequestData) {
     return this.net.post('/signup', data).pipe(
       tap(
-        (result: SignUpResponseData) => {
-
+        (result) => {
           //this.setAuthToken(result.token, false);
           //this.user.next(result.user);
-
           this.eventer.emitMessageEvent(
-            new EventMessage('success', 'Регистрация', 'Ваш пароль был отправлен на указанный номер телефона. Он будет действовать на постоянной основе')
-          )
+            new EventMessage(result?.message?.type, result?.message?.title, result?.message?.body)
+          );
         },
-
-        error => {
-          this.eventer.emitMessageEvent(
-            new EventMessage('error', 'Ошибка', error)
-          )
-        }
+        error => this.eventer.emitMessageEvent(
+          new EventMessage(error?.type, error?.title, error?.body)
+        )
       )
     );
   }
@@ -198,7 +195,7 @@ export class NgRestoUserService {
           this.bonusSystems.next(result);
         },
         error => this.eventer.emitMessageEvent(
-          new EventMessage('error', 'Ошибка', error)
+          new EventMessage(error?.type, error?.title, error?.body)
         )
       )
     );
@@ -211,7 +208,7 @@ export class NgRestoUserService {
 
         },
         error => this.eventer.emitMessageEvent(
-          new EventMessage('error', 'Ошибка', error)
+          new EventMessage(error?.type, error?.title, error?.body)
         )
       )
     );
@@ -224,7 +221,7 @@ export class NgRestoUserService {
 
         },
         error => this.eventer.emitMessageEvent(
-          new EventMessage('error', 'Ошибка', error)
+          new EventMessage(error?.type, error?.title, error?.body)
         )
       )
     );
@@ -239,7 +236,7 @@ export class NgRestoUserService {
           this.favorites.next(result);
         },
         error => this.eventer.emitMessageEvent(
-          new EventMessage('error', 'Ошибка', error)
+          new EventMessage(error?.type, error?.title, error?.body)
         )
       )
     );
@@ -258,7 +255,7 @@ export class NgRestoUserService {
           this.favorites.next(result);
         },
         error => this.eventer.emitMessageEvent(
-          new EventMessage('error', 'Ошибка', error)
+          new EventMessage(error?.type, error?.title, error?.body)
         )
       )
     );
@@ -279,7 +276,7 @@ export class NgRestoUserService {
           this.favorites.next(result);
         },
         error => this.eventer.emitMessageEvent(
-          new EventMessage('error', 'Ошибка', error)
+          new EventMessage(error?.type, error?.title, error?.body)
         )
       )
     );
@@ -334,8 +331,8 @@ export class NgRestoUserService {
 
   saveAvatar(avatar: File) {
     const data = new FormData();
-    data.append('avatar',avatar,avatar.name);
-    return this.net.post('/user/avatar/upload',data, true, {
+    data.append('avatar', avatar, avatar.name);
+    return this.net.post('/user/avatar/upload', data, true, {
       headers: { 'Content-Type': 'multipart/form-data' },
     }).pipe(
       tap(
@@ -346,7 +343,7 @@ export class NgRestoUserService {
           );
         },
         error => this.eventer.emitMessageEvent(
-          new EventMessage('error', 'Ошибка', error)
+          new EventMessage(error?.type, error?.title, error?.body)
         )
       )
     );
