@@ -1,7 +1,7 @@
 import { ɵɵinject, ɵɵdefineInjectable, ɵsetClassMetadata, Injectable, EventEmitter, ɵɵdirectiveInject, ɵɵdefineDirective, ɵɵlistener, Directive, Input, Output, HostListener, Renderer2, ElementRef, ɵɵdefineNgModule, ɵɵdefineInjector, ɵɵsetNgModuleScope, NgModule } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { filter, switchMap, tap } from 'rxjs/operators';
-import { EventMessage, NetService, EventerService } from '@webresto/ng-core';
+import { NetService, EventerService } from '@webresto/ng-core';
 
 const LS_TOKEN_NAME = 'gf:tkn:v2';
 class NgRestoUserService {
@@ -27,19 +27,17 @@ class NgRestoUserService {
             this.setAuthToken(result.token);
             this.user.next(result.user);
             this.isLoggedIn.next(true);
-            this.eventer.emitMessageEvent(new EventMessage('success', 'Успех', 'Успешно авторизирован'));
-        }, error => this.eventer.emitMessageEvent(new EventMessage(error === null || error === void 0 ? void 0 : error.type, error === null || error === void 0 ? void 0 : error.title, error === null || error === void 0 ? void 0 : error.body))));
+        }, () => { }));
     }
     getProfile() {
         return this.net.get('/user/get/user-info').pipe(tap((result) => {
             this.user.next(result);
-        }, error => this.eventer.emitMessageEvent(new EventMessage(error === null || error === void 0 ? void 0 : error.type, error === null || error === void 0 ? void 0 : error.title, error === null || error === void 0 ? void 0 : error.body))));
+        }, () => { }));
     }
     getHistory() {
         return this.net.get('/user/get/history').pipe(tap((historyItems) => {
             this.historyItems.next(historyItems);
         }, error => {
-            this.eventer.emitMessageEvent(new EventMessage(error === null || error === void 0 ? void 0 : error.type, error === null || error === void 0 ? void 0 : error.title, error === null || error === void 0 ? void 0 : error.body));
             if ((error === null || error === void 0 ? void 0 : error.type) === "Unauthorized") {
                 this.deleteAuthToken();
             }
@@ -49,24 +47,24 @@ class NgRestoUserService {
     getHistoryTransactions(bonusSystem = "local", limit = 15, set = 0) {
         return this.net.get(`/bonus/transactions?bonussystem=${bonusSystem}&limit=${limit}&number=${set}`).pipe(tap((transactions) => {
             this.historyTransactions.next(transactions);
-        }, error => this.eventer.emitMessageEvent(new EventMessage(error === null || error === void 0 ? void 0 : error.type, error === null || error === void 0 ? void 0 : error.title, error === null || error === void 0 ? void 0 : error.body))));
+        }, () => { }));
     }
     updateProfile(data) {
         return this.net.post('/user/set/user-info', {
             user: data
         }).pipe(tap((result) => {
             this.user.next(result);
-        }, error => this.eventer.emitMessageEvent(new EventMessage(error === null || error === void 0 ? void 0 : error.type, error === null || error === void 0 ? void 0 : error.title, error === null || error === void 0 ? void 0 : error.body))));
+        }, () => { }));
     }
     getAddresses() {
         return this.net.get('/user/get/location').pipe(tap((addresses) => {
             this.addresses.next(addresses);
-        }, error => this.eventer.emitMessageEvent(new EventMessage(error === null || error === void 0 ? void 0 : error.type, error === null || error === void 0 ? void 0 : error.title, error === null || error === void 0 ? void 0 : error.body))));
+        }, () => { }));
     }
     addAddress(address) {
         return this.net.post('/user/add/location', address).pipe(tap((addresses) => {
             this.addresses.next(addresses);
-        }, error => this.eventer.emitMessageEvent(new EventMessage(error === null || error === void 0 ? void 0 : error.type, error === null || error === void 0 ? void 0 : error.title, error === null || error === void 0 ? void 0 : error.body))));
+        }, () => { }));
     }
     deleteAddress(address) {
         var reqBody = {
@@ -76,37 +74,31 @@ class NgRestoUserService {
         };
         return this.net.post('/user/remove/location', reqBody).pipe(tap((addresses) => {
             this.addresses.next(addresses);
-        }, error => this.eventer.emitMessageEvent(new EventMessage(error === null || error === void 0 ? void 0 : error.type, error === null || error === void 0 ? void 0 : error.title, error === null || error === void 0 ? void 0 : error.body))));
+        }, () => { }));
     }
     signUp(data) {
         return this.net.post('/signup', data).pipe(tap((result) => {
-            var _a, _b, _c;
             //this.setAuthToken(result.token, false);
             //this.user.next(result.user);
-            this.eventer.emitMessageEvent(new EventMessage((_a = result === null || result === void 0 ? void 0 : result.message) === null || _a === void 0 ? void 0 : _a.type, (_b = result === null || result === void 0 ? void 0 : result.message) === null || _b === void 0 ? void 0 : _b.title, (_c = result === null || result === void 0 ? void 0 : result.message) === null || _c === void 0 ? void 0 : _c.body));
-        }, error => this.eventer.emitMessageEvent(new EventMessage(error === null || error === void 0 ? void 0 : error.type, error === null || error === void 0 ? void 0 : error.title, error === null || error === void 0 ? void 0 : error.body))));
+        }, () => { }));
     }
     signOut() {
         return this.deleteAuthToken();
     }
     getBonuses() {
-        return this.net.post('/bonus/get', {}).pipe(tap((result) => {
-            this.bonusSystems.next(result);
-        }, error => this.eventer.emitMessageEvent(new EventMessage(error === null || error === void 0 ? void 0 : error.type, error === null || error === void 0 ? void 0 : error.title, error === null || error === void 0 ? void 0 : error.body))));
+        return this.net.post('/bonus/get', {}).pipe(tap(result => this.bonusSystems.next(result), () => { }));
     }
     resetPassword(data) {
-        return this.net.post('/reset', data).pipe(tap((result) => {
-        }, error => this.eventer.emitMessageEvent(new EventMessage(error === null || error === void 0 ? void 0 : error.type, error === null || error === void 0 ? void 0 : error.title, error === null || error === void 0 ? void 0 : error.body))));
+        return this.net.post('/reset', data).pipe(tap(() => { }, () => { }));
     }
     resetPasswordCode(data) {
-        return this.net.post('/code', data).pipe(tap((result) => {
-        }, error => this.eventer.emitMessageEvent(new EventMessage(error === null || error === void 0 ? void 0 : error.type, error === null || error === void 0 ? void 0 : error.title, error === null || error === void 0 ? void 0 : error.body))));
+        return this.net.post('/code', data).pipe(tap(() => { }, () => { }));
     }
     getFavorites() {
-        return this.net.get('/user/get/favorites').pipe(tap((result) => {
+        return this.net.get('/user/get/favorites').pipe(tap(result => {
             console.info('getFavorites result', result);
             this.favorites.next(result);
-        }, error => this.eventer.emitMessageEvent(new EventMessage(error === null || error === void 0 ? void 0 : error.type, error === null || error === void 0 ? void 0 : error.title, error === null || error === void 0 ? void 0 : error.body))));
+        }, () => { }));
     }
     addDishToFavorites(dish) {
         let data = {
@@ -116,7 +108,7 @@ class NgRestoUserService {
             let favoritesUpdated = this.favorites.getValue();
             favoritesUpdated.push(dish);
             this.favorites.next(result);
-        }, error => this.eventer.emitMessageEvent(new EventMessage(error === null || error === void 0 ? void 0 : error.type, error === null || error === void 0 ? void 0 : error.title, error === null || error === void 0 ? void 0 : error.body))));
+        }, () => { }));
     }
     removeDishFromFavorites(dish) {
         let data = {
@@ -129,7 +121,7 @@ class NgRestoUserService {
                 .filter(item => item.id != dish.id);
             console.info('Стало=>>>', favoritesUpdated.length);
             this.favorites.next(result);
-        }, error => this.eventer.emitMessageEvent(new EventMessage(error === null || error === void 0 ? void 0 : error.type, error === null || error === void 0 ? void 0 : error.title, error === null || error === void 0 ? void 0 : error.body))));
+        }, () => { }));
     }
     userProfile() {
         return this.user;
@@ -176,10 +168,7 @@ class NgRestoUserService {
         data.append('avatar', avatar, avatar.name);
         return this.net.post('/user/avatar/upload', data, true, {
             headers: { 'Content-Type': 'multipart/form-data' },
-        }).pipe(tap((result) => {
-            this.user.next(result.user);
-            this.eventer.emitMessageEvent(new EventMessage('success', 'Успех', 'Аватар загружен'));
-        }, error => this.eventer.emitMessageEvent(new EventMessage(error === null || error === void 0 ? void 0 : error.type, error === null || error === void 0 ? void 0 : error.title, error === null || error === void 0 ? void 0 : error.body))));
+        }).pipe(tap(result => this.user.next(result.user), () => { }));
     }
 }
 NgRestoUserService.ɵfac = function NgRestoUserService_Factory(t) { return new (t || NgRestoUserService)(ɵɵinject(NetService), ɵɵinject(EventerService)); };

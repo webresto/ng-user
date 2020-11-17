@@ -1,6 +1,6 @@
 import { BehaviorSubject, Observable } from 'rxjs';
 import { EventerService, NetService } from '@webresto/ng-core';
-import { Address, SignInRequestData, SignInResponseData, User, UpdateProfileRequestData, UpdateProfileResponseData, AddAddressRequestData, SignUpRequestData, ResetPasswordRequestData, ResetPasswordResponseData, ResetPasswordCodeRequestData, ResetPasswordCodeResponseData } from '../../models';
+import { Address, SignInRequestData, SignInResponseData, User, UpdateProfileRequestData, UpdateProfileResponseData, AddAddressRequestData, SignUpRequestData, ResetPasswordRequestData, ResetPasswordCodeRequestData } from '../../models';
 import * as i0 from "@angular/core";
 export declare class NgRestoUserService {
     private net;
@@ -27,8 +27,8 @@ export declare class NgRestoUserService {
     signUp(data: SignUpRequestData): Observable<any>;
     signOut(): void;
     getBonuses(): Observable<any>;
-    resetPassword(data: ResetPasswordRequestData): Observable<ResetPasswordResponseData>;
-    resetPasswordCode(data: ResetPasswordCodeRequestData): Observable<ResetPasswordCodeResponseData>;
+    resetPassword(data: ResetPasswordRequestData): Observable<any>;
+    resetPasswordCode(data: ResetPasswordCodeRequestData): Observable<any>;
     getFavorites(): Observable<any[]>;
     addDishToFavorites(dish: any): Observable<any>;
     removeDishFromFavorites(dish: any): Observable<any[]>;

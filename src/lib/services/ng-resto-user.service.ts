@@ -50,13 +50,8 @@ export class NgRestoUserService {
           this.setAuthToken(result.token);
           this.user.next(result.user);
           this.isLoggedIn.next(true);
-          this.eventer.emitMessageEvent(
-            new EventMessage('success', 'Успех', 'Успешно авторизирован')
-          );
         },
-        error => this.eventer.emitMessageEvent(
-          new EventMessage(error?.type, error?.title, error?.body)
-        )
+        () => { }
       )
     );
 
@@ -68,9 +63,7 @@ export class NgRestoUserService {
         (result: User) => {
           this.user.next(result);
         },
-        error => this.eventer.emitMessageEvent(
-          new EventMessage(error?.type, error?.title, error?.body)
-        )
+        () => { }
       )
     );
   }
@@ -82,9 +75,6 @@ export class NgRestoUserService {
           this.historyItems.next(historyItems);
         },
         error => {
-          this.eventer.emitMessageEvent(
-            new EventMessage(error?.type, error?.title, error?.body)
-          );
           if (error?.type === "Unauthorized") {
             this.deleteAuthToken();
           };
@@ -98,9 +88,7 @@ export class NgRestoUserService {
         (transactions) => {
           this.historyTransactions.next(transactions);
         },
-        error => this.eventer.emitMessageEvent(
-          new EventMessage(error?.type, error?.title, error?.body)
-        )
+        () => { }
       )
     );
   }
@@ -113,9 +101,7 @@ export class NgRestoUserService {
         (result: UpdateProfileResponseData) => {
           this.user.next(result);
         },
-        error => this.eventer.emitMessageEvent(
-          new EventMessage(error?.type, error?.title, error?.body)
-        )
+        () => { }
       )
     )
   }
@@ -126,9 +112,7 @@ export class NgRestoUserService {
         (addresses: Address[]) => {
           this.addresses.next(addresses);
         },
-        error => this.eventer.emitMessageEvent(
-          new EventMessage(error?.type, error?.title, error?.body)
-        )
+        () => { }
       )
     );
   }
@@ -139,10 +123,7 @@ export class NgRestoUserService {
         (addresses: Address[]) => {
           this.addresses.next(addresses);
         },
-
-        error => this.eventer.emitMessageEvent(
-          new EventMessage(error?.type, error?.title, error?.body)
-        )
+        () => { }
       )
     );
   }
@@ -159,9 +140,7 @@ export class NgRestoUserService {
         (addresses: Address[]) => {
           this.addresses.next(addresses);
         },
-        error => this.eventer.emitMessageEvent(
-          new EventMessage(error?.type, error?.title, error?.body)
-        )
+        () => { }
       )
     );
   }
@@ -172,13 +151,8 @@ export class NgRestoUserService {
         (result) => {
           //this.setAuthToken(result.token, false);
           //this.user.next(result.user);
-          this.eventer.emitMessageEvent(
-            new EventMessage(result?.message?.type, result?.message?.title, result?.message?.body)
-          );
         },
-        error => this.eventer.emitMessageEvent(
-          new EventMessage(error?.type, error?.title, error?.body)
-        )
+        () => { }
       )
     );
   }
@@ -191,12 +165,8 @@ export class NgRestoUserService {
   getBonuses() {
     return this.net.post('/bonus/get', {}).pipe(
       tap(
-        (result: any) => {
-          this.bonusSystems.next(result);
-        },
-        error => this.eventer.emitMessageEvent(
-          new EventMessage(error?.type, error?.title, error?.body)
-        )
+        result => this.bonusSystems.next(result),
+        () => { }
       )
     );
   }
@@ -204,12 +174,8 @@ export class NgRestoUserService {
   resetPassword(data: ResetPasswordRequestData) {
     return this.net.post('/reset', data).pipe(
       tap(
-        (result: ResetPasswordResponseData) => {
-
-        },
-        error => this.eventer.emitMessageEvent(
-          new EventMessage(error?.type, error?.title, error?.body)
-        )
+        () => {},
+        () => {}
       )
     );
   }
@@ -217,27 +183,21 @@ export class NgRestoUserService {
   resetPasswordCode(data: ResetPasswordCodeRequestData) {
     return this.net.post('/code', data).pipe(
       tap(
-        (result: ResetPasswordCodeResponseData) => {
-
-        },
-        error => this.eventer.emitMessageEvent(
-          new EventMessage(error?.type, error?.title, error?.body)
-        )
+        () => {        },
+        () => {}
       )
     );
   }
 
 
   getFavorites() {
-    return this.net.get('/user/get/favorites').pipe(
+    return this.net.get<any[]>('/user/get/favorites').pipe(
       tap(
-        (result: any[]) => {
+        result => {
           console.info('getFavorites result', result);
           this.favorites.next(result);
         },
-        error => this.eventer.emitMessageEvent(
-          new EventMessage(error?.type, error?.title, error?.body)
-        )
+        () => {}
       )
     );
   }
@@ -251,12 +211,9 @@ export class NgRestoUserService {
         result => {
           let favoritesUpdated: any[] = this.favorites.getValue();
           favoritesUpdated.push(dish);
-
           this.favorites.next(result);
         },
-        error => this.eventer.emitMessageEvent(
-          new EventMessage(error?.type, error?.title, error?.body)
-        )
+        () => {}
       )
     );
   }
@@ -275,9 +232,7 @@ export class NgRestoUserService {
           console.info('Стало=>>>', favoritesUpdated.length);
           this.favorites.next(result);
         },
-        error => this.eventer.emitMessageEvent(
-          new EventMessage(error?.type, error?.title, error?.body)
-        )
+        () => {}
       )
     );
   }
@@ -336,18 +291,9 @@ export class NgRestoUserService {
       headers: { 'Content-Type': 'multipart/form-data' },
     }).pipe(
       tap(
-        (result) => {
-          this.user.next(result.user);
-          this.eventer.emitMessageEvent(
-            new EventMessage('success', 'Успех', 'Аватар загружен')
-          );
-        },
-        error => this.eventer.emitMessageEvent(
-          new EventMessage(error?.type, error?.title, error?.body)
-        )
+        result => this.user.next(result.user)        ,
+        () => {}
       )
     );
-
   }
-
 }
