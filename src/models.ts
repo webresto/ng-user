@@ -16,16 +16,17 @@ export declare interface ProfileResponseData {
   user: User
 }
 export declare interface Address {
-  id: string,
-  street: string,
-  home: string,
-  name?: string,
-  housing?: string,
-  index?: string,
-  entrance?: string,
-  floor?: string,
-  apartment?: string,
-  doorphone?: string
+  id: string;
+  street?: string;
+  streetId?:string;
+  home: string;
+  name?: string;
+  housing?: string;
+  index?: string;
+  entrance?: string;
+  floor?: string;
+  apartment?: string;
+  doorphone?: string;
 }
 export declare interface AddDishToFavoritesRequestData {
   dishId: string
