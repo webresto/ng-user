@@ -307,12 +307,9 @@
 
     var LS_TOKEN_NAME = 'gf:tkn:v2';
     var NgRestoUserService = /** @class */ (function () {
-        function NgRestoUserService(
-        //private restoStorageService:RestoStorageService,
-        net, eventer) {
+        function NgRestoUserService(net) {
             var _this = this;
             this.net = net;
-            this.eventer = eventer;
             this.authToken = localStorage.getItem(LS_TOKEN_NAME);
             this.rememberMe = false;
             this.user = new rxjs.BehaviorSubject({});
@@ -365,7 +362,7 @@
             return this.net.post('/user/set/user-info', {
                 user: data
             }).pipe(operators.tap(function (result) {
-                _this.user.next(result);
+                _this.user.next(result.user);
             }, function () { }));
         };
         NgRestoUserService.prototype.getAddresses = function () {
@@ -492,7 +489,7 @@
         };
         return NgRestoUserService;
     }());
-    NgRestoUserService.ɵfac = function NgRestoUserService_Factory(t) { return new (t || NgRestoUserService)(i0.ɵɵinject(i1.NetService), i0.ɵɵinject(i1.EventerService)); };
+    NgRestoUserService.ɵfac = function NgRestoUserService_Factory(t) { return new (t || NgRestoUserService)(i0.ɵɵinject(i1.NetService)); };
     NgRestoUserService.ɵprov = i0.ɵɵdefineInjectable({ token: NgRestoUserService, factory: NgRestoUserService.ɵfac, providedIn: 'root' });
     /*@__PURE__*/ (function () {
         i0.ɵsetClassMetadata(NgRestoUserService, [{
@@ -500,7 +497,7 @@
                 args: [{
                         providedIn: 'root'
                     }]
-            }], function () { return [{ type: i1.NetService }, { type: i1.EventerService }]; }, null);
+            }], function () { return [{ type: i1.NetService }]; }, null);
     })();
 
     var SignUpDirective = /** @class */ (function () {

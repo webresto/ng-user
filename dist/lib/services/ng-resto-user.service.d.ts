@@ -1,10 +1,9 @@
 import { BehaviorSubject, Observable } from 'rxjs';
-import { EventerService, NetService } from '@webresto/ng-core';
+import { NetService } from '@webresto/ng-core';
 import { Address, SignInRequestData, SignInResponseData, User, UpdateProfileRequestData, UpdateProfileResponseData, AddAddressRequestData, SignUpRequestData, ResetPasswordRequestData, ResetPasswordCodeRequestData } from '../../models';
 import * as i0 from "@angular/core";
 export declare class NgRestoUserService {
     private net;
-    private eventer;
     private authToken;
     private rememberMe;
     private user;
@@ -15,7 +14,7 @@ export declare class NgRestoUserService {
     private historyTransactions;
     private bonusSystems;
     private isLoggedSubscription;
-    constructor(net: NetService, eventer: EventerService);
+    constructor(net: NetService);
     signIn(data: SignInRequestData, rememberMe?: boolean): Observable<SignInResponseData>;
     getProfile(): Observable<User>;
     getHistory(): Observable<any>;

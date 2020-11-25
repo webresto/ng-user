@@ -1,15 +1,12 @@
 import { ɵɵinject, ɵɵdefineInjectable, ɵsetClassMetadata, Injectable, EventEmitter, ɵɵdirectiveInject, ɵɵdefineDirective, ɵɵlistener, Directive, Input, Output, HostListener, Renderer2, ElementRef, ɵɵdefineNgModule, ɵɵdefineInjector, ɵɵsetNgModuleScope, NgModule } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { filter, switchMap, tap } from 'rxjs/operators';
-import { NetService, EventerService } from '@webresto/ng-core';
+import { NetService } from '@webresto/ng-core';
 
 const LS_TOKEN_NAME = 'gf:tkn:v2';
 class NgRestoUserService {
-    constructor(
-    //private restoStorageService:RestoStorageService,
-    net, eventer) {
+    constructor(net) {
         this.net = net;
-        this.eventer = eventer;
         this.authToken = localStorage.getItem(LS_TOKEN_NAME);
         this.rememberMe = false;
         this.user = new BehaviorSubject({});
@@ -53,7 +50,7 @@ class NgRestoUserService {
         return this.net.post('/user/set/user-info', {
             user: data
         }).pipe(tap((result) => {
-            this.user.next(result);
+            this.user.next(result.user);
         }, () => { }));
     }
     getAddresses() {
@@ -171,14 +168,14 @@ class NgRestoUserService {
         }).pipe(tap(result => this.user.next(result.user), () => { }));
     }
 }
-NgRestoUserService.ɵfac = function NgRestoUserService_Factory(t) { return new (t || NgRestoUserService)(ɵɵinject(NetService), ɵɵinject(EventerService)); };
+NgRestoUserService.ɵfac = function NgRestoUserService_Factory(t) { return new (t || NgRestoUserService)(ɵɵinject(NetService)); };
 NgRestoUserService.ɵprov = ɵɵdefineInjectable({ token: NgRestoUserService, factory: NgRestoUserService.ɵfac, providedIn: 'root' });
 /*@__PURE__*/ (function () { ɵsetClassMetadata(NgRestoUserService, [{
         type: Injectable,
         args: [{
                 providedIn: 'root'
             }]
-    }], function () { return [{ type: NetService }, { type: EventerService }]; }, null); })();
+    }], function () { return [{ type: NetService }]; }, null); })();
 
 class SignUpDirective {
     constructor(ngRestoUserService) {

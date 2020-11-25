@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { filter, switchMap, tap } from 'rxjs/operators';
-import { EventerService, EventMessage, NetService } from '@webresto/ng-core';
+import { NetService } from '@webresto/ng-core';
 import {
   Address, SignInRequestData, SignInResponseData, User, UpdateProfileRequestData,
   UpdateProfileResponseData, AddAddressRequestData, RemoveAddressRequestData, SignUpRequestData,
-  SignUpResponseData, ResetPasswordRequestData, ResetPasswordResponseData, ResetPasswordCodeRequestData,
-  ResetPasswordCodeResponseData, AddDishToFavoritesRequestData, RemoveDishFromFavoritesRequestData
+  ResetPasswordRequestData, ResetPasswordCodeRequestData,
+  AddDishToFavoritesRequestData, RemoveDishFromFavoritesRequestData
 } from '../../models';
 
 const LS_TOKEN_NAME = 'gf:tkn:v2';
@@ -34,11 +34,7 @@ export class NgRestoUserService {
     switchMap(() => this.getHistory())
   ).subscribe(() => { }, () => { }, () => this.isLoggedSubscription.unsubscribe());
 
-  constructor(
-    //private restoStorageService:RestoStorageService,
-    private net: NetService,
-    private eventer: EventerService
-  ) { }
+  constructor(private net: NetService) { }
 
   signIn(data: SignInRequestData, rememberMe: boolean = false) {
 
@@ -99,7 +95,7 @@ export class NgRestoUserService {
     }).pipe(
       tap(
         (result: UpdateProfileResponseData) => {
-          this.user.next(result);
+          this.user.next(result.user);
         },
         () => { }
       )
@@ -174,8 +170,8 @@ export class NgRestoUserService {
   resetPassword(data: ResetPasswordRequestData) {
     return this.net.post('/reset', data).pipe(
       tap(
-        () => {},
-        () => {}
+        () => { },
+        () => { }
       )
     );
   }
@@ -183,8 +179,8 @@ export class NgRestoUserService {
   resetPasswordCode(data: ResetPasswordCodeRequestData) {
     return this.net.post('/code', data).pipe(
       tap(
-        () => {        },
-        () => {}
+        () => { },
+        () => { }
       )
     );
   }
@@ -197,7 +193,7 @@ export class NgRestoUserService {
           console.info('getFavorites result', result);
           this.favorites.next(result);
         },
-        () => {}
+        () => { }
       )
     );
   }
@@ -213,7 +209,7 @@ export class NgRestoUserService {
           favoritesUpdated.push(dish);
           this.favorites.next(result);
         },
-        () => {}
+        () => { }
       )
     );
   }
@@ -232,7 +228,7 @@ export class NgRestoUserService {
           console.info('Стало=>>>', favoritesUpdated.length);
           this.favorites.next(result);
         },
-        () => {}
+        () => { }
       )
     );
   }
@@ -291,8 +287,8 @@ export class NgRestoUserService {
       headers: { 'Content-Type': 'multipart/form-data' },
     }).pipe(
       tap(
-        result => this.user.next(result.user)        ,
-        () => {}
+        result => this.user.next(result.user),
+        () => { }
       )
     );
   }
