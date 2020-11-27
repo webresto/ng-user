@@ -628,18 +628,6 @@ DeleteAddressDirective.ɵdir = ɵɵdefineDirective({ type: DeleteAddressDirectiv
             args: ['click']
         }] }); })();
 
-const DIRECTIVES = [
-    SignUpDirective,
-    SignInDirective,
-    SignOutDirective,
-    ResetPasswordDirective,
-    ResetPasswordCodeDirective,
-    BalanceDirective,
-    ToggleDishToFavoritesDirective,
-    UpdateProfileDirective,
-    AddAddressDirective,
-    DeleteAddressDirective
-];
 class NgUserModule {
 }
 NgUserModule.ɵmod = ɵɵdefineNgModule({ type: NgUserModule });
@@ -668,8 +656,30 @@ NgUserModule.ɵinj = ɵɵdefineInjector({ factory: function NgUserModule_Factory
         args: [{
                 imports: [],
                 providers: [],
-                declarations: [...DIRECTIVES],
-                exports: [...DIRECTIVES]
+                declarations: [
+                    SignUpDirective,
+                    SignInDirective,
+                    SignOutDirective,
+                    ResetPasswordDirective,
+                    ResetPasswordCodeDirective,
+                    BalanceDirective,
+                    ToggleDishToFavoritesDirective,
+                    UpdateProfileDirective,
+                    AddAddressDirective,
+                    DeleteAddressDirective
+                ],
+                exports: [
+                    SignUpDirective,
+                    SignInDirective,
+                    SignOutDirective,
+                    ResetPasswordDirective,
+                    ResetPasswordCodeDirective,
+                    BalanceDirective,
+                    ToggleDishToFavoritesDirective,
+                    UpdateProfileDirective,
+                    AddAddressDirective,
+                    DeleteAddressDirective
+                ]
             }]
     }], null, null); })();
 

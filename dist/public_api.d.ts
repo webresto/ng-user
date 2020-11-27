@@ -1,4 +1,3 @@
-export * from './lib/ng-user.module';
 export * from './lib/directives/sign-up.directive';
 export * from './lib/directives/sign-in.directive';
 export * from './lib/directives/sign-out.directive';
@@ -10,4 +9,5 @@ export * from './lib/directives/update-profile.directive';
 export * from './lib/directives/add-address.directive';
 export * from './lib/directives/delete-address.directive';
 export * from './lib/services/ng-resto-user.service';
+export * from './lib/ng-user.module';
 //# sourceMappingURL=public_api.d.ts.map
