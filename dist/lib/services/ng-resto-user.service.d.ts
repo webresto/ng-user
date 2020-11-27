@@ -1,5 +1,5 @@
 import { BehaviorSubject, Observable } from 'rxjs';
-import { NetService } from '@webresto/ng-core';
+import { NetService } from '@webresto/ng-core/dist';
 import { Address, SignInRequestData, SignInResponseData, User, UpdateProfileRequestData, UpdateProfileResponseData, AddAddressRequestData, SignUpRequestData, ResetPasswordRequestData, ResetPasswordCodeRequestData } from '../../models';
 import * as i0 from "@angular/core";
 export declare class NgRestoUserService {

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { filter, switchMap, tap } from 'rxjs/operators';
-import { NetService } from '@webresto/ng-core';
+import { NetService } from '@webresto/ng-core/dist';
 import {
   Address, SignInRequestData, SignInResponseData, User, UpdateProfileRequestData,
   UpdateProfileResponseData, AddAddressRequestData, RemoveAddressRequestData, SignUpRequestData,

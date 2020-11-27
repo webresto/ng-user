@@ -1,7 +1,7 @@
 import { ɵɵinject, ɵɵdefineInjectable, ɵsetClassMetadata, Injectable, EventEmitter, ɵɵdirectiveInject, ɵɵdefineDirective, ɵɵlistener, Directive, Input, Output, HostListener, Renderer2, ElementRef, ɵɵdefineNgModule, ɵɵdefineInjector, ɵɵsetNgModuleScope, NgModule } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { filter, switchMap, tap } from 'rxjs/operators';
-import { NetService } from '@webresto/ng-core';
+import { NetService } from '@webresto/ng-core/dist';
 
 const LS_TOKEN_NAME = 'gf:tkn:v2';
 class NgRestoUserService {

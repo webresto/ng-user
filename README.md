@@ -6,13 +6,13 @@
 
 ~~~ javascript
 import { NgUserModule } from '@webresto/ng-user';
-import { ngCoreHttpInterceptorProviders } from '@webresto/ng-core';
+import { ngCoreHttpInterceptorProviders } from '@webresto/ng-core/dist';
 import { ngUserHttpInterceptorProviders } from '@webresto/ng-user';
 ~~~
-~~~ javascript  
+~~~ javascript
 imports: [
-  .......... 
-  NgUserModule 
+  ..........
+  NgUserModule
 ],
 providers: [
   ..........
@@ -35,15 +35,15 @@ constructor(
       .subscribe(isLoggedIn => {
         ...........
       });
-    
-    // Получить данные профиля и подписатся на изменения  
+
+    // Получить данные профиля и подписатся на изменения
     this.userService
       .userProfile()
       .subscribe(user => {
         this.user = user;
         ...........
       });
-      
+
     // Получить историю заказов
     this.userService
       .userHistory()
@@ -51,7 +51,7 @@ constructor(
         this.historyItems = historyItems;
         ...........
       });
-      
+
     // Прописать токен авторизации принудительно
     // Автоматически подменятся данные профиля и избранные
     this.usrtService.setAuthToken(token)
@@ -74,7 +74,7 @@ constructor(
         [password]="password.value"
         [captcha]="captcha"
         [rememberMe]="rememberMe.value"
-    
+
         (success)="...."
         (error)="....">Войти</button>
 ~~~
@@ -94,7 +94,7 @@ constructor(
         [email]="email.value"
         [password]="password.value"
         [captcha]="captcha"
-    
+
         (success)="...."
         (error)="....">Регистрация</button>
 ~~~
@@ -118,7 +118,7 @@ constructor(
         [floor]="floor.value"
         [apartment]="apartment.value"
         [doorphone]="doorphone.value"
-    
+
         (success)="...."
         (error)="....">Регистрация</button>
 ~~~
@@ -153,7 +153,7 @@ constructor(
  ........
  <button appToggleDishToFavorites
         [dish]="dish"
-        
+
         (change)="...."
         (addedToFavorites)="...."
         (removedFromFavorites)="...."
