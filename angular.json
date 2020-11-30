@@ -127,7 +127,7 @@
       "projectType": "library",
       "root": "projects/webresto/ng-user",
       "sourceRoot": "projects/webresto/ng-user/src",
-      "prefix": "lib",
+      "prefix": "rst",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",

@@ -5,7 +5,7 @@ import {
 import { NgRestoUserService } from '../services/ng-resto-user.service';
 
 @Directive({
-  selector: '[appToggleDishToFavorites]'
+  selector: '[rstToggleDishToFavorites]'
 })
 export class ToggleDishToFavoritesDirective {
 

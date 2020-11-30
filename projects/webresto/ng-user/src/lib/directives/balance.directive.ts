@@ -2,7 +2,7 @@ import { Directive, Renderer2, ElementRef } from '@angular/core';
 import { NgRestoUserService } from '../services/ng-resto-user.service';
 
 @Directive({
-  selector: '[appBalance]'
+  selector: '[rstBalance]'
 })
 export class BalanceDirective {
 

@@ -8,6 +8,6 @@ export declare class BalanceDirective {
     amount: string;
     constructor(renderer: Renderer2, el: ElementRef, ngRestoUserService: NgRestoUserService);
     static ɵfac: i0.ɵɵFactoryDef<BalanceDirective, never>;
-    static ɵdir: i0.ɵɵDirectiveDefWithMeta<BalanceDirective, "[appBalance]", never, {}, {}, never>;
+    static ɵdir: i0.ɵɵDirectiveDefWithMeta<BalanceDirective, "[rstBalance]", never, {}, {}, never>;
 }
 //# sourceMappingURL=balance.directive.d.ts.map

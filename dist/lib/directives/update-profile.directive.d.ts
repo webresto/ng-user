@@ -13,6 +13,6 @@ export declare class UpdateProfileDirective {
     constructor(ngRestoUserService: NgRestoUserService);
     onClick(): void;
     static ɵfac: i0.ɵɵFactoryDef<UpdateProfileDirective, never>;
-    static ɵdir: i0.ɵɵDirectiveDefWithMeta<UpdateProfileDirective, "[appUpdateProfile]", never, { "name": "name"; "phone": "phone"; "email": "email"; "additionalInfo": "additionalInfo"; "birthday": "birthday"; }, { "success": "success"; "error": "error"; }, never>;
+    static ɵdir: i0.ɵɵDirectiveDefWithMeta<UpdateProfileDirective, "[rstUpdateProfile]", never, { "name": "name"; "phone": "phone"; "email": "email"; "additionalInfo": "additionalInfo"; "birthday": "birthday"; }, { "success": "success"; "error": "error"; }, never>;
 }
 //# sourceMappingURL=update-profile.directive.d.ts.map

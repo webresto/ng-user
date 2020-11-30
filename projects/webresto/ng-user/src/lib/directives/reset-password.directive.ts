@@ -3,7 +3,7 @@ import { ResetPasswordRequestData } from '../../models';
 import { NgRestoUserService } from '../services/ng-resto-user.service';
 
 @Directive({
-  selector: '[appResetPassword]'
+  selector: '[rstResetPassword]'
 })
 export class ResetPasswordDirective {
 

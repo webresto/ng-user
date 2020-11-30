@@ -18,6 +18,6 @@ export declare class ToggleDishToFavoritesDirective {
     addDishToFavorites(): void;
     removeDishFromFavorites(): void;
     static ɵfac: i0.ɵɵFactoryDef<ToggleDishToFavoritesDirective, never>;
-    static ɵdir: i0.ɵɵDirectiveDefWithMeta<ToggleDishToFavoritesDirective, "[appToggleDishToFavorites]", never, { "dish": "dish"; }, { "addedToFavorites": "addedToFavorites"; "removedFromFavorites": "removedFromFavorites"; "change": "change"; "error": "error"; }, never>;
+    static ɵdir: i0.ɵɵDirectiveDefWithMeta<ToggleDishToFavoritesDirective, "[rstToggleDishToFavorites]", never, { "dish": "dish"; }, { "addedToFavorites": "addedToFavorites"; "removedFromFavorites": "removedFromFavorites"; "change": "change"; "error": "error"; }, never>;
 }
 //# sourceMappingURL=toggle-dish-to-favorites.directive.d.ts.map

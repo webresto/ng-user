@@ -10,6 +10,6 @@ export declare class ResetPasswordDirective {
     constructor(ngRestoUserService: NgRestoUserService);
     onClick(): void;
     static ɵfac: i0.ɵɵFactoryDef<ResetPasswordDirective, never>;
-    static ɵdir: i0.ɵɵDirectiveDefWithMeta<ResetPasswordDirective, "[appResetPassword]", never, { "phone": "phone"; "captcha": "captcha"; }, { "success": "success"; "error": "error"; }, never>;
+    static ɵdir: i0.ɵɵDirectiveDefWithMeta<ResetPasswordDirective, "[rstResetPassword]", never, { "phone": "phone"; "captcha": "captcha"; }, { "success": "success"; "error": "error"; }, never>;
 }
 //# sourceMappingURL=reset-password.directive.d.ts.map

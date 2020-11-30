@@ -2,7 +2,7 @@ import { Directive, HostListener } from '@angular/core';
 import { NgRestoUserService } from '../services/ng-resto-user.service';
 
 @Directive({
-  selector: '[appSignOut]'
+  selector: '[rstSignOut]'
 })
 export class SignOutDirective {
 

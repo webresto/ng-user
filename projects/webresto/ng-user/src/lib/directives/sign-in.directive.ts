@@ -3,7 +3,7 @@ import { SignInRequestData } from '../../models';
 import { NgRestoUserService } from '../services/ng-resto-user.service';
 
 @Directive({
-  selector: '[appSignIn]'
+  selector: '[rstSignIn]'
 })
 export class SignInDirective {
 

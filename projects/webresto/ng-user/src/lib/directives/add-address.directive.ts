@@ -3,7 +3,7 @@ import { AddAddressRequestData } from '../../models';
 import { NgRestoUserService } from '../services/ng-resto-user.service';
 
 @Directive({
-  selector: '[appAddAddress]'
+  selector: '[rstAddAddress]'
 })
 export class AddAddressDirective {
 

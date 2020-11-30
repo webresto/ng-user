@@ -3,7 +3,7 @@ import { UpdateProfileRequestData } from '../../models';
 import { NgRestoUserService } from '../services/ng-resto-user.service';
 
 @Directive({
-  selector: '[appUpdateProfile]'
+  selector: '[rstUpdateProfile]'
 })
 export class UpdateProfileDirective {
 

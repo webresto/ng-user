@@ -3,7 +3,7 @@ import { Address } from '../../models';
 import { NgRestoUserService } from '../services/ng-resto-user.service';
 
 @Directive({
-  selector: '[appDeleteAddress]'
+  selector: '[rstDeleteAddress]'
 })
 export class DeleteAddressDirective {
 

@@ -13,6 +13,6 @@ export declare class SignInDirective {
     onClick(): void;
     preparePhone(phone: any): any;
     static ɵfac: i0.ɵɵFactoryDef<SignInDirective, never>;
-    static ɵdir: i0.ɵɵDirectiveDefWithMeta<SignInDirective, "[appSignIn]", never, { "phone": "phone"; "password": "password"; "captcha": "captcha"; "rememberMe": "rememberMe"; }, { "success": "success"; "error": "error"; }, never>;
+    static ɵdir: i0.ɵɵDirectiveDefWithMeta<SignInDirective, "[rstSignIn]", never, { "phone": "phone"; "password": "password"; "captcha": "captcha"; "rememberMe": "rememberMe"; }, { "success": "success"; "error": "error"; }, never>;
 }
 //# sourceMappingURL=sign-in.directive.d.ts.map

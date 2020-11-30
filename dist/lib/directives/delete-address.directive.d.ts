@@ -10,6 +10,6 @@ export declare class DeleteAddressDirective {
     constructor(ngRestoUserService: NgRestoUserService);
     onClick(): void;
     static ɵfac: i0.ɵɵFactoryDef<DeleteAddressDirective, never>;
-    static ɵdir: i0.ɵɵDirectiveDefWithMeta<DeleteAddressDirective, "[appDeleteAddress]", never, { "address": "address"; }, { "success": "success"; "error": "error"; }, never>;
+    static ɵdir: i0.ɵɵDirectiveDefWithMeta<DeleteAddressDirective, "[rstDeleteAddress]", never, { "address": "address"; }, { "success": "success"; "error": "error"; }, never>;
 }
 //# sourceMappingURL=delete-address.directive.d.ts.map
