@@ -19,4 +19,3 @@ export declare class AddAddressDirective {
     static ɵfac: i0.ɵɵFactoryDef<AddAddressDirective, never>;
     static ɵdir: i0.ɵɵDirectiveDefWithMeta<AddAddressDirective, "[rstAddAddress]", never, { "street": "street"; "home": "home"; "name": "name"; "housing": "housing"; "index": "index"; "entrance": "entrance"; "floor": "floor"; "apartment": "apartment"; "doorphone": "doorphone"; }, { "success": "success"; "error": "error"; }, never>;
 }
-//# sourceMappingURL=add-address.directive.d.ts.map

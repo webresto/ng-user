@@ -13,4 +13,3 @@ export declare class ResetPasswordCodeDirective {
     static ɵfac: i0.ɵɵFactoryDef<ResetPasswordCodeDirective, never>;
     static ɵdir: i0.ɵɵDirectiveDefWithMeta<ResetPasswordCodeDirective, "[rstResetPasswordCode]", never, { "userId": "userId"; "code": "code"; "password": "password"; }, { "success": "success"; "error": "error"; }, never>;
 }
-//# sourceMappingURL=reset-password-code.directive.d.ts.map

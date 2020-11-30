@@ -15,4 +15,3 @@ export declare class SignInDirective {
     static ɵfac: i0.ɵɵFactoryDef<SignInDirective, never>;
     static ɵdir: i0.ɵɵDirectiveDefWithMeta<SignInDirective, "[rstSignIn]", never, { "phone": "phone"; "password": "password"; "captcha": "captcha"; "rememberMe": "rememberMe"; }, { "success": "success"; "error": "error"; }, never>;
 }
-//# sourceMappingURL=sign-in.directive.d.ts.map

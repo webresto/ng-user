@@ -44,4 +44,3 @@ export declare class NgRestoUserService {
     static ɵfac: i0.ɵɵFactoryDef<NgRestoUserService, never>;
     static ɵprov: i0.ɵɵInjectableDef<NgRestoUserService>;
 }
-//# sourceMappingURL=ng-resto-user.service.d.ts.map

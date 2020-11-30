@@ -94,4 +94,3 @@ export declare interface RemoveAddressRequestData {
 export declare interface RemoveDishFromFavoritesRequestData {
     dishId: string;
 }
-//# sourceMappingURL=models.d.ts.map

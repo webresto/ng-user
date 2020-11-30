@@ -1,1 +1,0 @@
-{"version":3,"file":"sign-out.directive.d.ts","sourceRoot":"../../projects/webresto/ng-user/src/","sources":["lib/directives/sign-out.directive.ts"],"names":[],"mappings":"AACA,OAAO,EAAE,kBAAkB,EAAE,MAAM,mCAAmC,CAAC;;AAEvE,qBAGa,gBAAgB;IAGzB,OAAO,CAAC,kBAAkB;gBAAlB,kBAAkB,EAAE,kBAAkB;IAIhD,OAAO;iCAPI,gBAAgB;2CAAhB,gBAAgB;CAW5B"}

@@ -10,4 +10,3 @@ export declare class BalanceDirective {
     static ɵfac: i0.ɵɵFactoryDef<BalanceDirective, never>;
     static ɵdir: i0.ɵɵDirectiveDefWithMeta<BalanceDirective, "[rstBalance]", never, {}, {}, never>;
 }
-//# sourceMappingURL=balance.directive.d.ts.map

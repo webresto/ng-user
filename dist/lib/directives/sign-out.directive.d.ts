@@ -7,4 +7,3 @@ export declare class SignOutDirective {
     static ɵfac: i0.ɵɵFactoryDef<SignOutDirective, never>;
     static ɵdir: i0.ɵɵDirectiveDefWithMeta<SignOutDirective, "[rstSignOut]", never, {}, {}, never>;
 }
-//# sourceMappingURL=sign-out.directive.d.ts.map
