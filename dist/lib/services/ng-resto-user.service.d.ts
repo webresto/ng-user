@@ -1,7 +1,6 @@
 import { BehaviorSubject, Observable } from 'rxjs';
 import { NetService } from '@webresto/ng-core/dist';
 import { Address, SignInRequestData, SignInResponseData, User, UpdateProfileRequestData, UpdateProfileResponseData, AddAddressRequestData, SignUpRequestData, ResetPasswordRequestData, ResetPasswordCodeRequestData } from '../../models';
-import * as i0 from "@angular/core";
 export declare class NgRestoUserService {
     private net;
     private authToken;
@@ -41,6 +40,4 @@ export declare class NgRestoUserService {
     setAuthToken(authToken: string): void;
     deleteAuthToken(): void;
     saveAvatar(avatar: File): Observable<any>;
-    static ɵfac: i0.ɵɵFactoryDef<NgRestoUserService, never>;
-    static ɵprov: i0.ɵɵInjectableDef<NgRestoUserService>;
 }

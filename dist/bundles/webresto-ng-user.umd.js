@@ -1,8 +1,8 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('rxjs'), require('rxjs/operators'), require('@webresto/ng-core/dist')) :
-    typeof define === 'function' && define.amd ? define('@webresto/ng-user', ['exports', '@angular/core', 'rxjs', 'rxjs/operators', '@webresto/ng-core/dist'], factory) :
-    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory((global.webresto = global.webresto || {}, global.webresto['ng-user'] = {}), global.ng.core, global.rxjs, global.rxjs.operators, global.i1));
-}(this, (function (exports, i0, rxjs, operators, i1) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('rxjs'), require('rxjs/operators'), require('@webresto/ng-core/dist'), require('@webresto/ng-core/dist/lib/services/index')) :
+    typeof define === 'function' && define.amd ? define('@webresto/ng-user', ['exports', '@angular/core', 'rxjs', 'rxjs/operators', '@webresto/ng-core/dist', '@webresto/ng-core/dist/lib/services/index'], factory) :
+    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory((global.webresto = global.webresto || {}, global.webresto['ng-user'] = {}), global.ng.core, global.rxjs, global.rxjs.operators, global.dist, global.i1));
+}(this, (function (exports, i0, rxjs, operators, dist, i1) { 'use strict';
 
     var LS_TOKEN_NAME = 'gf:tkn:v2';
     var NgRestoUserService = /** @class */ (function () {
@@ -188,16 +188,15 @@
         };
         return NgRestoUserService;
     }());
-    NgRestoUserService.ɵfac = function NgRestoUserService_Factory(t) { return new (t || NgRestoUserService)(i0.ɵɵinject(i1.NetService)); };
-    NgRestoUserService.ɵprov = i0.ɵɵdefineInjectable({ token: NgRestoUserService, factory: NgRestoUserService.ɵfac, providedIn: 'root' });
-    /*@__PURE__*/ (function () {
-        i0.ɵsetClassMetadata(NgRestoUserService, [{
-                type: i0.Injectable,
-                args: [{
-                        providedIn: 'root'
-                    }]
-            }], function () { return [{ type: i1.NetService }]; }, null);
-    })();
+    NgRestoUserService.ɵprov = i0.ɵɵdefineInjectable({ factory: function NgRestoUserService_Factory() { return new NgRestoUserService(i0.ɵɵinject(i1.NetService)); }, token: NgRestoUserService, providedIn: "root" });
+    NgRestoUserService.decorators = [
+        { type: i0.Injectable, args: [{
+                    providedIn: 'root'
+                },] }
+    ];
+    NgRestoUserService.ctorParameters = function () { return [
+        { type: dist.NetService }
+    ]; };
 
     var SignUpDirective = /** @class */ (function () {
         function SignUpDirective(ngRestoUserService) {
@@ -224,37 +223,24 @@
         };
         return SignUpDirective;
     }());
-    SignUpDirective.ɵfac = function SignUpDirective_Factory(t) { return new (t || SignUpDirective)(i0.ɵɵdirectiveInject(NgRestoUserService)); };
-    SignUpDirective.ɵdir = i0.ɵɵdefineDirective({ type: SignUpDirective, selectors: [["", "rstSignUp", ""]], hostBindings: function SignUpDirective_HostBindings(rf, ctx) {
-            if (rf & 1) {
-                i0.ɵɵlistener("click", function SignUpDirective_click_HostBindingHandler() { return ctx.onClick(); });
-            }
-        }, inputs: { name: "name", phone: "phone", email: "email", password: "password", captcha: "captcha" }, outputs: { success: "success", error: "error" } });
-    /*@__PURE__*/ (function () {
-        i0.ɵsetClassMetadata(SignUpDirective, [{
-                type: i0.Directive,
-                args: [{
-                        selector: '[rstSignUp]'
-                    }]
-            }], function () { return [{ type: NgRestoUserService }]; }, { name: [{
-                    type: i0.Input
-                }], phone: [{
-                    type: i0.Input
-                }], email: [{
-                    type: i0.Input
-                }], password: [{
-                    type: i0.Input
-                }], captcha: [{
-                    type: i0.Input
-                }], success: [{
-                    type: i0.Output
-                }], error: [{
-                    type: i0.Output
-                }], onClick: [{
-                    type: i0.HostListener,
-                    args: ['click']
-                }] });
-    })();
+    SignUpDirective.decorators = [
+        { type: i0.Directive, args: [{
+                    selector: '[rstSignUp]'
+                },] }
+    ];
+    SignUpDirective.ctorParameters = function () { return [
+        { type: NgRestoUserService }
+    ]; };
+    SignUpDirective.propDecorators = {
+        name: [{ type: i0.Input }],
+        phone: [{ type: i0.Input }],
+        email: [{ type: i0.Input }],
+        password: [{ type: i0.Input }],
+        captcha: [{ type: i0.Input }],
+        success: [{ type: i0.Output }],
+        error: [{ type: i0.Output }],
+        onClick: [{ type: i0.HostListener, args: ['click',] }]
+    };
 
     var SignInDirective = /** @class */ (function () {
         function SignInDirective(ngRestoUserService) {
@@ -279,35 +265,23 @@
         };
         return SignInDirective;
     }());
-    SignInDirective.ɵfac = function SignInDirective_Factory(t) { return new (t || SignInDirective)(i0.ɵɵdirectiveInject(NgRestoUserService)); };
-    SignInDirective.ɵdir = i0.ɵɵdefineDirective({ type: SignInDirective, selectors: [["", "rstSignIn", ""]], hostBindings: function SignInDirective_HostBindings(rf, ctx) {
-            if (rf & 1) {
-                i0.ɵɵlistener("click", function SignInDirective_click_HostBindingHandler() { return ctx.onClick(); });
-            }
-        }, inputs: { phone: "phone", password: "password", captcha: "captcha", rememberMe: "rememberMe" }, outputs: { success: "success", error: "error" } });
-    /*@__PURE__*/ (function () {
-        i0.ɵsetClassMetadata(SignInDirective, [{
-                type: i0.Directive,
-                args: [{
-                        selector: '[rstSignIn]'
-                    }]
-            }], function () { return [{ type: NgRestoUserService }]; }, { phone: [{
-                    type: i0.Input
-                }], password: [{
-                    type: i0.Input
-                }], captcha: [{
-                    type: i0.Input
-                }], rememberMe: [{
-                    type: i0.Input
-                }], success: [{
-                    type: i0.Output
-                }], error: [{
-                    type: i0.Output
-                }], onClick: [{
-                    type: i0.HostListener,
-                    args: ['click']
-                }] });
-    })();
+    SignInDirective.decorators = [
+        { type: i0.Directive, args: [{
+                    selector: '[rstSignIn]'
+                },] }
+    ];
+    SignInDirective.ctorParameters = function () { return [
+        { type: NgRestoUserService }
+    ]; };
+    SignInDirective.propDecorators = {
+        phone: [{ type: i0.Input }],
+        password: [{ type: i0.Input }],
+        captcha: [{ type: i0.Input }],
+        rememberMe: [{ type: i0.Input }],
+        success: [{ type: i0.Output }],
+        error: [{ type: i0.Output }],
+        onClick: [{ type: i0.HostListener, args: ['click',] }]
+    };
 
     var SignOutDirective = /** @class */ (function () {
         function SignOutDirective(ngRestoUserService) {
@@ -318,23 +292,17 @@
         };
         return SignOutDirective;
     }());
-    SignOutDirective.ɵfac = function SignOutDirective_Factory(t) { return new (t || SignOutDirective)(i0.ɵɵdirectiveInject(NgRestoUserService)); };
-    SignOutDirective.ɵdir = i0.ɵɵdefineDirective({ type: SignOutDirective, selectors: [["", "rstSignOut", ""]], hostBindings: function SignOutDirective_HostBindings(rf, ctx) {
-            if (rf & 1) {
-                i0.ɵɵlistener("click", function SignOutDirective_click_HostBindingHandler() { return ctx.onClick(); });
-            }
-        } });
-    /*@__PURE__*/ (function () {
-        i0.ɵsetClassMetadata(SignOutDirective, [{
-                type: i0.Directive,
-                args: [{
-                        selector: '[rstSignOut]'
-                    }]
-            }], function () { return [{ type: NgRestoUserService }]; }, { onClick: [{
-                    type: i0.HostListener,
-                    args: ['click']
-                }] });
-    })();
+    SignOutDirective.decorators = [
+        { type: i0.Directive, args: [{
+                    selector: '[rstSignOut]'
+                },] }
+    ];
+    SignOutDirective.ctorParameters = function () { return [
+        { type: NgRestoUserService }
+    ]; };
+    SignOutDirective.propDecorators = {
+        onClick: [{ type: i0.HostListener, args: ['click',] }]
+    };
 
     var ResetPasswordDirective = /** @class */ (function () {
         function ResetPasswordDirective(ngRestoUserService) {
@@ -354,31 +322,21 @@
         };
         return ResetPasswordDirective;
     }());
-    ResetPasswordDirective.ɵfac = function ResetPasswordDirective_Factory(t) { return new (t || ResetPasswordDirective)(i0.ɵɵdirectiveInject(NgRestoUserService)); };
-    ResetPasswordDirective.ɵdir = i0.ɵɵdefineDirective({ type: ResetPasswordDirective, selectors: [["", "rstResetPassword", ""]], hostBindings: function ResetPasswordDirective_HostBindings(rf, ctx) {
-            if (rf & 1) {
-                i0.ɵɵlistener("click", function ResetPasswordDirective_click_HostBindingHandler() { return ctx.onClick(); });
-            }
-        }, inputs: { phone: "phone", captcha: "captcha" }, outputs: { success: "success", error: "error" } });
-    /*@__PURE__*/ (function () {
-        i0.ɵsetClassMetadata(ResetPasswordDirective, [{
-                type: i0.Directive,
-                args: [{
-                        selector: '[rstResetPassword]'
-                    }]
-            }], function () { return [{ type: NgRestoUserService }]; }, { phone: [{
-                    type: i0.Input
-                }], captcha: [{
-                    type: i0.Input
-                }], success: [{
-                    type: i0.Output
-                }], error: [{
-                    type: i0.Output
-                }], onClick: [{
-                    type: i0.HostListener,
-                    args: ['click']
-                }] });
-    })();
+    ResetPasswordDirective.decorators = [
+        { type: i0.Directive, args: [{
+                    selector: '[rstResetPassword]'
+                },] }
+    ];
+    ResetPasswordDirective.ctorParameters = function () { return [
+        { type: NgRestoUserService }
+    ]; };
+    ResetPasswordDirective.propDecorators = {
+        phone: [{ type: i0.Input }],
+        captcha: [{ type: i0.Input }],
+        success: [{ type: i0.Output }],
+        error: [{ type: i0.Output }],
+        onClick: [{ type: i0.HostListener, args: ['click',] }]
+    };
 
     var ResetPasswordCodeDirective = /** @class */ (function () {
         function ResetPasswordCodeDirective(ngRestoUserService) {
@@ -399,33 +357,22 @@
         };
         return ResetPasswordCodeDirective;
     }());
-    ResetPasswordCodeDirective.ɵfac = function ResetPasswordCodeDirective_Factory(t) { return new (t || ResetPasswordCodeDirective)(i0.ɵɵdirectiveInject(NgRestoUserService)); };
-    ResetPasswordCodeDirective.ɵdir = i0.ɵɵdefineDirective({ type: ResetPasswordCodeDirective, selectors: [["", "rstResetPasswordCode", ""]], hostBindings: function ResetPasswordCodeDirective_HostBindings(rf, ctx) {
-            if (rf & 1) {
-                i0.ɵɵlistener("click", function ResetPasswordCodeDirective_click_HostBindingHandler() { return ctx.onClick(); });
-            }
-        }, inputs: { userId: "userId", code: "code", password: "password" }, outputs: { success: "success", error: "error" } });
-    /*@__PURE__*/ (function () {
-        i0.ɵsetClassMetadata(ResetPasswordCodeDirective, [{
-                type: i0.Directive,
-                args: [{
-                        selector: '[rstResetPasswordCode]'
-                    }]
-            }], function () { return [{ type: NgRestoUserService }]; }, { userId: [{
-                    type: i0.Input
-                }], code: [{
-                    type: i0.Input
-                }], password: [{
-                    type: i0.Input
-                }], success: [{
-                    type: i0.Output
-                }], error: [{
-                    type: i0.Output
-                }], onClick: [{
-                    type: i0.HostListener,
-                    args: ['click']
-                }] });
-    })();
+    ResetPasswordCodeDirective.decorators = [
+        { type: i0.Directive, args: [{
+                    selector: '[rstResetPasswordCode]'
+                },] }
+    ];
+    ResetPasswordCodeDirective.ctorParameters = function () { return [
+        { type: NgRestoUserService }
+    ]; };
+    ResetPasswordCodeDirective.propDecorators = {
+        userId: [{ type: i0.Input }],
+        code: [{ type: i0.Input }],
+        password: [{ type: i0.Input }],
+        success: [{ type: i0.Output }],
+        error: [{ type: i0.Output }],
+        onClick: [{ type: i0.HostListener, args: ['click',] }]
+    };
 
     var BalanceDirective = /** @class */ (function () {
         function BalanceDirective(renderer, el, ngRestoUserService) {
@@ -449,16 +396,16 @@
         }
         return BalanceDirective;
     }());
-    BalanceDirective.ɵfac = function BalanceDirective_Factory(t) { return new (t || BalanceDirective)(i0.ɵɵdirectiveInject(i0.Renderer2), i0.ɵɵdirectiveInject(i0.ElementRef), i0.ɵɵdirectiveInject(NgRestoUserService)); };
-    BalanceDirective.ɵdir = i0.ɵɵdefineDirective({ type: BalanceDirective, selectors: [["", "rstBalance", ""]] });
-    /*@__PURE__*/ (function () {
-        i0.ɵsetClassMetadata(BalanceDirective, [{
-                type: i0.Directive,
-                args: [{
-                        selector: '[rstBalance]'
-                    }]
-            }], function () { return [{ type: i0.Renderer2 }, { type: i0.ElementRef }, { type: NgRestoUserService }]; }, null);
-    })();
+    BalanceDirective.decorators = [
+        { type: i0.Directive, args: [{
+                    selector: '[rstBalance]'
+                },] }
+    ];
+    BalanceDirective.ctorParameters = function () { return [
+        { type: i0.Renderer2 },
+        { type: i0.ElementRef },
+        { type: NgRestoUserService }
+    ]; };
 
     var ToggleDishToFavoritesDirective = /** @class */ (function () {
         function ToggleDishToFavoritesDirective(ngRestoUserService, element, renderer) {
@@ -517,33 +464,24 @@
         };
         return ToggleDishToFavoritesDirective;
     }());
-    ToggleDishToFavoritesDirective.ɵfac = function ToggleDishToFavoritesDirective_Factory(t) { return new (t || ToggleDishToFavoritesDirective)(i0.ɵɵdirectiveInject(NgRestoUserService), i0.ɵɵdirectiveInject(i0.ElementRef), i0.ɵɵdirectiveInject(i0.Renderer2)); };
-    ToggleDishToFavoritesDirective.ɵdir = i0.ɵɵdefineDirective({ type: ToggleDishToFavoritesDirective, selectors: [["", "rstToggleDishToFavorites", ""]], hostBindings: function ToggleDishToFavoritesDirective_HostBindings(rf, ctx) {
-            if (rf & 1) {
-                i0.ɵɵlistener("click", function ToggleDishToFavoritesDirective_click_HostBindingHandler() { return ctx.onClick(); });
-            }
-        }, inputs: { dish: "dish" }, outputs: { addedToFavorites: "addedToFavorites", removedFromFavorites: "removedFromFavorites", change: "change", error: "error" } });
-    /*@__PURE__*/ (function () {
-        i0.ɵsetClassMetadata(ToggleDishToFavoritesDirective, [{
-                type: i0.Directive,
-                args: [{
-                        selector: '[rstToggleDishToFavorites]'
-                    }]
-            }], function () { return [{ type: NgRestoUserService }, { type: i0.ElementRef }, { type: i0.Renderer2 }]; }, { dish: [{
-                    type: i0.Input
-                }], addedToFavorites: [{
-                    type: i0.Output
-                }], removedFromFavorites: [{
-                    type: i0.Output
-                }], change: [{
-                    type: i0.Output
-                }], error: [{
-                    type: i0.Output
-                }], onClick: [{
-                    type: i0.HostListener,
-                    args: ['click']
-                }] });
-    })();
+    ToggleDishToFavoritesDirective.decorators = [
+        { type: i0.Directive, args: [{
+                    selector: '[rstToggleDishToFavorites]'
+                },] }
+    ];
+    ToggleDishToFavoritesDirective.ctorParameters = function () { return [
+        { type: NgRestoUserService },
+        { type: i0.ElementRef },
+        { type: i0.Renderer2 }
+    ]; };
+    ToggleDishToFavoritesDirective.propDecorators = {
+        dish: [{ type: i0.Input }],
+        addedToFavorites: [{ type: i0.Output }],
+        removedFromFavorites: [{ type: i0.Output }],
+        change: [{ type: i0.Output }],
+        error: [{ type: i0.Output }],
+        onClick: [{ type: i0.HostListener, args: ['click',] }]
+    };
 
     var UpdateProfileDirective = /** @class */ (function () {
         function UpdateProfileDirective(ngRestoUserService) {
@@ -566,37 +504,24 @@
         };
         return UpdateProfileDirective;
     }());
-    UpdateProfileDirective.ɵfac = function UpdateProfileDirective_Factory(t) { return new (t || UpdateProfileDirective)(i0.ɵɵdirectiveInject(NgRestoUserService)); };
-    UpdateProfileDirective.ɵdir = i0.ɵɵdefineDirective({ type: UpdateProfileDirective, selectors: [["", "rstUpdateProfile", ""]], hostBindings: function UpdateProfileDirective_HostBindings(rf, ctx) {
-            if (rf & 1) {
-                i0.ɵɵlistener("click", function UpdateProfileDirective_click_HostBindingHandler() { return ctx.onClick(); });
-            }
-        }, inputs: { name: "name", phone: "phone", email: "email", additionalInfo: "additionalInfo", birthday: "birthday" }, outputs: { success: "success", error: "error" } });
-    /*@__PURE__*/ (function () {
-        i0.ɵsetClassMetadata(UpdateProfileDirective, [{
-                type: i0.Directive,
-                args: [{
-                        selector: '[rstUpdateProfile]'
-                    }]
-            }], function () { return [{ type: NgRestoUserService }]; }, { name: [{
-                    type: i0.Input
-                }], phone: [{
-                    type: i0.Input
-                }], email: [{
-                    type: i0.Input
-                }], additionalInfo: [{
-                    type: i0.Input
-                }], birthday: [{
-                    type: i0.Input
-                }], success: [{
-                    type: i0.Output
-                }], error: [{
-                    type: i0.Output
-                }], onClick: [{
-                    type: i0.HostListener,
-                    args: ['click']
-                }] });
-    })();
+    UpdateProfileDirective.decorators = [
+        { type: i0.Directive, args: [{
+                    selector: '[rstUpdateProfile]'
+                },] }
+    ];
+    UpdateProfileDirective.ctorParameters = function () { return [
+        { type: NgRestoUserService }
+    ]; };
+    UpdateProfileDirective.propDecorators = {
+        name: [{ type: i0.Input }],
+        phone: [{ type: i0.Input }],
+        email: [{ type: i0.Input }],
+        additionalInfo: [{ type: i0.Input }],
+        birthday: [{ type: i0.Input }],
+        success: [{ type: i0.Output }],
+        error: [{ type: i0.Output }],
+        onClick: [{ type: i0.HostListener, args: ['click',] }]
+    };
 
     var AddAddressDirective = /** @class */ (function () {
         function AddAddressDirective(ngRestoUserService) {
@@ -631,45 +556,28 @@
         };
         return AddAddressDirective;
     }());
-    AddAddressDirective.ɵfac = function AddAddressDirective_Factory(t) { return new (t || AddAddressDirective)(i0.ɵɵdirectiveInject(NgRestoUserService)); };
-    AddAddressDirective.ɵdir = i0.ɵɵdefineDirective({ type: AddAddressDirective, selectors: [["", "rstAddAddress", ""]], hostBindings: function AddAddressDirective_HostBindings(rf, ctx) {
-            if (rf & 1) {
-                i0.ɵɵlistener("click", function AddAddressDirective_click_HostBindingHandler() { return ctx.onClick(); });
-            }
-        }, inputs: { street: "street", home: "home", name: "name", housing: "housing", index: "index", entrance: "entrance", floor: "floor", apartment: "apartment", doorphone: "doorphone" }, outputs: { success: "success", error: "error" } });
-    /*@__PURE__*/ (function () {
-        i0.ɵsetClassMetadata(AddAddressDirective, [{
-                type: i0.Directive,
-                args: [{
-                        selector: '[rstAddAddress]'
-                    }]
-            }], function () { return [{ type: NgRestoUserService }]; }, { street: [{
-                    type: i0.Input
-                }], home: [{
-                    type: i0.Input
-                }], name: [{
-                    type: i0.Input
-                }], housing: [{
-                    type: i0.Input
-                }], index: [{
-                    type: i0.Input
-                }], entrance: [{
-                    type: i0.Input
-                }], floor: [{
-                    type: i0.Input
-                }], apartment: [{
-                    type: i0.Input
-                }], doorphone: [{
-                    type: i0.Input
-                }], success: [{
-                    type: i0.Output
-                }], error: [{
-                    type: i0.Output
-                }], onClick: [{
-                    type: i0.HostListener,
-                    args: ['click']
-                }] });
-    })();
+    AddAddressDirective.decorators = [
+        { type: i0.Directive, args: [{
+                    selector: '[rstAddAddress]'
+                },] }
+    ];
+    AddAddressDirective.ctorParameters = function () { return [
+        { type: NgRestoUserService }
+    ]; };
+    AddAddressDirective.propDecorators = {
+        street: [{ type: i0.Input }],
+        home: [{ type: i0.Input }],
+        name: [{ type: i0.Input }],
+        housing: [{ type: i0.Input }],
+        index: [{ type: i0.Input }],
+        entrance: [{ type: i0.Input }],
+        floor: [{ type: i0.Input }],
+        apartment: [{ type: i0.Input }],
+        doorphone: [{ type: i0.Input }],
+        success: [{ type: i0.Output }],
+        error: [{ type: i0.Output }],
+        onClick: [{ type: i0.HostListener, args: ['click',] }]
+    };
 
     var DeleteAddressDirective = /** @class */ (function () {
         function DeleteAddressDirective(ngRestoUserService) {
@@ -685,91 +593,56 @@
         };
         return DeleteAddressDirective;
     }());
-    DeleteAddressDirective.ɵfac = function DeleteAddressDirective_Factory(t) { return new (t || DeleteAddressDirective)(i0.ɵɵdirectiveInject(NgRestoUserService)); };
-    DeleteAddressDirective.ɵdir = i0.ɵɵdefineDirective({ type: DeleteAddressDirective, selectors: [["", "rstDeleteAddress", ""]], hostBindings: function DeleteAddressDirective_HostBindings(rf, ctx) {
-            if (rf & 1) {
-                i0.ɵɵlistener("click", function DeleteAddressDirective_click_HostBindingHandler() { return ctx.onClick(); });
-            }
-        }, inputs: { address: "address" }, outputs: { success: "success", error: "error" } });
-    /*@__PURE__*/ (function () {
-        i0.ɵsetClassMetadata(DeleteAddressDirective, [{
-                type: i0.Directive,
-                args: [{
-                        selector: '[rstDeleteAddress]'
-                    }]
-            }], function () { return [{ type: NgRestoUserService }]; }, { address: [{
-                    type: i0.Input
-                }], success: [{
-                    type: i0.Output
-                }], error: [{
-                    type: i0.Output
-                }], onClick: [{
-                    type: i0.HostListener,
-                    args: ['click']
-                }] });
-    })();
+    DeleteAddressDirective.decorators = [
+        { type: i0.Directive, args: [{
+                    selector: '[rstDeleteAddress]'
+                },] }
+    ];
+    DeleteAddressDirective.ctorParameters = function () { return [
+        { type: NgRestoUserService }
+    ]; };
+    DeleteAddressDirective.propDecorators = {
+        address: [{ type: i0.Input }],
+        success: [{ type: i0.Output }],
+        error: [{ type: i0.Output }],
+        onClick: [{ type: i0.HostListener, args: ['click',] }]
+    };
 
     var NgUserModule = /** @class */ (function () {
         function NgUserModule() {
         }
         return NgUserModule;
     }());
-    NgUserModule.ɵmod = i0.ɵɵdefineNgModule({ type: NgUserModule });
-    NgUserModule.ɵinj = i0.ɵɵdefineInjector({ factory: function NgUserModule_Factory(t) { return new (t || NgUserModule)(); }, providers: [], imports: [[]] });
-    (function () {
-        (typeof ngJitMode === "undefined" || ngJitMode) && i0.ɵɵsetNgModuleScope(NgUserModule, { declarations: [SignUpDirective,
-                SignInDirective,
-                SignOutDirective,
-                ResetPasswordDirective,
-                ResetPasswordCodeDirective,
-                BalanceDirective,
-                ToggleDishToFavoritesDirective,
-                UpdateProfileDirective,
-                AddAddressDirective,
-                DeleteAddressDirective], exports: [SignUpDirective,
-                SignInDirective,
-                SignOutDirective,
-                ResetPasswordDirective,
-                ResetPasswordCodeDirective,
-                BalanceDirective,
-                ToggleDishToFavoritesDirective,
-                UpdateProfileDirective,
-                AddAddressDirective,
-                DeleteAddressDirective] });
-    })();
-    /*@__PURE__*/ (function () {
-        i0.ɵsetClassMetadata(NgUserModule, [{
-                type: i0.NgModule,
-                args: [{
-                        imports: [],
-                        providers: [],
-                        declarations: [
-                            SignUpDirective,
-                            SignInDirective,
-                            SignOutDirective,
-                            ResetPasswordDirective,
-                            ResetPasswordCodeDirective,
-                            BalanceDirective,
-                            ToggleDishToFavoritesDirective,
-                            UpdateProfileDirective,
-                            AddAddressDirective,
-                            DeleteAddressDirective
-                        ],
-                        exports: [
-                            SignUpDirective,
-                            SignInDirective,
-                            SignOutDirective,
-                            ResetPasswordDirective,
-                            ResetPasswordCodeDirective,
-                            BalanceDirective,
-                            ToggleDishToFavoritesDirective,
-                            UpdateProfileDirective,
-                            AddAddressDirective,
-                            DeleteAddressDirective
-                        ]
-                    }]
-            }], null, null);
-    })();
+    NgUserModule.decorators = [
+        { type: i0.NgModule, args: [{
+                    imports: [],
+                    providers: [],
+                    declarations: [
+                        SignUpDirective,
+                        SignInDirective,
+                        SignOutDirective,
+                        ResetPasswordDirective,
+                        ResetPasswordCodeDirective,
+                        BalanceDirective,
+                        ToggleDishToFavoritesDirective,
+                        UpdateProfileDirective,
+                        AddAddressDirective,
+                        DeleteAddressDirective
+                    ],
+                    exports: [
+                        SignUpDirective,
+                        SignInDirective,
+                        SignOutDirective,
+                        ResetPasswordDirective,
+                        ResetPasswordCodeDirective,
+                        BalanceDirective,
+                        ToggleDishToFavoritesDirective,
+                        UpdateProfileDirective,
+                        AddAddressDirective,
+                        DeleteAddressDirective
+                    ]
+                },] }
+    ];
 
     /*
      * Public API Surface of ng-user

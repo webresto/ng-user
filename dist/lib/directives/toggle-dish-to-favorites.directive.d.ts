@@ -1,6 +1,5 @@
 import { EventEmitter, ElementRef, Renderer2 } from '@angular/core';
 import { NgRestoUserService } from '../services/ng-resto-user.service';
-import * as i0 from "@angular/core";
 export declare class ToggleDishToFavoritesDirective {
     private ngRestoUserService;
     private element;
@@ -17,6 +16,4 @@ export declare class ToggleDishToFavoritesDirective {
     onClick(): void;
     addDishToFavorites(): void;
     removeDishFromFavorites(): void;
-    static ɵfac: i0.ɵɵFactoryDef<ToggleDishToFavoritesDirective, never>;
-    static ɵdir: i0.ɵɵDirectiveDefWithMeta<ToggleDishToFavoritesDirective, "[rstToggleDishToFavorites]", never, { "dish": "dish"; }, { "addedToFavorites": "addedToFavorites"; "removedFromFavorites": "removedFromFavorites"; "change": "change"; "error": "error"; }, never>;
 }
