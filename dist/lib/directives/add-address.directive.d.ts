@@ -1,5 +1,6 @@
 import { EventEmitter } from '@angular/core';
 import { NgRestoUserService } from '../services/ng-resto-user.service';
+import * as i0 from "@angular/core";
 export declare class AddAddressDirective {
     private ngRestoUserService;
     street: string;
@@ -15,4 +16,6 @@ export declare class AddAddressDirective {
     error: EventEmitter<string>;
     constructor(ngRestoUserService: NgRestoUserService);
     onClick(): void;
+    static ɵfac: i0.ɵɵFactoryDef<AddAddressDirective, never>;
+    static ɵdir: i0.ɵɵDirectiveDefWithMeta<AddAddressDirective, "[rstAddAddress]", never, { "street": "street"; "home": "home"; "name": "name"; "housing": "housing"; "index": "index"; "entrance": "entrance"; "floor": "floor"; "apartment": "apartment"; "doorphone": "doorphone"; }, { "success": "success"; "error": "error"; }, never>;
 }
