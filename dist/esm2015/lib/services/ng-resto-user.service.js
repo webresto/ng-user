@@ -3,7 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import { filter, switchMap, tap } from 'rxjs/operators';
 import { NetService } from '@webresto/ng-core/dist';
 import * as i0 from "@angular/core";
-import * as i1 from "@webresto/ng-core/dist/lib/services/index";
+import * as i1 from "@webresto/ng-core";
 const LS_TOKEN_NAME = 'gf:tkn:v2';
 export class NgRestoUserService {
     constructor(net) {
