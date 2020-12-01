@@ -1,21 +1,33 @@
 {
   "name": "@webresto/ng-user",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/webresto/ng-user.git"
+  },
   "version": "0.0.1",
   "peerDependencies": {
-    "@angular/common": "^11.0.1",
-    "@angular/core": "^11.0.1"
+    "@angular/common": "^11.0.2",
+    "@angular/core": "^11.0.2",
+    "@webresto/ng-core": "^0.0.3"
   },
   "dependencies": {
-    "tslib": "^2.0.0"
+    "tslib": "^2.0.3"
   },
+  "bugs": {
+    "url": "https://github.com/webresto/ng-user/issues"
+  },
+  "homepage": "https://github.com/webresto/ng-user#readme",
+  "directories": {
+    "lib": "lib"
+  },
+  "license": "ISC",
+  "description": "",
   "main": "bundles/webresto-ng-user.umd.js",
   "module": "fesm2015/webresto-ng-user.js",
   "es2015": "fesm2015/webresto-ng-user.js",
   "esm2015": "esm2015/webresto-ng-user.js",
   "fesm2015": "fesm2015/webresto-ng-user.js",
   "typings": "webresto-ng-user.d.ts",
-  "sideEffects": false,
-  "scripts": {
-    "prepublishOnly": "node --eval \"console.error('ERROR: Trying to publish a package that has been compiled by Ivy. This is not allowed.\\nPlease delete and rebuild the package, without compiling with Ivy, before attempting to publish.\\n')\" && exit 1"
-  }
+  "metadata": "webresto-ng-user.metadata.json",
+  "sideEffects": false
 }

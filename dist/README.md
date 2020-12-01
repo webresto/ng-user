@@ -61,7 +61,7 @@ constructor(
 ## Директивы
 
 
-### [appSignIn] - Вход по логин/паролю
+### [rstSignIn] - Вход по логин/паролю
 Пример использования в компоненте:
 
 ~~~ html
@@ -69,7 +69,7 @@ constructor(
  <input #password type="password">
  <input #rememberMe type="checkbox">
  ........
- <button appSignIn
+ <button rstSignIn
         [phone]="phone.value"
         [password]="password.value"
         [captcha]="captcha"
@@ -79,7 +79,7 @@ constructor(
         (error)="....">Войти</button>
 ~~~
 
-### [appSignUp] - Регистрация
+### [rstSignUp] - Регистрация
 Пример использования в компоненте:
 
 ~~~ html
@@ -88,7 +88,7 @@ constructor(
  <input #email type="text">
  <input #password type="password">
  ........
- <button appSignUp
+ <button rstSignUp
         [name]="name.value"
         [phone]="phone.value"
         [email]="email.value"
@@ -99,7 +99,7 @@ constructor(
         (error)="....">Регистрация</button>
 ~~~
 
-### [appAddAddress] - Добавить адрес
+### [rstAddAddress] - Добавить адрес
 Пример использования в компоненте:
 
 ~~~ html
@@ -123,35 +123,35 @@ constructor(
         (error)="....">Регистрация</button>
 ~~~
 
-### [appDeleteAddress] - Удалить адрес
+### [rstDeleteAddress] - Удалить адрес
 Пример использования в компоненте:
 
 ~~~ html
- <button appDeleteAddress [address]="address">Удалить</button>
+ <button rstDeleteAddress [address]="address">Удалить</button>
 ~~~
 
 
-### [appBalance]  - добавляет значение текущего баланса
+### [rstBalance]  - добавляет значение текущего баланса
 Пример использования в компоненте:
 
 ~~~ html
-<span appBalance></span>
+<span rstBalance></span>
 ~~~
 Директива добавит внутрь контейнера строку с текущим балансом
 
-### [appSignOut] - выход со своего аккаунта
+### [rstSignOut] - выход со своего аккаунта
 Пример использования в компоненте:
 
 ~~~ html
-<button appSignOut class="btn-yellow-hollow align-center">Выход</button>
+<button rstSignOut class="btn-yellow-hollow align-center">Выход</button>
 ~~~
 
-### [appToggleDishToFavorites] - Добавить/удалить в списке Избранных
+### [rstToggleDishToFavorites] - Добавить/удалить в списке Избранных
 Пример использования в компоненте:
 
 ~~~ html
  ........
- <button appToggleDishToFavorites
+ <button rstToggleDishToFavorites
         [dish]="dish"
 
         (change)="...."
