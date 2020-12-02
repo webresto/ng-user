@@ -1,7 +1,7 @@
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('rxjs'), require('rxjs/operators'), require('@webresto/ng-core')) :
     typeof define === 'function' && define.amd ? define('@webresto/ng-user', ['exports', '@angular/core', 'rxjs', 'rxjs/operators', '@webresto/ng-core'], factory) :
-    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory((global.webresto = global.webresto || {}, global.webresto['ng-user'] = {}), global.ng.core, global.rxjs, global.rxjs.operators, global.i1));
+    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory((global.webresto = global.webresto || {}, global.webresto['ng-user'] = {}), global.ng.core, global.rxjs, global.rxjs.operators, global['@webresto/ng-core']));
 }(this, (function (exports, i0, rxjs, operators, i1) { 'use strict';
 
     var LS_TOKEN_NAME = 'gf:tkn:v2';
