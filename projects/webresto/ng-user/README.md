@@ -6,7 +6,7 @@
 
 ~~~ javascript
 import { NgUserModule } from '@webresto/ng-user';
-import { ngCoreHttpInterceptorProviders } from '@webresto/ng-core/dist';
+import { ngCoreHttpInterceptorProviders } from '@webresto/ng-core';
 import { ngUserHttpInterceptorProviders } from '@webresto/ng-user';
 ~~~
 ~~~ javascript
