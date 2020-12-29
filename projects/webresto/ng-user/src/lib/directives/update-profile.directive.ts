@@ -1,6 +1,7 @@
 import { Directive, HostListener, Input, Output, EventEmitter } from '@angular/core';
 import { UpdateProfileRequestData } from '../../models';
 import { NgRestoUserService } from '../services/ng-resto-user.service';
+import { formatDate } from '@angular/common';
 
 @Directive({
   selector: '[rstUpdateProfile]'
@@ -27,7 +28,7 @@ export class UpdateProfileDirective {
       //phone: this.phone,
       email: this.email,
       additionalInfo:this.additionalInfo,
-      birthday:this.birthday
+      birthday:this.birthday ? formatDate(this.birthday,'yyyy-MM-dd','en') : this.birthday
     };
     this.ngRestoUserService
       .updateProfile(data)
