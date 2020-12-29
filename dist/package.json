@@ -1,0 +1,33 @@
+{
+  "name": "@webresto/ng-user",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/webresto/ng-user.git"
+  },
+  "version": "0.0.5",
+  "peerDependencies": {
+    "@angular/common": "^11.0.5",
+    "@angular/core": "^11.0.5",
+    "@webresto/ng-core": "^0.0.7"
+  },
+  "dependencies": {
+    "tslib": "^2.0.3"
+  },
+  "bugs": {
+    "url": "https://github.com/webresto/ng-user/issues"
+  },
+  "homepage": "https://github.com/webresto/ng-user#readme",
+  "directories": {
+    "lib": "lib"
+  },
+  "license": "ISC",
+  "description": "",
+  "main": "bundles/webresto-ng-user.umd.js",
+  "module": "fesm2015/webresto-ng-user.js",
+  "es2015": "fesm2015/webresto-ng-user.js",
+  "esm2015": "esm2015/webresto-ng-user.js",
+  "fesm2015": "fesm2015/webresto-ng-user.js",
+  "typings": "webresto-ng-user.d.ts",
+  "metadata": "webresto-ng-user.metadata.json",
+  "sideEffects": false
+}
