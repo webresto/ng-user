@@ -10,7 +10,7 @@ class NgRestoUserService {
         this.net = net;
         this.authToken = localStorage.getItem(LS_TOKEN_NAME);
         this.rememberMe = false;
-        this.user = new BehaviorSubject({});
+        this.user = new BehaviorSubject(null);
         this.isLoggedIn = new BehaviorSubject(this.authToken ? true : false);
         this.favorites = new BehaviorSubject([]);
         this.addresses = new BehaviorSubject([]);

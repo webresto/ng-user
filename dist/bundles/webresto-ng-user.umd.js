@@ -11,7 +11,7 @@
             this.net = net;
             this.authToken = localStorage.getItem(LS_TOKEN_NAME);
             this.rememberMe = false;
-            this.user = new rxjs.BehaviorSubject({});
+            this.user = new rxjs.BehaviorSubject(null);
             this.isLoggedIn = new rxjs.BehaviorSubject(this.authToken ? true : false);
             this.favorites = new rxjs.BehaviorSubject([]);
             this.addresses = new rxjs.BehaviorSubject([]);
