@@ -18,7 +18,7 @@
             this.historyItems = new rxjs.BehaviorSubject([]);
             this.historyTransactions = new rxjs.BehaviorSubject([]);
             this.bonusSystems = new rxjs.BehaviorSubject([]);
-            this.isLoggedSubscription = this.isLoggedIn.pipe(operators.filter(function (isLoggedIn) { return isLoggedIn === true; }), operators.switchMap(function () { return _this.getFavorites(); }), operators.switchMap(function () { return _this.getProfile(); }), operators.switchMap(function () { return _this.getAddresses(); }), operators.switchMap(function () { return _this.getBonuses(); }), operators.switchMap(function () { return _this.getHistory(); })).subscribe(function () { }, function () { }, function () { return _this.isLoggedSubscription.unsubscribe(); });
+            var isLoggedSubscription = this.isLoggedIn.pipe(operators.filter(function (isLoggedIn) { return !!isLoggedIn; }), operators.switchMap(function () { return _this.getFavorites(); }), operators.switchMap(function () { return _this.getProfile(); }), operators.switchMap(function () { return _this.getAddresses(); }), operators.switchMap(function () { return _this.getBonuses(); })).subscribe(function () { }, function () { }, function () { return isLoggedSubscription.unsubscribe(); });
         }
         NgRestoUserService.prototype.signIn = function (data, rememberMe) {
             var _this = this;
@@ -139,7 +139,8 @@
             }, function () { }));
         };
         NgRestoUserService.prototype.userProfile = function () {
-            return this.user;
+            var _this = this;
+            return !!this.user.value ? this.user : this.getProfile().pipe(operators.switchMap(function () { return _this.getProfile(); }), operators.switchMap(function () { return _this.getFavorites(); }), operators.switchMap(function () { return _this.getAddresses(); }), operators.switchMap(function () { return _this.getBonuses(); }), operators.switchMap(function () { return _this.user; }));
         };
         NgRestoUserService.prototype.userIsLoggedIn = function () {
             return this.isLoggedIn;

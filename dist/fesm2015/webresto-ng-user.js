@@ -17,7 +17,7 @@ class NgRestoUserService {
         this.historyItems = new BehaviorSubject([]);
         this.historyTransactions = new BehaviorSubject([]);
         this.bonusSystems = new BehaviorSubject([]);
-        this.isLoggedSubscription = this.isLoggedIn.pipe(filter(isLoggedIn => isLoggedIn === true), switchMap(() => this.getFavorites()), switchMap(() => this.getProfile()), switchMap(() => this.getAddresses()), switchMap(() => this.getBonuses()), switchMap(() => this.getHistory())).subscribe(() => { }, () => { }, () => this.isLoggedSubscription.unsubscribe());
+        const isLoggedSubscription = this.isLoggedIn.pipe(filter(isLoggedIn => !!isLoggedIn), switchMap(() => this.getFavorites()), switchMap(() => this.getProfile()), switchMap(() => this.getAddresses()), switchMap(() => this.getBonuses())).subscribe(() => { }, () => { }, () => isLoggedSubscription.unsubscribe());
     }
     signIn(data, rememberMe = false) {
         this.rememberMe = rememberMe;
@@ -122,7 +122,7 @@ class NgRestoUserService {
         }, () => { }));
     }
     userProfile() {
-        return this.user;
+        return !!this.user.value ? this.user : this.getProfile().pipe(switchMap(() => this.getProfile()), switchMap(() => this.getFavorites()), switchMap(() => this.getAddresses()), switchMap(() => this.getBonuses()), switchMap(() => this.user));
     }
     userIsLoggedIn() {
         return this.isLoggedIn;

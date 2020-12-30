@@ -25,16 +25,17 @@ export class NgRestoUserService {
   private historyItems: BehaviorSubject<any[]> = new BehaviorSubject([]);
   private historyTransactions: BehaviorSubject<any[]> = new BehaviorSubject([]);
   private bonusSystems: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
-  private isLoggedSubscription = this.isLoggedIn.pipe(
-    filter(isLoggedIn => isLoggedIn === true),
-    switchMap(() => this.getFavorites()),
-    switchMap(() => this.getProfile()),
-    switchMap(() => this.getAddresses()),
-    switchMap(() => this.getBonuses()),
-    switchMap(() => this.getHistory())
-  ).subscribe(() => { }, () => { }, () => this.isLoggedSubscription.unsubscribe());
 
-  constructor(private net: NetService) { }
+  constructor(private net: NetService) {
+    const isLoggedSubscription = this.isLoggedIn.pipe(
+      filter(isLoggedIn => !!isLoggedIn),
+      switchMap(() => this.getFavorites()),
+      switchMap(() => this.getProfile()),
+      switchMap(() => this.getAddresses()),
+      switchMap(() => this.getBonuses()),
+    ).subscribe(() => { }, () => { }, () => isLoggedSubscription.unsubscribe()
+    );
+  }
 
   signIn(data: SignInRequestData, rememberMe: boolean = false) {
 
@@ -233,8 +234,14 @@ export class NgRestoUserService {
     );
   }
 
-  userProfile(): BehaviorSubject<User> {
-    return this.user;
+  userProfile(): Observable<User> {
+    return !!this.user.value ? this.user : this.getProfile().pipe(
+      switchMap(() => this.getProfile()),
+      switchMap(() => this.getFavorites()),
+      switchMap(() => this.getAddresses()),
+      switchMap(() => this.getBonuses()),
+      switchMap(() => this.user)
+    );
   }
 
   userIsLoggedIn(): BehaviorSubject<boolean> {

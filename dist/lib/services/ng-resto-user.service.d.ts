@@ -12,7 +12,6 @@ export declare class NgRestoUserService {
     private historyItems;
     private historyTransactions;
     private bonusSystems;
-    private isLoggedSubscription;
     constructor(net: NetService);
     signIn(data: SignInRequestData, rememberMe?: boolean): Observable<SignInResponseData>;
     getProfile(): Observable<User>;
@@ -30,7 +29,7 @@ export declare class NgRestoUserService {
     getFavorites(): Observable<any[]>;
     addDishToFavorites(dish: any): Observable<any>;
     removeDishFromFavorites(dish: any): Observable<any[]>;
-    userProfile(): BehaviorSubject<User>;
+    userProfile(): Observable<User>;
     userIsLoggedIn(): BehaviorSubject<boolean>;
     userFavorites(): Observable<any[]>;
     userAddresses(): Observable<Address[]>;
