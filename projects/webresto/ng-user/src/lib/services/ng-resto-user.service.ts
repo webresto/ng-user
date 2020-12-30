@@ -18,7 +18,7 @@ export class NgRestoUserService {
 
   private authToken: string = localStorage.getItem(LS_TOKEN_NAME);
   private rememberMe: boolean = false;
-  private user: BehaviorSubject<any> = new BehaviorSubject({});
+  private user: BehaviorSubject<any> = new BehaviorSubject(null);
   private isLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.authToken ? true : false);
   private favorites: BehaviorSubject<any[]> = new BehaviorSubject([]);
   private addresses: BehaviorSubject<Address[]> = new BehaviorSubject([]);
