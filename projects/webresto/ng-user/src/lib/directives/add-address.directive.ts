@@ -7,15 +7,16 @@ import { NgRestoUserService } from '../services/ng-resto-user.service';
 })
 export class AddAddressDirective {
 
-  @Input() street:string;     //required
-  @Input() home:string;       //required
-  @Input() name:string;
-  @Input() housing:string;
-  @Input() index:string;
-  @Input() entrance:string;
-  @Input() floor:string;
-  @Input() apartment:string;
-  @Input() doorphone:string;
+  @Input() street: string;     //required
+  @Input() streetId: string;     //required
+  @Input() home: string;       //required
+  @Input() name: string;
+  @Input() housing: string;
+  @Input() index: string;
+  @Input() entrance: string;
+  @Input() floor: string;
+  @Input() apartment: string;
+  @Input() doorphone: string;
 
   @Output() success = new EventEmitter<boolean>();
   @Output() error = new EventEmitter<string>();
@@ -26,15 +27,19 @@ export class AddAddressDirective {
 
   @HostListener('click')
   onClick() {
-    if(!this.street) {
+    if (!this.street) {
       this.error.emit('Необходимо указать улицу'); return;
     }
-    if(!this.home) {
+    if (!this.streetId) {
+      this.error.emit('Необходимо указать streetId'); return;
+    }
+    if (!this.home) {
       this.error.emit('Необходимо указать номер дома'); return;
     }
 
-    let data:AddAddressRequestData = {
+    let data: AddAddressRequestData = {
       street: this.street,
+      streetId: this.streetId,
       home: this.home,
       name: this.name || '',
       housing: this.housing || '',
@@ -44,11 +49,10 @@ export class AddAddressDirective {
       apartment: this.apartment || '',
       doorphone: this.doorphone || ''
     };
-    this.ngRestoUserService
-      .addAddress(data)
-      .subscribe(
-        () => this.success.emit(true),
-        error => this.error.emit(error)
-      );
+    const req = this.ngRestoUserService.addAddress(data).subscribe(
+      () => this.success.emit(true),
+      error => this.error.emit(error),
+      () => req.unsubscribe()
+    );
   }
 }

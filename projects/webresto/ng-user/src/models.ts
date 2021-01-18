@@ -33,6 +33,7 @@ export declare interface AddDishToFavoritesRequestData {
 }
 export declare interface AddAddressRequestData {
   street: string,
+  streetId: string,
   home: string,
   name?: string,
   housing?: string,

@@ -1,17 +1,15 @@
 import {
   Directive, HostListener, Input,
-  Output, EventEmitter, ElementRef, Renderer2
+  Output, EventEmitter, ElementRef, Renderer2, OnDestroy
 } from '@angular/core';
 import { NgRestoUserService } from '../services/ng-resto-user.service';
 
 @Directive({
   selector: '[rstToggleDishToFavorites]'
 })
-export class ToggleDishToFavoritesDirective {
+export class ToggleDishToFavoritesDirective implements OnDestroy {
 
-  @Input() dish:any;
-  @Output() addedToFavorites = new EventEmitter<void>();
-  @Output() removedFromFavorites = new EventEmitter<void>();
+  @Input() dish: any;
   @Output() change = new EventEmitter<boolean>();
   @Output() error = new EventEmitter<string>();
 
@@ -22,7 +20,11 @@ export class ToggleDishToFavoritesDirective {
     private ngRestoUserService: NgRestoUserService,
     private element: ElementRef,
     private renderer: Renderer2
-  ) {}
+  ) { }
+
+  ngOnDestroy(): void {
+    [this.change, this.error].forEach(emitter => emitter.complete());
+  }
 
   ngOnInit() {
     this.ngRestoUserService
@@ -31,7 +33,7 @@ export class ToggleDishToFavoritesDirective {
 
         this.inFavorites = favorites.find(dish => dish.id == this.dish.id);
 
-        if(this.inFavorites) {
+        if (this.inFavorites) {
           this.renderer.addClass(this.element.nativeElement, 'selected')
         } else {
           this.renderer.removeClass(this.element.nativeElement, 'selected');
@@ -44,7 +46,7 @@ export class ToggleDishToFavoritesDirective {
 
   @HostListener('click')
   onClick() {
-    if(this.inFavorites) {
+    if (this.inFavorites) {
       this.removeDishFromFavorites();
     } else {
       this.addDishToFavorites();
@@ -56,7 +58,6 @@ export class ToggleDishToFavoritesDirective {
       .addDishToFavorites(this.dish)
       .subscribe(
         () => {
-          this.addedToFavorites.emit();
           this.change.emit(true);
           this.renderer.addClass(this.element.nativeElement, 'selected');
         },
@@ -65,16 +66,14 @@ export class ToggleDishToFavoritesDirective {
   }
 
   removeDishFromFavorites() {
-    this.ngRestoUserService
-      .removeDishFromFavorites(this.dish)
-      .subscribe(
-        () => {
-          this.removedFromFavorites.emit();
-          this.change.emit(false);
-          this.renderer.removeClass(this.element.nativeElement, 'selected');
-        },
-        error => this.error.emit(error)
-      )
+    const req = this.ngRestoUserService.removeDishFromFavorites(this.dish).subscribe(
+      () => {
+        this.change.emit(false);
+        this.renderer.removeClass(this.element.nativeElement, 'selected');
+      },
+      error => this.error.emit(error),
+      () => req.unsubscribe()
+    )
   }
 
 }
