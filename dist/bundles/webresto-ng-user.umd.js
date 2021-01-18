@@ -1,8 +1,8 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('rxjs'), require('rxjs/operators'), require('@webresto/ng-core'), require('@angular/common')) :
-    typeof define === 'function' && define.amd ? define('@webresto/ng-user', ['exports', '@angular/core', 'rxjs', 'rxjs/operators', '@webresto/ng-core', '@angular/common'], factory) :
-    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory((global.webresto = global.webresto || {}, global.webresto['ng-user'] = {}), global.ng.core, global.rxjs, global.rxjs.operators, global['@webresto/ng-core'], global.ng.common));
-}(this, (function (exports, i0, rxjs, operators, i1, common) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@webresto/ng-core'), require('rxjs'), require('rxjs/operators'), require('@angular/common')) :
+    typeof define === 'function' && define.amd ? define('@webresto/ng-user', ['exports', '@angular/core', '@webresto/ng-core', 'rxjs', 'rxjs/operators', '@angular/common'], factory) :
+    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory((global.webresto = global.webresto || {}, global.webresto['ng-user'] = {}), global.ng.core, global['@webresto/ng-core'], global.rxjs, global.rxjs.operators, global.ng.common));
+}(this, (function (exports, i0, i1, rxjs, operators, common) { 'use strict';
 
     var LS_TOKEN_NAME = 'gf:tkn:v2';
     var NgRestoUserService = /** @class */ (function () {
@@ -413,11 +413,12 @@
             this.ngRestoUserService = ngRestoUserService;
             this.element = element;
             this.renderer = renderer;
-            this.addedToFavorites = new i0.EventEmitter();
-            this.removedFromFavorites = new i0.EventEmitter();
             this.change = new i0.EventEmitter();
             this.error = new i0.EventEmitter();
         }
+        ToggleDishToFavoritesDirective.prototype.ngOnDestroy = function () {
+            [this.change, this.error].forEach(function (emitter) { return emitter.complete(); });
+        };
         ToggleDishToFavoritesDirective.prototype.ngOnInit = function () {
             var _this = this;
             this.ngRestoUserService
@@ -448,20 +449,16 @@
             this.ngRestoUserService
                 .addDishToFavorites(this.dish)
                 .subscribe(function () {
-                _this.addedToFavorites.emit();
                 _this.change.emit(true);
                 _this.renderer.addClass(_this.element.nativeElement, 'selected');
             }, function (error) { return _this.error.emit(error); });
         };
         ToggleDishToFavoritesDirective.prototype.removeDishFromFavorites = function () {
             var _this = this;
-            this.ngRestoUserService
-                .removeDishFromFavorites(this.dish)
-                .subscribe(function () {
-                _this.removedFromFavorites.emit();
+            var req = this.ngRestoUserService.removeDishFromFavorites(this.dish).subscribe(function () {
                 _this.change.emit(false);
                 _this.renderer.removeClass(_this.element.nativeElement, 'selected');
-            }, function (error) { return _this.error.emit(error); });
+            }, function (error) { return _this.error.emit(error); }, function () { return req.unsubscribe(); });
         };
         return ToggleDishToFavoritesDirective;
     }());
@@ -477,8 +474,6 @@
     ]; };
     ToggleDishToFavoritesDirective.propDecorators = {
         dish: [{ type: i0.Input }],
-        addedToFavorites: [{ type: i0.Output }],
-        removedFromFavorites: [{ type: i0.Output }],
         change: [{ type: i0.Output }],
         error: [{ type: i0.Output }],
         onClick: [{ type: i0.HostListener, args: ['click',] }]
@@ -536,12 +531,17 @@
                 this.error.emit('Необходимо указать улицу');
                 return;
             }
+            if (!this.streetId) {
+                this.error.emit('Необходимо указать streetId');
+                return;
+            }
             if (!this.home) {
                 this.error.emit('Необходимо указать номер дома');
                 return;
             }
             var data = {
                 street: this.street,
+                streetId: this.streetId,
                 home: this.home,
                 name: this.name || '',
                 housing: this.housing || '',
@@ -551,9 +551,7 @@
                 apartment: this.apartment || '',
                 doorphone: this.doorphone || ''
             };
-            this.ngRestoUserService
-                .addAddress(data)
-                .subscribe(function () { return _this.success.emit(true); }, function (error) { return _this.error.emit(error); });
+            var req = this.ngRestoUserService.addAddress(data).subscribe(function () { return _this.success.emit(true); }, function (error) { return _this.error.emit(error); }, function () { return req.unsubscribe(); });
         };
         return AddAddressDirective;
     }());
@@ -567,6 +565,7 @@
     ]; };
     AddAddressDirective.propDecorators = {
         street: [{ type: i0.Input }],
+        streetId: [{ type: i0.Input }],
         home: [{ type: i0.Input }],
         name: [{ type: i0.Input }],
         housing: [{ type: i0.Input }],

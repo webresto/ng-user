@@ -3,6 +3,7 @@ import { NgRestoUserService } from '../services/ng-resto-user.service';
 export declare class AddAddressDirective {
     private ngRestoUserService;
     street: string;
+    streetId: string;
     home: string;
     name: string;
     housing: string;

@@ -1,7 +1,7 @@
 import { ɵɵdefineInjectable, ɵɵinject, Injectable, EventEmitter, Directive, Input, Output, HostListener, Renderer2, ElementRef, NgModule } from '@angular/core';
+import { NetService } from '@webresto/ng-core';
 import { BehaviorSubject } from 'rxjs';
 import { filter, switchMap, tap } from 'rxjs/operators';
-import { NetService } from '@webresto/ng-core';
 import { formatDate } from '@angular/common';
 
 const LS_TOKEN_NAME = 'gf:tkn:v2';
@@ -382,10 +382,11 @@ class ToggleDishToFavoritesDirective {
         this.ngRestoUserService = ngRestoUserService;
         this.element = element;
         this.renderer = renderer;
-        this.addedToFavorites = new EventEmitter();
-        this.removedFromFavorites = new EventEmitter();
         this.change = new EventEmitter();
         this.error = new EventEmitter();
+    }
+    ngOnDestroy() {
+        [this.change, this.error].forEach(emitter => emitter.complete());
     }
     ngOnInit() {
         this.ngRestoUserService
@@ -415,19 +416,15 @@ class ToggleDishToFavoritesDirective {
         this.ngRestoUserService
             .addDishToFavorites(this.dish)
             .subscribe(() => {
-            this.addedToFavorites.emit();
             this.change.emit(true);
             this.renderer.addClass(this.element.nativeElement, 'selected');
         }, error => this.error.emit(error));
     }
     removeDishFromFavorites() {
-        this.ngRestoUserService
-            .removeDishFromFavorites(this.dish)
-            .subscribe(() => {
-            this.removedFromFavorites.emit();
+        const req = this.ngRestoUserService.removeDishFromFavorites(this.dish).subscribe(() => {
             this.change.emit(false);
             this.renderer.removeClass(this.element.nativeElement, 'selected');
-        }, error => this.error.emit(error));
+        }, error => this.error.emit(error), () => req.unsubscribe());
     }
 }
 ToggleDishToFavoritesDirective.decorators = [
@@ -442,8 +439,6 @@ ToggleDishToFavoritesDirective.ctorParameters = () => [
 ];
 ToggleDishToFavoritesDirective.propDecorators = {
     dish: [{ type: Input }],
-    addedToFavorites: [{ type: Output }],
-    removedFromFavorites: [{ type: Output }],
     change: [{ type: Output }],
     error: [{ type: Output }],
     onClick: [{ type: HostListener, args: ['click',] }]
@@ -498,12 +493,17 @@ class AddAddressDirective {
             this.error.emit('Необходимо указать улицу');
             return;
         }
+        if (!this.streetId) {
+            this.error.emit('Необходимо указать streetId');
+            return;
+        }
         if (!this.home) {
             this.error.emit('Необходимо указать номер дома');
             return;
         }
         let data = {
             street: this.street,
+            streetId: this.streetId,
             home: this.home,
             name: this.name || '',
             housing: this.housing || '',
@@ -513,9 +513,7 @@ class AddAddressDirective {
             apartment: this.apartment || '',
             doorphone: this.doorphone || ''
         };
-        this.ngRestoUserService
-            .addAddress(data)
-            .subscribe(() => this.success.emit(true), error => this.error.emit(error));
+        const req = this.ngRestoUserService.addAddress(data).subscribe(() => this.success.emit(true), error => this.error.emit(error), () => req.unsubscribe());
     }
 }
 AddAddressDirective.decorators = [
@@ -528,6 +526,7 @@ AddAddressDirective.ctorParameters = () => [
 ];
 AddAddressDirective.propDecorators = {
     street: [{ type: Input }],
+    streetId: [{ type: Input }],
     home: [{ type: Input }],
     name: [{ type: Input }],
     housing: [{ type: Input }],
