@@ -118,7 +118,7 @@ class NgRestoUserService {
         }, () => { }));
     }
     userProfile() {
-        return !!this.user.value ? this.user : this.getProfile().pipe(switchMap(() => this.getProfile()), switchMap(() => this.getFavorites()), switchMap(() => this.getAddresses()), switchMap(() => this.getBonuses()), switchMap(() => this.user));
+        return this.user ? this.user : this.getProfile().pipe(switchMap(() => this.getProfile()), switchMap(() => this.getFavorites()), switchMap(() => this.getAddresses()), switchMap(() => this.getBonuses()), switchMap(() => this.user));
     }
     userIsLoggedIn() {
         return this.isLoggedIn;

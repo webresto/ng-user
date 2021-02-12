@@ -14,7 +14,7 @@ export declare class NgRestoUserService {
     private bonusSystems;
     constructor(net: NetService);
     signIn(data: SignInRequestData, rememberMe?: boolean): Observable<SignInResponseData>;
-    getProfile(): Observable<any>;
+    getProfile(): Observable<User>;
     getHistory(): Observable<any>;
     getHistoryTransactions(bonusSystem?: string, limit?: number, set?: number): Observable<any>;
     updateProfile(data: UpdateProfileRequestData): Observable<UpdateProfileResponseData>;

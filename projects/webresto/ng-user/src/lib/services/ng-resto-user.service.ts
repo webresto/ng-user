@@ -18,7 +18,7 @@ export class NgRestoUserService {
 
   private authToken: string = localStorage.getItem(LS_TOKEN_NAME);
   private rememberMe: boolean = false;
-  private user: BehaviorSubject<any>;
+  private user: BehaviorSubject<User>;
   private isLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.authToken ? true : false);
   private favorites: BehaviorSubject<any[]>;
   private addresses: BehaviorSubject<Address[]>;
@@ -224,7 +224,7 @@ export class NgRestoUserService {
   }
 
   userProfile(): Observable<User> {
-    return !!this.user.value ? this.user : this.getProfile().pipe(
+    return this.user ? this.user : this.getProfile().pipe(
       switchMap(() => this.getProfile()),
       switchMap(() => this.getFavorites()),
       switchMap(() => this.getAddresses()),

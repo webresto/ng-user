@@ -136,7 +136,7 @@
         };
         NgRestoUserService.prototype.userProfile = function () {
             var _this = this;
-            return !!this.user.value ? this.user : this.getProfile().pipe(operators.switchMap(function () { return _this.getProfile(); }), operators.switchMap(function () { return _this.getFavorites(); }), operators.switchMap(function () { return _this.getAddresses(); }), operators.switchMap(function () { return _this.getBonuses(); }), operators.switchMap(function () { return _this.user; }));
+            return this.user ? this.user : this.getProfile().pipe(operators.switchMap(function () { return _this.getProfile(); }), operators.switchMap(function () { return _this.getFavorites(); }), operators.switchMap(function () { return _this.getAddresses(); }), operators.switchMap(function () { return _this.getBonuses(); }), operators.switchMap(function () { return _this.user; }));
         };
         NgRestoUserService.prototype.userIsLoggedIn = function () {
             return this.isLoggedIn;
