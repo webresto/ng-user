@@ -29,7 +29,7 @@
         NgRestoUserService.prototype.getProfile = function () {
             var _this = this;
             return this.user ? this.user : this.net.get('/user/get/user-info').pipe(operators.switchMap(function (result) {
-                _this.user.next(result);
+                _this.user = new rxjs.BehaviorSubject(result);
                 return _this.user;
             }));
         };
@@ -64,7 +64,7 @@
         NgRestoUserService.prototype.getAddresses = function () {
             var _this = this;
             return this.addresses ? this.addresses : this.net.get('/user/get/location').pipe(operators.switchMap(function (addresses) {
-                _this.addresses.next(addresses);
+                _this.addresses = new rxjs.BehaviorSubject(addresses);
                 return _this.addresses;
             }));
         };
@@ -97,7 +97,7 @@
         NgRestoUserService.prototype.getBonuses = function () {
             var _this = this;
             return this.bonusSystems ? this.bonusSystems : this.net.post('/bonus/get', {}).pipe(operators.switchMap(function (result) {
-                _this.bonusSystems.next(result);
+                _this.bonusSystems = new rxjs.BehaviorSubject(result);
                 return _this.bonusSystems;
             }));
         };
@@ -111,7 +111,7 @@
             var _this = this;
             return this.favorites ? this.favorites : this.net.get('/user/get/favorites').pipe(operators.switchMap(function (result) {
                 console.info('getFavorites result', result);
-                _this.favorites.next(result);
+                _this.favorites = new rxjs.BehaviorSubject(result);
                 return _this.favorites;
             }));
         };

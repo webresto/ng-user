@@ -25,7 +25,7 @@ class NgRestoUserService {
     }
     getProfile() {
         return this.user ? this.user : this.net.get('/user/get/user-info').pipe(switchMap(result => {
-            this.user.next(result);
+            this.user = new BehaviorSubject(result);
             return this.user;
         }));
     }
@@ -53,7 +53,7 @@ class NgRestoUserService {
     }
     getAddresses() {
         return this.addresses ? this.addresses : this.net.get('/user/get/location').pipe(switchMap(addresses => {
-            this.addresses.next(addresses);
+            this.addresses = new BehaviorSubject(addresses);
             return this.addresses;
         }));
     }
@@ -83,7 +83,7 @@ class NgRestoUserService {
     }
     getBonuses() {
         return this.bonusSystems ? this.bonusSystems : this.net.post('/bonus/get', {}).pipe(switchMap(result => {
-            this.bonusSystems.next(result);
+            this.bonusSystems = new BehaviorSubject(result);
             return this.bonusSystems;
         }));
     }
@@ -96,7 +96,7 @@ class NgRestoUserService {
     getFavorites() {
         return this.favorites ? this.favorites : this.net.get('/user/get/favorites').pipe(switchMap(result => {
             console.info('getFavorites result', result);
-            this.favorites.next(result);
+            this.favorites = new BehaviorSubject(result);
             return this.favorites;
         }));
     }
