@@ -10,13 +10,9 @@ class NgRestoUserService {
         this.net = net;
         this.authToken = localStorage.getItem(LS_TOKEN_NAME);
         this.rememberMe = false;
-        this.user = new BehaviorSubject(null);
         this.isLoggedIn = new BehaviorSubject(this.authToken ? true : false);
-        this.favorites = new BehaviorSubject([]);
-        this.addresses = new BehaviorSubject([]);
         this.historyItems = new BehaviorSubject([]);
         this.historyTransactions = new BehaviorSubject([]);
-        this.bonusSystems = new BehaviorSubject([]);
         const isLoggedSubscription = this.isLoggedIn.pipe(filter(isLoggedIn => !!isLoggedIn), switchMap(() => this.getFavorites()), switchMap(() => this.getProfile()), switchMap(() => this.getAddresses()), switchMap(() => this.getBonuses())).subscribe(() => { }, () => { }, () => isLoggedSubscription.unsubscribe());
     }
     signIn(data, rememberMe = false) {
@@ -28,9 +24,10 @@ class NgRestoUserService {
         }, () => { }));
     }
     getProfile() {
-        return this.net.get('/user/get/user-info').pipe(tap((result) => {
+        return this.user ? this.user : this.net.get('/user/get/user-info').pipe(switchMap(result => {
             this.user.next(result);
-        }, () => { }));
+            return this.user;
+        }));
     }
     getHistory() {
         return this.net.get('/user/get/history').pipe(tap((historyItems) => {
@@ -55,27 +52,28 @@ class NgRestoUserService {
         }, () => { }));
     }
     getAddresses() {
-        return this.net.get('/user/get/location').pipe(tap((addresses) => {
+        return this.addresses ? this.addresses : this.net.get('/user/get/location').pipe(switchMap(addresses => {
             this.addresses.next(addresses);
-        }, () => { }));
+            return this.addresses;
+        }));
     }
     addAddress(address) {
-        return this.net.post('/user/add/location', address).pipe(tap((addresses) => {
+        return this.net.post('/user/add/location', address).pipe(switchMap(addresses => {
             this.addresses.next(addresses);
-        }, () => { }));
+            return this.addresses;
+        }));
     }
     deleteAddress(address) {
-        var reqBody = {
+        return this.net.post('/user/remove/location', {
             id: address.id,
             street: address.street,
             home: address.home
-        };
-        return this.net.post('/user/remove/location', reqBody).pipe(tap((addresses) => {
+        }).pipe(tap((addresses) => {
             this.addresses.next(addresses);
         }, () => { }));
     }
     signUp(data) {
-        return this.net.post('/signup', data).pipe(tap((result) => {
+        return this.net.post('/signup', data).pipe(tap(() => {
             //this.setAuthToken(result.token, false);
             //this.user.next(result.user);
         }, () => { }));
@@ -84,7 +82,10 @@ class NgRestoUserService {
         return this.deleteAuthToken();
     }
     getBonuses() {
-        return this.net.post('/bonus/get', {}).pipe(tap(result => this.bonusSystems.next(result), () => { }));
+        return this.bonusSystems ? this.bonusSystems : this.net.post('/bonus/get', {}).pipe(switchMap(result => {
+            this.bonusSystems.next(result);
+            return this.bonusSystems;
+        }));
     }
     resetPassword(data) {
         return this.net.post('/reset', data).pipe(tap(() => { }, () => { }));
@@ -93,26 +94,21 @@ class NgRestoUserService {
         return this.net.post('/code', data).pipe(tap(() => { }, () => { }));
     }
     getFavorites() {
-        return this.net.get('/user/get/favorites').pipe(tap(result => {
+        return this.favorites ? this.favorites : this.net.get('/user/get/favorites').pipe(switchMap(result => {
             console.info('getFavorites result', result);
             this.favorites.next(result);
-        }, () => { }));
+            return this.favorites;
+        }));
     }
     addDishToFavorites(dish) {
-        let data = {
+        return this.net.post('/user/add/favorites ', {
             dishId: dish.id
-        };
-        return this.net.post('/user/add/favorites ', data).pipe(tap(result => {
-            let favoritesUpdated = this.favorites.getValue();
-            favoritesUpdated.push(dish);
-            this.favorites.next(result);
-        }, () => { }));
+        }).pipe(tap(result => this.favorites.next(result), () => { }));
     }
     removeDishFromFavorites(dish) {
-        let data = {
+        return this.net.post('/user/remove/favorites ', {
             dishId: dish.id
-        };
-        return this.net.post('/user/remove/favorites ', data).pipe(tap((result) => {
+        }).pipe(tap(result => {
             console.info('Было=>>>', this.favorites.getValue().length);
             let favoritesUpdated = this.favorites
                 .getValue()

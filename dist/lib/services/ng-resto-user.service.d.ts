@@ -14,7 +14,7 @@ export declare class NgRestoUserService {
     private bonusSystems;
     constructor(net: NetService);
     signIn(data: SignInRequestData, rememberMe?: boolean): Observable<SignInResponseData>;
-    getProfile(): Observable<User>;
+    getProfile(): Observable<any>;
     getHistory(): Observable<any>;
     getHistoryTransactions(bonusSystem?: string, limit?: number, set?: number): Observable<any>;
     updateProfile(data: UpdateProfileRequestData): Observable<UpdateProfileResponseData>;
@@ -23,11 +23,11 @@ export declare class NgRestoUserService {
     deleteAddress(address: Address): Observable<Address[]>;
     signUp(data: SignUpRequestData): Observable<any>;
     signOut(): void;
-    getBonuses(): Observable<any>;
+    getBonuses(): Observable<any[]>;
     resetPassword(data: ResetPasswordRequestData): Observable<any>;
     resetPasswordCode(data: ResetPasswordCodeRequestData): Observable<any>;
     getFavorites(): Observable<any[]>;
-    addDishToFavorites(dish: any): Observable<any>;
+    addDishToFavorites(dish: any): Observable<any[]>;
     removeDishFromFavorites(dish: any): Observable<any[]>;
     userProfile(): Observable<User>;
     userIsLoggedIn(): BehaviorSubject<boolean>;

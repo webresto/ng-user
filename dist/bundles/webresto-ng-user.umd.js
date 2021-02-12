@@ -11,13 +11,9 @@
             this.net = net;
             this.authToken = localStorage.getItem(LS_TOKEN_NAME);
             this.rememberMe = false;
-            this.user = new rxjs.BehaviorSubject(null);
             this.isLoggedIn = new rxjs.BehaviorSubject(this.authToken ? true : false);
-            this.favorites = new rxjs.BehaviorSubject([]);
-            this.addresses = new rxjs.BehaviorSubject([]);
             this.historyItems = new rxjs.BehaviorSubject([]);
             this.historyTransactions = new rxjs.BehaviorSubject([]);
-            this.bonusSystems = new rxjs.BehaviorSubject([]);
             var isLoggedSubscription = this.isLoggedIn.pipe(operators.filter(function (isLoggedIn) { return !!isLoggedIn; }), operators.switchMap(function () { return _this.getFavorites(); }), operators.switchMap(function () { return _this.getProfile(); }), operators.switchMap(function () { return _this.getAddresses(); }), operators.switchMap(function () { return _this.getBonuses(); })).subscribe(function () { }, function () { }, function () { return isLoggedSubscription.unsubscribe(); });
         }
         NgRestoUserService.prototype.signIn = function (data, rememberMe) {
@@ -32,9 +28,10 @@
         };
         NgRestoUserService.prototype.getProfile = function () {
             var _this = this;
-            return this.net.get('/user/get/user-info').pipe(operators.tap(function (result) {
+            return this.user ? this.user : this.net.get('/user/get/user-info').pipe(operators.switchMap(function (result) {
                 _this.user.next(result);
-            }, function () { }));
+                return _this.user;
+            }));
         };
         NgRestoUserService.prototype.getHistory = function () {
             var _this = this;
@@ -66,29 +63,30 @@
         };
         NgRestoUserService.prototype.getAddresses = function () {
             var _this = this;
-            return this.net.get('/user/get/location').pipe(operators.tap(function (addresses) {
+            return this.addresses ? this.addresses : this.net.get('/user/get/location').pipe(operators.switchMap(function (addresses) {
                 _this.addresses.next(addresses);
-            }, function () { }));
+                return _this.addresses;
+            }));
         };
         NgRestoUserService.prototype.addAddress = function (address) {
             var _this = this;
-            return this.net.post('/user/add/location', address).pipe(operators.tap(function (addresses) {
+            return this.net.post('/user/add/location', address).pipe(operators.switchMap(function (addresses) {
                 _this.addresses.next(addresses);
-            }, function () { }));
+                return _this.addresses;
+            }));
         };
         NgRestoUserService.prototype.deleteAddress = function (address) {
             var _this = this;
-            var reqBody = {
+            return this.net.post('/user/remove/location', {
                 id: address.id,
                 street: address.street,
                 home: address.home
-            };
-            return this.net.post('/user/remove/location', reqBody).pipe(operators.tap(function (addresses) {
+            }).pipe(operators.tap(function (addresses) {
                 _this.addresses.next(addresses);
             }, function () { }));
         };
         NgRestoUserService.prototype.signUp = function (data) {
-            return this.net.post('/signup', data).pipe(operators.tap(function (result) {
+            return this.net.post('/signup', data).pipe(operators.tap(function () {
                 //this.setAuthToken(result.token, false);
                 //this.user.next(result.user);
             }, function () { }));
@@ -98,7 +96,10 @@
         };
         NgRestoUserService.prototype.getBonuses = function () {
             var _this = this;
-            return this.net.post('/bonus/get', {}).pipe(operators.tap(function (result) { return _this.bonusSystems.next(result); }, function () { }));
+            return this.bonusSystems ? this.bonusSystems : this.net.post('/bonus/get', {}).pipe(operators.switchMap(function (result) {
+                _this.bonusSystems.next(result);
+                return _this.bonusSystems;
+            }));
         };
         NgRestoUserService.prototype.resetPassword = function (data) {
             return this.net.post('/reset', data).pipe(operators.tap(function () { }, function () { }));
@@ -108,28 +109,23 @@
         };
         NgRestoUserService.prototype.getFavorites = function () {
             var _this = this;
-            return this.net.get('/user/get/favorites').pipe(operators.tap(function (result) {
+            return this.favorites ? this.favorites : this.net.get('/user/get/favorites').pipe(operators.switchMap(function (result) {
                 console.info('getFavorites result', result);
                 _this.favorites.next(result);
-            }, function () { }));
+                return _this.favorites;
+            }));
         };
         NgRestoUserService.prototype.addDishToFavorites = function (dish) {
             var _this = this;
-            var data = {
+            return this.net.post('/user/add/favorites ', {
                 dishId: dish.id
-            };
-            return this.net.post('/user/add/favorites ', data).pipe(operators.tap(function (result) {
-                var favoritesUpdated = _this.favorites.getValue();
-                favoritesUpdated.push(dish);
-                _this.favorites.next(result);
-            }, function () { }));
+            }).pipe(operators.tap(function (result) { return _this.favorites.next(result); }, function () { }));
         };
         NgRestoUserService.prototype.removeDishFromFavorites = function (dish) {
             var _this = this;
-            var data = {
+            return this.net.post('/user/remove/favorites ', {
                 dishId: dish.id
-            };
-            return this.net.post('/user/remove/favorites ', data).pipe(operators.tap(function (result) {
+            }).pipe(operators.tap(function (result) {
                 console.info('Было=>>>', _this.favorites.getValue().length);
                 var favoritesUpdated = _this.favorites
                     .getValue()
