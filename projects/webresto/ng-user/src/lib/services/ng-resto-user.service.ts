@@ -18,13 +18,13 @@ export class NgRestoUserService {
 
   private authToken: string = localStorage.getItem(LS_TOKEN_NAME);
   private rememberMe: boolean = false;
-  private user: BehaviorSubject<any> = new BehaviorSubject(null);
+  private user: BehaviorSubject<any>;
   private isLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.authToken ? true : false);
-  private favorites: BehaviorSubject<any[]> = new BehaviorSubject([]);
-  private addresses: BehaviorSubject<Address[]> = new BehaviorSubject([]);
+  private favorites: BehaviorSubject<any[]>;
+  private addresses: BehaviorSubject<Address[]>;
   private historyItems: BehaviorSubject<any[]> = new BehaviorSubject([]);
   private historyTransactions: BehaviorSubject<any[]> = new BehaviorSubject([]);
-  private bonusSystems: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
+  private bonusSystems: BehaviorSubject<any[]>;
 
   constructor(private net: NetService) {
     const isLoggedSubscription = this.isLoggedIn.pipe(
@@ -55,13 +55,12 @@ export class NgRestoUserService {
   }
 
   getProfile() {
-    return this.net.get('/user/get/user-info').pipe(
-      tap(
-        (result: User) => {
+    return this.user ? this.user : this.net.get<User>('/user/get/user-info').pipe(
+      switchMap(
+        result => {
           this.user.next(result);
-        },
-        () => { }
-      )
+          return this.user;
+        })
     );
   }
 
@@ -104,35 +103,31 @@ export class NgRestoUserService {
   }
 
   getAddresses() {
-    return this.net.get('/user/get/location').pipe(
-      tap(
-        (addresses: Address[]) => {
+    return this.addresses ? this.addresses : this.net.get<Address[]>('/user/get/location').pipe(
+      switchMap(
+        addresses => {
           this.addresses.next(addresses);
-        },
-        () => { }
-      )
+          return this.addresses;
+        })
     );
   }
 
   addAddress(address: AddAddressRequestData) {
-    return this.net.post('/user/add/location', address).pipe(
-      tap(
-        (addresses: Address[]) => {
+    return this.net.post<AddAddressRequestData, Address[]>('/user/add/location', address).pipe(
+      switchMap(
+        addresses => {
           this.addresses.next(addresses);
-        },
-        () => { }
-      )
+          return this.addresses;
+        })
     );
   }
 
   deleteAddress(address: Address) {
-    var reqBody: RemoveAddressRequestData = {
+    return this.net.post<RemoveAddressRequestData, Address[]>('/user/remove/location', {
       id: address.id,
       street: address.street,
       home: address.home
-    };
-
-    return this.net.post('/user/remove/location', reqBody).pipe(
+    }).pipe(
       tap(
         (addresses: Address[]) => {
           this.addresses.next(addresses);
@@ -145,7 +140,7 @@ export class NgRestoUserService {
   signUp(data: SignUpRequestData) {
     return this.net.post('/signup', data).pipe(
       tap(
-        (result) => {
+        () => {
           //this.setAuthToken(result.token, false);
           //this.user.next(result.user);
         },
@@ -160,11 +155,12 @@ export class NgRestoUserService {
 
 
   getBonuses() {
-    return this.net.post('/bonus/get', {}).pipe(
-      tap(
-        result => this.bonusSystems.next(result),
-        () => { }
-      )
+    return this.bonusSystems ? this.bonusSystems : this.net.post('/bonus/get', {}).pipe(
+      switchMap(
+        result => {
+          this.bonusSystems.next(result);
+          return this.bonusSystems;
+        })
     );
   }
 
@@ -188,40 +184,33 @@ export class NgRestoUserService {
 
 
   getFavorites() {
-    return this.net.get<any[]>('/user/get/favorites').pipe(
-      tap(
+    return this.favorites ? this.favorites : this.net.get<any[]>('/user/get/favorites').pipe(
+      switchMap(
         result => {
           console.info('getFavorites result', result);
           this.favorites.next(result);
-        },
-        () => { }
-      )
+          return this.favorites;
+        })
     );
   }
 
   addDishToFavorites(dish: any) {
-    let data: AddDishToFavoritesRequestData = {
+    return this.net.post<AddDishToFavoritesRequestData, any[]>('/user/add/favorites ', {
       dishId: dish.id
-    };
-    return this.net.post<AddDishToFavoritesRequestData, any[]>('/user/add/favorites ', data).pipe(
+    }).pipe(
       tap(
-        result => {
-          let favoritesUpdated: any[] = this.favorites.getValue();
-          favoritesUpdated.push(dish);
-          this.favorites.next(result);
-        },
+        result => this.favorites.next(result),
         () => { }
       )
     );
   }
 
   removeDishFromFavorites(dish: any) {
-    let data: RemoveDishFromFavoritesRequestData = {
+    return this.net.post<RemoveDishFromFavoritesRequestData, any[]>('/user/remove/favorites ', {
       dishId: dish.id
-    };
-    return this.net.post('/user/remove/favorites ', data).pipe(
+    }).pipe(
       tap(
-        (result: any[]) => {
+        result => {
           console.info('Было=>>>', this.favorites.getValue().length);
           let favoritesUpdated: any[] = this.favorites
             .getValue()

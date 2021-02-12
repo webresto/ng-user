@@ -4,12 +4,12 @@
     "type": "git",
     "url": "https://github.com/webresto/ng-user.git"
   },
-  "version": "0.0.8",
+  "version": "0.0.9",
   "peerDependencies": {
-    "@angular/common": "^11.0.9",
-    "@angular/core": "^11.0.9",
+    "@angular/common": "^11.2.0",
+    "@angular/core": "^11.2.0",
     "rxjs":"6.6.3",
-    "@webresto/ng-core": "^0.0.8"
+    "@webresto/ng-core": "^0.0.9"
   },
   "dependencies": {
     "tslib": "^2.1.0"
