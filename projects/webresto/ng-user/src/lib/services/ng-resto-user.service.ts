@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { NetService } from '@webresto/ng-core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { filter, switchMap, tap } from 'rxjs/operators';
 import {
   Address, SignInRequestData, SignInResponseData, User, UpdateProfileRequestData,
@@ -225,7 +225,6 @@ export class NgRestoUserService {
 
   userProfile(): Observable<User> {
     return this.user ? this.user : this.getProfile().pipe(
-      switchMap(() => this.getProfile()),
       switchMap(() => this.getFavorites()),
       switchMap(() => this.getAddresses()),
       switchMap(() => this.getBonuses()),
@@ -238,18 +237,19 @@ export class NgRestoUserService {
   }
 
   userFavorites(): Observable<any[]> {
-    return this.favorites.pipe();
+    return this.favorites ? this.favorites.asObservable() : of([]);
   }
 
   userAddresses(): Observable<Address[]> {
-    return this.addresses.pipe();
+    return this.addresses ? this.addresses.asObservable() : of([]);
   }
 
   userHistory(): Observable<any[]> {
-    return this.historyItems.pipe();
+    return this.historyItems ? this.historyItems.asObservable() : of([]);
   }
+
   userTransactionsHistory(): Observable<any[]> {
-    return this.historyTransactions.pipe();
+    return this.historyTransactions ? this.historyTransactions.asObservable() : of([]);
   }
 
   getAuthToken(): string {

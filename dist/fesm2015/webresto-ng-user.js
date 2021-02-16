@@ -1,6 +1,6 @@
 import { ɵɵdefineInjectable, ɵɵinject, Injectable, EventEmitter, Directive, Input, Output, HostListener, Renderer2, ElementRef, NgModule } from '@angular/core';
 import { NetService } from '@webresto/ng-core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
 import { filter, switchMap, tap } from 'rxjs/operators';
 import { formatDate } from '@angular/common';
 
@@ -118,22 +118,22 @@ class NgRestoUserService {
         }, () => { }));
     }
     userProfile() {
-        return this.user ? this.user : this.getProfile().pipe(switchMap(() => this.getProfile()), switchMap(() => this.getFavorites()), switchMap(() => this.getAddresses()), switchMap(() => this.getBonuses()), switchMap(() => this.user));
+        return this.user ? this.user : this.getProfile().pipe(switchMap(() => this.getFavorites()), switchMap(() => this.getAddresses()), switchMap(() => this.getBonuses()), switchMap(() => this.user));
     }
     userIsLoggedIn() {
         return this.isLoggedIn;
     }
     userFavorites() {
-        return this.favorites.pipe();
+        return this.favorites ? this.favorites.asObservable() : of([]);
     }
     userAddresses() {
-        return this.addresses.pipe();
+        return this.addresses ? this.addresses.asObservable() : of([]);
     }
     userHistory() {
-        return this.historyItems.pipe();
+        return this.historyItems ? this.historyItems.asObservable() : of([]);
     }
     userTransactionsHistory() {
-        return this.historyTransactions.pipe();
+        return this.historyTransactions ? this.historyTransactions.asObservable() : of([]);
     }
     getAuthToken() {
         return this.authToken;

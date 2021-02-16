@@ -136,22 +136,22 @@
         };
         NgRestoUserService.prototype.userProfile = function () {
             var _this = this;
-            return this.user ? this.user : this.getProfile().pipe(operators.switchMap(function () { return _this.getProfile(); }), operators.switchMap(function () { return _this.getFavorites(); }), operators.switchMap(function () { return _this.getAddresses(); }), operators.switchMap(function () { return _this.getBonuses(); }), operators.switchMap(function () { return _this.user; }));
+            return this.user ? this.user : this.getProfile().pipe(operators.switchMap(function () { return _this.getFavorites(); }), operators.switchMap(function () { return _this.getAddresses(); }), operators.switchMap(function () { return _this.getBonuses(); }), operators.switchMap(function () { return _this.user; }));
         };
         NgRestoUserService.prototype.userIsLoggedIn = function () {
             return this.isLoggedIn;
         };
         NgRestoUserService.prototype.userFavorites = function () {
-            return this.favorites.pipe();
+            return this.favorites ? this.favorites.asObservable() : rxjs.of([]);
         };
         NgRestoUserService.prototype.userAddresses = function () {
-            return this.addresses.pipe();
+            return this.addresses ? this.addresses.asObservable() : rxjs.of([]);
         };
         NgRestoUserService.prototype.userHistory = function () {
-            return this.historyItems.pipe();
+            return this.historyItems ? this.historyItems.asObservable() : rxjs.of([]);
         };
         NgRestoUserService.prototype.userTransactionsHistory = function () {
-            return this.historyTransactions.pipe();
+            return this.historyTransactions ? this.historyTransactions.asObservable() : rxjs.of([]);
         };
         NgRestoUserService.prototype.getAuthToken = function () {
             return this.authToken;
