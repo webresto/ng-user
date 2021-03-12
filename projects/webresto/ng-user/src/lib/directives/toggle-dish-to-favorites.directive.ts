@@ -1,20 +1,20 @@
 import {
   Directive, HostListener, Input,
-  Output, EventEmitter, ElementRef, Renderer2, OnDestroy
+  Output, EventEmitter, ElementRef, Renderer2, OnDestroy, OnChanges
 } from '@angular/core';
 import { NgRestoUserService } from '../services/ng-resto-user.service';
 
 @Directive({
   selector: '[rstToggleDishToFavorites]'
 })
-export class ToggleDishToFavoritesDirective implements OnDestroy {
+export class ToggleDishToFavoritesDirective implements OnDestroy, OnChanges {
 
   @Input() dish: any;
   @Output() change = new EventEmitter<boolean>();
   @Output() error = new EventEmitter<string>();
 
-  inFavorites: boolean;
-  isLoggedIn: boolean;
+  @Input() isLoggedIn: boolean;
+  @Input() favorites: any[];
 
   constructor(
     private ngRestoUserService: NgRestoUserService,
@@ -22,26 +22,21 @@ export class ToggleDishToFavoritesDirective implements OnDestroy {
     private renderer: Renderer2
   ) { }
 
+  get inFavorites(): boolean {
+    return !!this.favorites.find(dish => dish.id == this.dish.id)
+  };
+
+
   ngOnDestroy(): void {
     [this.change, this.error].forEach(emitter => emitter.complete());
   }
 
-  ngOnInit() {
-    this.ngRestoUserService
-      .userFavorites()
-      .subscribe(favorites => {
-
-        this.inFavorites = favorites.find(dish => dish.id == this.dish.id);
-
-        if (this.inFavorites) {
-          this.renderer.addClass(this.element.nativeElement, 'selected')
-        } else {
-          this.renderer.removeClass(this.element.nativeElement, 'selected');
-        }
-      });
-    this.ngRestoUserService
-      .userIsLoggedIn()
-      .subscribe(result => this.isLoggedIn = result);
+  ngOnChanges() {
+    if (this.inFavorites) {
+      this.renderer.addClass(this.element.nativeElement, 'selected')
+    } else {
+      this.renderer.removeClass(this.element.nativeElement, 'selected');
+    };
   }
 
   @HostListener('click')
