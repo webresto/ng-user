@@ -1,4 +1,6 @@
-import { ɵɵdefineInjectable, ɵɵinject, Injectable, EventEmitter, Directive, Input, Output, HostListener, Renderer2, ElementRef, NgModule } from '@angular/core';
+import * as i0 from '@angular/core';
+import { Injectable, EventEmitter, Directive, Input, Output, HostListener, Renderer2, ElementRef, NgModule } from '@angular/core';
+import * as i1 from '@webresto/ng-core';
 import { NetService } from '@webresto/ng-core';
 import { BehaviorSubject, of } from 'rxjs';
 import { filter, switchMap, tap } from 'rxjs/operators';
@@ -165,7 +167,7 @@ class NgRestoUserService {
         }).pipe(tap(result => this.user.next(result.user), () => { }));
     }
 }
-NgRestoUserService.ɵprov = ɵɵdefineInjectable({ factory: function NgRestoUserService_Factory() { return new NgRestoUserService(ɵɵinject(NetService)); }, token: NgRestoUserService, providedIn: "root" });
+NgRestoUserService.ɵprov = i0.ɵɵdefineInjectable({ factory: function NgRestoUserService_Factory() { return new NgRestoUserService(i0.ɵɵinject(i1.NetService)); }, token: NgRestoUserService, providedIn: "root" });
 NgRestoUserService.decorators = [
     { type: Injectable, args: [{
                 providedIn: 'root'
@@ -381,24 +383,21 @@ class ToggleDishToFavoritesDirective {
         this.change = new EventEmitter();
         this.error = new EventEmitter();
     }
+    get inFavorites() {
+        return !!this.favorites.find(dish => dish.id == this.dish.id);
+    }
+    ;
     ngOnDestroy() {
         [this.change, this.error].forEach(emitter => emitter.complete());
     }
-    ngOnInit() {
-        this.ngRestoUserService
-            .userFavorites()
-            .subscribe(favorites => {
-            this.inFavorites = favorites.find(dish => dish.id == this.dish.id);
-            if (this.inFavorites) {
-                this.renderer.addClass(this.element.nativeElement, 'selected');
-            }
-            else {
-                this.renderer.removeClass(this.element.nativeElement, 'selected');
-            }
-        });
-        this.ngRestoUserService
-            .userIsLoggedIn()
-            .subscribe(result => this.isLoggedIn = result);
+    ngOnChanges() {
+        if (this.inFavorites) {
+            this.renderer.addClass(this.element.nativeElement, 'selected');
+        }
+        else {
+            this.renderer.removeClass(this.element.nativeElement, 'selected');
+        }
+        ;
     }
     onClick() {
         if (this.inFavorites) {
@@ -437,6 +436,8 @@ ToggleDishToFavoritesDirective.propDecorators = {
     dish: [{ type: Input }],
     change: [{ type: Output }],
     error: [{ type: Output }],
+    isLoggedIn: [{ type: Input }],
+    favorites: [{ type: Input }],
     onClick: [{ type: HostListener, args: ['click',] }]
 };
 

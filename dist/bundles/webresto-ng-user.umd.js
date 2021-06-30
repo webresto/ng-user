@@ -4,6 +4,29 @@
     (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory((global.webresto = global.webresto || {}, global.webresto['ng-user'] = {}), global.ng.core, global['@webresto/ng-core'], global.rxjs, global.rxjs.operators, global.ng.common));
 }(this, (function (exports, i0, i1, rxjs, operators, common) { 'use strict';
 
+    function _interopNamespace(e) {
+        if (e && e.__esModule) return e;
+        var n = Object.create(null);
+        if (e) {
+            Object.keys(e).forEach(function (k) {
+                if (k !== 'default') {
+                    var d = Object.getOwnPropertyDescriptor(e, k);
+                    Object.defineProperty(n, k, d.get ? d : {
+                        enumerable: true,
+                        get: function () {
+                            return e[k];
+                        }
+                    });
+                }
+            });
+        }
+        n['default'] = e;
+        return Object.freeze(n);
+    }
+
+    var i0__namespace = /*#__PURE__*/_interopNamespace(i0);
+    var i1__namespace = /*#__PURE__*/_interopNamespace(i1);
+
     var LS_TOKEN_NAME = 'gf:tkn:v2';
     var NgRestoUserService = /** @class */ (function () {
         function NgRestoUserService(net) {
@@ -185,7 +208,7 @@
         };
         return NgRestoUserService;
     }());
-    NgRestoUserService.ɵprov = i0.ɵɵdefineInjectable({ factory: function NgRestoUserService_Factory() { return new NgRestoUserService(i0.ɵɵinject(i1.NetService)); }, token: NgRestoUserService, providedIn: "root" });
+    NgRestoUserService.ɵprov = i0__namespace.ɵɵdefineInjectable({ factory: function NgRestoUserService_Factory() { return new NgRestoUserService(i0__namespace.ɵɵinject(i1__namespace.NetService)); }, token: NgRestoUserService, providedIn: "root" });
     NgRestoUserService.decorators = [
         { type: i0.Injectable, args: [{
                     providedIn: 'root'
@@ -412,25 +435,26 @@
             this.change = new i0.EventEmitter();
             this.error = new i0.EventEmitter();
         }
+        Object.defineProperty(ToggleDishToFavoritesDirective.prototype, "inFavorites", {
+            get: function () {
+                var _this = this;
+                return !!this.favorites.find(function (dish) { return dish.id == _this.dish.id; });
+            },
+            enumerable: false,
+            configurable: true
+        });
+        ;
         ToggleDishToFavoritesDirective.prototype.ngOnDestroy = function () {
             [this.change, this.error].forEach(function (emitter) { return emitter.complete(); });
         };
-        ToggleDishToFavoritesDirective.prototype.ngOnInit = function () {
-            var _this = this;
-            this.ngRestoUserService
-                .userFavorites()
-                .subscribe(function (favorites) {
-                _this.inFavorites = favorites.find(function (dish) { return dish.id == _this.dish.id; });
-                if (_this.inFavorites) {
-                    _this.renderer.addClass(_this.element.nativeElement, 'selected');
-                }
-                else {
-                    _this.renderer.removeClass(_this.element.nativeElement, 'selected');
-                }
-            });
-            this.ngRestoUserService
-                .userIsLoggedIn()
-                .subscribe(function (result) { return _this.isLoggedIn = result; });
+        ToggleDishToFavoritesDirective.prototype.ngOnChanges = function () {
+            if (this.inFavorites) {
+                this.renderer.addClass(this.element.nativeElement, 'selected');
+            }
+            else {
+                this.renderer.removeClass(this.element.nativeElement, 'selected');
+            }
+            ;
         };
         ToggleDishToFavoritesDirective.prototype.onClick = function () {
             if (this.inFavorites) {
@@ -472,6 +496,8 @@
         dish: [{ type: i0.Input }],
         change: [{ type: i0.Output }],
         error: [{ type: i0.Output }],
+        isLoggedIn: [{ type: i0.Input }],
+        favorites: [{ type: i0.Input }],
         onClick: [{ type: i0.HostListener, args: ['click',] }]
     };
 
