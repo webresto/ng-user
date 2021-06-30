@@ -3,7 +3,7 @@ import { Injectable, EventEmitter, Directive, Input, Output, HostListener, Rende
 import * as i1 from '@webresto/ng-core';
 import { NetService } from '@webresto/ng-core';
 import { BehaviorSubject, of } from 'rxjs';
-import { filter, switchMap, tap } from 'rxjs/operators';
+import { filter, switchMap, tap, map } from 'rxjs/operators';
 import { formatDate } from '@angular/common';
 
 const LS_TOKEN_NAME = 'gf:tkn:v2';
@@ -105,7 +105,7 @@ class NgRestoUserService {
     addDishToFavorites(dish) {
         return this.net.post('/user/add/favorites ', {
             dishId: dish.id
-        }).pipe(tap(result => this.favorites.next(result), () => { }));
+        }).pipe(map(result => this.favorites.next(result)));
     }
     removeDishFromFavorites(dish) {
         return this.net.post('/user/remove/favorites ', {
@@ -411,6 +411,7 @@ class ToggleDishToFavoritesDirective {
         this.ngRestoUserService
             .addDishToFavorites(this.dish)
             .subscribe(() => {
+            console.log('toggle dish');
             this.change.emit(true);
             this.renderer.addClass(this.element.nativeElement, 'selected');
         }, error => this.error.emit(error));

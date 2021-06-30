@@ -53,6 +53,7 @@ export class ToggleDishToFavoritesDirective implements OnDestroy, OnChanges {
       .addDishToFavorites(this.dish)
       .subscribe(
         () => {
+          console.log('toggle dish');
           this.change.emit(true);
           this.renderer.addClass(this.element.nativeElement, 'selected');
         },

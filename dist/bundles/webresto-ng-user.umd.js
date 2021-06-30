@@ -142,7 +142,7 @@
             var _this = this;
             return this.net.post('/user/add/favorites ', {
                 dishId: dish.id
-            }).pipe(operators.tap(function (result) { return _this.favorites.next(result); }, function () { }));
+            }).pipe(operators.map(function (result) { return _this.favorites.next(result); }));
         };
         NgRestoUserService.prototype.removeDishFromFavorites = function (dish) {
             var _this = this;
@@ -469,6 +469,7 @@
             this.ngRestoUserService
                 .addDishToFavorites(this.dish)
                 .subscribe(function () {
+                console.log('toggle dish');
                 _this.change.emit(true);
                 _this.renderer.addClass(_this.element.nativeElement, 'selected');
             }, function (error) { return _this.error.emit(error); });

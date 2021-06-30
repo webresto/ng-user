@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { NetService } from '@webresto/ng-core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { filter, switchMap, tap } from 'rxjs/operators';
 import {
   Address, SignInRequestData, SignInResponseData, User, UpdateProfileRequestData,
@@ -198,9 +199,8 @@ export class NgRestoUserService {
     return this.net.post<AddDishToFavoritesRequestData, any[]>('/user/add/favorites ', {
       dishId: dish.id
     }).pipe(
-      tap(
+      map(
         result => this.favorites.next(result),
-        () => { }
       )
     );
   }

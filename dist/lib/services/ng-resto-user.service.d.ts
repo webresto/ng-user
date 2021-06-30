@@ -27,7 +27,7 @@ export declare class NgRestoUserService {
     resetPassword(data: ResetPasswordRequestData): Observable<any>;
     resetPasswordCode(data: ResetPasswordCodeRequestData): Observable<any>;
     getFavorites(): Observable<any[]>;
-    addDishToFavorites(dish: any): Observable<any[]>;
+    addDishToFavorites(dish: any): Observable<void>;
     removeDishFromFavorites(dish: any): Observable<any[]>;
     userProfile(): Observable<User>;
     userIsLoggedIn(): BehaviorSubject<boolean>;
