@@ -432,7 +432,7 @@
             this.ngRestoUserService = ngRestoUserService;
             this.element = element;
             this.renderer = renderer;
-            this.change = new i0.EventEmitter();
+            this.toggle = new i0.EventEmitter();
             this.error = new i0.EventEmitter();
         }
         Object.defineProperty(ToggleDishToFavoritesDirective.prototype, "inFavorites", {
@@ -445,7 +445,7 @@
         });
         ;
         ToggleDishToFavoritesDirective.prototype.ngOnDestroy = function () {
-            [this.change, this.error].forEach(function (emitter) { return emitter.complete(); });
+            [this.toggle, this.error].forEach(function (emitter) { return emitter.complete(); });
         };
         ToggleDishToFavoritesDirective.prototype.ngOnChanges = function () {
             if (this.inFavorites) {
@@ -470,14 +470,14 @@
                 .addDishToFavorites(this.dish)
                 .subscribe(function () {
                 console.log('toggle dish');
-                _this.change.emit(true);
+                _this.toggle.emit(true);
                 _this.renderer.addClass(_this.element.nativeElement, 'selected');
             }, function (error) { return _this.error.emit(error); });
         };
         ToggleDishToFavoritesDirective.prototype.removeDishFromFavorites = function () {
             var _this = this;
             var req = this.ngRestoUserService.removeDishFromFavorites(this.dish).subscribe(function () {
-                _this.change.emit(false);
+                _this.toggle.emit(false);
                 _this.renderer.removeClass(_this.element.nativeElement, 'selected');
             }, function (error) { return _this.error.emit(error); }, function () { return req.unsubscribe(); });
         };
@@ -495,7 +495,7 @@
     ]; };
     ToggleDishToFavoritesDirective.propDecorators = {
         dish: [{ type: i0.Input }],
-        change: [{ type: i0.Output }],
+        toggle: [{ type: i0.Output }],
         error: [{ type: i0.Output }],
         isLoggedIn: [{ type: i0.Input }],
         favorites: [{ type: i0.Input }],

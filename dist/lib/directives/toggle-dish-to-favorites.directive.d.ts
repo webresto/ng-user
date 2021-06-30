@@ -5,7 +5,7 @@ export declare class ToggleDishToFavoritesDirective implements OnDestroy, OnChan
     private element;
     private renderer;
     dish: any;
-    change: EventEmitter<boolean>;
+    toggle: EventEmitter<boolean>;
     error: EventEmitter<string>;
     isLoggedIn: boolean;
     favorites: any[];

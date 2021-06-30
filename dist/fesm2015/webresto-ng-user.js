@@ -380,7 +380,7 @@ class ToggleDishToFavoritesDirective {
         this.ngRestoUserService = ngRestoUserService;
         this.element = element;
         this.renderer = renderer;
-        this.change = new EventEmitter();
+        this.toggle = new EventEmitter();
         this.error = new EventEmitter();
     }
     get inFavorites() {
@@ -388,7 +388,7 @@ class ToggleDishToFavoritesDirective {
     }
     ;
     ngOnDestroy() {
-        [this.change, this.error].forEach(emitter => emitter.complete());
+        [this.toggle, this.error].forEach(emitter => emitter.complete());
     }
     ngOnChanges() {
         if (this.inFavorites) {
@@ -412,13 +412,13 @@ class ToggleDishToFavoritesDirective {
             .addDishToFavorites(this.dish)
             .subscribe(() => {
             console.log('toggle dish');
-            this.change.emit(true);
+            this.toggle.emit(true);
             this.renderer.addClass(this.element.nativeElement, 'selected');
         }, error => this.error.emit(error));
     }
     removeDishFromFavorites() {
         const req = this.ngRestoUserService.removeDishFromFavorites(this.dish).subscribe(() => {
-            this.change.emit(false);
+            this.toggle.emit(false);
             this.renderer.removeClass(this.element.nativeElement, 'selected');
         }, error => this.error.emit(error), () => req.unsubscribe());
     }
@@ -435,7 +435,7 @@ ToggleDishToFavoritesDirective.ctorParameters = () => [
 ];
 ToggleDishToFavoritesDirective.propDecorators = {
     dish: [{ type: Input }],
-    change: [{ type: Output }],
+    toggle: [{ type: Output }],
     error: [{ type: Output }],
     isLoggedIn: [{ type: Input }],
     favorites: [{ type: Input }],
